@@ -42,7 +42,6 @@ registerLocaleData(en);
 
 export function appConfigInit(configService: ConfigService, translate: TranslateService) {
   return async () => {
-    console.log("INIT")
     translate.setDefaultLang('en');
     await firstValueFrom(translate.use('en'));
     await configService.load();
@@ -50,7 +49,6 @@ export function appConfigInit(configService: ConfigService, translate: Translate
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  console.log('httpFactory');
   return new TranslateHttpLoader(
     http,
     './assets/i18n/',
@@ -60,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimationsAsync(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

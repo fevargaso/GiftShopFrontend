@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [AntdModule],
   exports: [CommonModule, TranslateModule, RouterModule, FormsModule, ReactiveFormsModule, AntdModule],
 })
 export class SharedModule {}

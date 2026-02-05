@@ -72,15 +72,23 @@
           </nz-form-item>
 
           <nz-form-item>
-            <nz-form-label>URL de la Imagen</nz-form-label>
+            <nz-form-label>Imagen del Producto</nz-form-label>
             <nz-form-control>
-              <input nz-input [(ngModel)]="currentProduct.imageUrl" name="imageUrl" placeholder="https://ejemplo.com/foto.jpg" />
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none" />
+                
+                <button nz-button type="button" nzBlock (click)="fileInput.click()" style="border-radius: 4px;">
+                  <span nz-icon nzType="upload"></span> {{ currentProduct.imageUrl ? 'Cambiar Foto' : 'Subir Foto Local' }}
+                </button>
+
+                <input nz-input [(ngModel)]="currentProduct.imageUrl" name="imageUrl" placeholder="O pega el link de la imagen aquí" style="font-size: 12px;" />
+              </div>
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
         <nz-form-item>
           <nz-form-label>Precio</nz-form-label>
           <nz-form-control>

@@ -66,8 +66,6 @@ loadProducts() {
     next: (res: any) => {
       this.products = res.items || []; 
       this.totalItems = res.totalCount || 0;
-      
-      console.log('Datos cargados:', this.products.length, 'Total en DB:', this.totalItems);
     },
     error: (err) => console.error('Error cargando productos', err)
   });
@@ -78,7 +76,6 @@ loadProducts() {
   }
 
   onPageChange(page: number) {
-    console.log('Page changed to:', page);
     this.params.page = page;
     this.loadProducts();
     window.scrollTo({ top: 0, behavior: 'smooth' });

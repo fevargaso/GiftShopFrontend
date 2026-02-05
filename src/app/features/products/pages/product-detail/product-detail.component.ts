@@ -22,8 +22,12 @@ export class ProductDetailComponent implements OnInit {
     private cartService: CartService
   ) {}
 
-  ngOnInit(): void {
-    // Obtenemos el ID de la ruta (configurada como /products/:id)
+ngOnInit(): void {
+  const navigation = window.history.state;
+  
+  if (navigation && navigation.product) {
+    this.product = navigation.product;
+  } else {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.productService.getById(id).subscribe({
@@ -32,6 +36,7 @@ export class ProductDetailComponent implements OnInit {
       });
     }
   }
+}
 
   addToCart(): void {
     if (this.product) {
@@ -39,7 +44,6 @@ export class ProductDetailComponent implements OnInit {
         product: this.product,
         quantity: 1
       });
-      // Tip: Aquí podrías disparar un mensaje de éxito con NzMessageService
     }
   }
 }

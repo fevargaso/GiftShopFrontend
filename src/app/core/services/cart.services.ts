@@ -12,6 +12,10 @@ export class CartService {
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
   cart$ = this.cartSubject.asObservable();
 
+  get items(): CartItem[] {
+    return this.cartItems;
+  }
+
   constructor(private notification: NotificationUtilService) {}
 
   addToCartProduct(product: Product): void {
