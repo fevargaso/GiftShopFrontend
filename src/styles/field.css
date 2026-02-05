@@ -1,0 +1,136 @@
+/* -- input -- */
+.field {
+  border-radius: 6px;
+  border: 1px solid var(--border-input-2);
+  color: var(--label-inactive-text);
+  font: var(--font-open-sans);
+  font-size: 16px;
+}
+
+.field.with-clear.has-value {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.field-large.ant-input {
+  height: 36px;
+}
+
+.field.ant-input[disabled] {
+  color: var(--color-dark5);
+  background-color: var(--border-disabled);
+  border: 1px solid var(--border-input-2);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.field-readonly.field.ant-input[disabled] {
+  background-color: transparent;
+  border: none;
+  color: var(--text-body);
+}
+
+.field-readonly.field.ant-input {
+  padding: 4px 1px;
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-open-sans);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--text-heading);
+}
+
+.field-label.ant-form-item-label {
+  text-align: left;
+}
+
+.field-label.ant-form-item-label > label {
+  font-family: var(--font-open-sans);
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--text-heading);
+  text-align: left;
+}
+
+/* -- input number -- */
+.field.ant-input-number {
+  padding: 2px 11px;
+}
+
+.field .ant-input-number-input {
+  padding: 0;
+}
+
+/* -- select dropdown -- */
+nz-select.select-field.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.ant-select:not(.ant-select-customize-input) .ant-select-selector,
+.select-field input {
+  height: auto;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-input-2);
+  color: var(--label-inactive-text);
+  font: var(--font-open-sans);
+  font-size: 16px;
+}
+.select-field.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  padding: 2px 11px;
+}
+.field-readonly.select-field.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: transparent;
+  border: none;
+  color: #6E6B7B;
+}
+.field-readonly.select-field.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  padding: 4px 1px;
+}
+.select-field.ant-select-multiple .ant-select-selector {
+  padding: 3px 11px;
+}
+.select-field.ant-select-multiple .ant-select-selection-placeholder {
+  padding-left: 7px;
+}
+.ant-select-dropdown {
+  z-index: 1050;
+  background-color: var(--color-gray0);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow-card-light);
+}
+.ant-select-item {
+  font-family: var(--font-open-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  text-align: left;
+  color: var(--color-dark5);
+}
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  color: var(--color-dark5);
+  font-weight: 600;
+  background-color: #E7F0FF;
+}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: #E7F0FF;
+}
+
+.select-field.with-clear.ant-select-multiple .ant-select-selection-item {
+  padding: 1px 10px;
+  border-radius: 20px;
+  color: #0D6EFD;
+  background: #E7F0FF;
+  border: 1px solid #BBD6FF;
+}
+.select-field.with-clear.ant-select-multiple .ant-select-selection-item {
+  max-width: 200px;
+  display: initial;
+}
+.select-field.with-clear.ant-select:not(.ant-select-customize-input) .ant-select-selector:has(.ant-select-selection-item) {
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+.select-field.with-clear.readonly.ant-select:not(.ant-select-customize-input) .ant-select-selector:has(.ant-select-selection-item),
+.select-field.with-clear.disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector:has(.ant-select-selection-item) {
+  border-radius: var(--border-radius);
+}
+/* -- end select dropdown -- */

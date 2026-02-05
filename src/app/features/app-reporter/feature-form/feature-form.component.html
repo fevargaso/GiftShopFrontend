@@ -1,0 +1,11 @@
+<app-reporter-form
+  [title]="'AppReporter.FEATURE_TITLE' | translate"
+  [hint]="'AppReporter.FEATURE_HINT' | translate"
+  [form]="form"
+  [files]="files"
+  [isSubmiting]="isSubmiting"
+  (onAddAttachment)="onAddAttachment($event)"
+  (onRemoveAttachment)="onRemoveAttachment($event)"
+  (onSubmit)="onSubmit()"
+  (onCancel)="onCancel()"
+></app-reporter-form>

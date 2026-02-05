@@ -1,0 +1,19 @@
+.admin-page {
+  padding: 24px;
+  background: white;
+  min-height: 100vh;
+
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    h2 { margin: 0; color: #001529; }
+  }
+}
+
+::ng-deep .ant-table-thead > tr > th {
+  background: #f0f2f5;
+  font-weight: 700;
+}

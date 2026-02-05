@@ -1,0 +1,144 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import './styles/layout.css';
+@import './styles/helpers.css';
+@import './styles/colors.css';
+@import './styles/typography.css';
+@import './styles/button.css';
+@import './styles/table.css';
+@import './styles/checkbox.css';
+@import './styles/tooltip.css';
+@import './styles/field.css';
+@import './styles/menu-actions.css';
+@import './styles/modal.css';
+
+:root {
+  --color-primary: #457b9d;
+  --color-main: #118ab2;
+  --color-link: #992f2f;
+  --color-card-text: #2c353f;
+  --color-blur-background: rgba(0, 0, 0, 0.15);
+
+  --box-shadow-card: 0px 4px 23px 0px #0000000F;
+  --box-shadow-card-light: 2px 2px 5px 0px #0000000F;
+  --box-shadow-employee-photo: 0px 0px 8px 0px rgba(0, 0, 0, 0.14);
+  --box-shadow-navigation-bar: 0px 8px 12px 0px rgba(13, 73, 39, 0.12);
+  --box-shadow-header-menu: 2px 4px 20px 0px #06303E08;
+  --box-shadow-dropdown-menu: 0px 4px 23px 0px #0000000f;
+  --box-shadow-menu-user-actions: 0px 8px 24px 0px #00000026;
+  --box-shadow-progress-bar: 0px 2px 10px 0px #33719F4D;
+  --box-shadow-filter-menu: 0px 4px 23px 0px #0000001A;
+  --box-shadow-button-close: 0px 3px 8px 0px #A7AEB566;;
+
+  --font-open-sans: 'Open Sans', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+
+  --color-status-pending: #c09879;
+  --color-status-active: #84ac4e;
+  --color-status-inactive: #a99d9e;
+
+  --ant-primary-color: var(--color-primary) !important;
+  --ant-primary-color-hover: #6d5e8b !important;
+  --ant-primary-color-active: rgb(98, 86, 122) !important;
+  /* --ant-primary-color-outline: rgba(98, 86, 122, 0.2) !important; */
+  --ant-primary-color-outline: transparent !important;
+  --ant-info-color: var(--color-primary) !important;
+  /* --ant-primary-1: #c2a5fd !important; */
+  --ant-primary-2: var(--color-primary) !important;
+  --ant-primary-3: var(--color-primary) !important;
+  --ant-primary-4: var(--color-primary) !important;
+  --ant-primary-5: var(--color-primary) !important;
+  --ant-primary-6: var(--color-primary) !important;
+  --ant-primary-7: var(--color-primary) !important;
+  --ant-primary-color-deprecated-pure: ;
+  --ant-primary-color-deprecated-l-35: var(--color-primary) !important;
+  --ant-primary-color-deprecated-l-20: var(--color-primary) !important;
+  --ant-primary-color-deprecated-t-20: var(--color-primary) !important;
+  --ant-primary-color-deprecated-t-50: var(--color-primary) !important;
+  --ant-primary-color-deprecated-f-12: rgba(98, 86, 122, 0.12) !important;
+
+  --border-radius: 6px;
+  --border-radius-xs: 3px;
+  --border-radius-sm: 4px;
+
+  /* MAIN PALETTE COLORS */
+  --color-red2: #EFDCDE;
+  --color-red7: #BE757A;
+  --color-red8:#AC4F55;
+  --color-red9: #931A21; /* fatima: check this some vars red9 in figma are #7C171D */
+
+  --color-background: #FAF9F9;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-blue: #457B9D;
+  --color-blue0: #F7FAFB;
+  --color-blue4: #AFC7D9;
+  --color-blue6: #7DA4C2;
+  --color-blue8: #33719F;
+  --color-blue10: #134266;
+
+  --color-violet8: #7F5AB1;
+
+  --color-gray0: #faf9f9;
+  --color-gray1: #efeded;
+  --color-gray3: #d7d2d2;
+  --color-gray8: #7a6869;
+
+  --color-dark: #3B3737;
+  --color-dark5: #4B4B4B;
+
+  /* GRAPHS */
+  --graph-blue: #0D6EFD;
+  --graph-indigo: #6610F2;
+  --graph-green: #28C76F;
+  --graph-red: #EA5455;
+  --graph-orange: #FF9F43;
+
+  --tag-available: #28C76F;
+  --tag-prospect: #0D6EFD;
+  --tag-notavailable: #EA5455;
+
+  /* TEXT PALETTE */
+  --text-body: #6E6B7B;
+  --text-heading: #5E5873;
+  --text-muted: #B9B9C3;
+
+  /* BORDER */
+  --border-input: #D8D6DE;
+  --border-input-2: #ebe9f1;
+  --border-disabled: #EFEFEF;
+
+  /* LABELS */
+  --label-active-background: #E5F8EE;
+  --label-active-text: #28C76F;
+  --label-active-border: #C2EFD7;
+
+  --label-inactive-background: #F0F0F1;
+  --label-inactive-text: #82868B;
+  --label-inactive-border: #DCDDDE;
+
+  --label-pending-background: #FFF0E3;
+  --label-pending-text: #FD7E14;
+
+  --label-prospect-background: #E7F0FF;
+  --label-prospect-text: #0D6EFD;
+  --label-prospect-border: #BBD6FF;
+
+  /* PAGINATION COLORS */
+  --pagination-background-color: #F3F2F7;
+  --pagination-principal-color: #33719F;
+
+  --division-pa-color: var(--color-blue8);
+  --division-ss-color: var(--color-violet8);
+}
+
+nz-footer {
+  text-align: center;
+  background-color: var(--color-background) !important;
+}

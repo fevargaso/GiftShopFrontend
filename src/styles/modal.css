@@ -1,0 +1,58 @@
+.ant-modal-mask {
+  background-color: var(--color-blur-background);
+}
+
+/* -- modal content -- */
+.modal-vessel .ant-modal-content {
+  border-radius: var(--border-radius);
+}
+/* -- end modal content -- */
+
+/* -- modal header -- */
+.modal-vessel .ant-modal-header {
+  background-color: var(--color-gray0);
+  border-bottom: none;
+  border-radius: var(--border-radius) var(--border-radius) 0px 0px;
+  padding: 10px 20px;
+}
+
+.modal-vessel .ant-modal-close {
+  background-color: var(--color-white);
+  margin-right: -0.5%; /* hacky, but necessary to put button outside */
+  margin-top: -0.5%; /* hacky, but necessary to put button outside */
+  display: flex;
+  box-shadow: var(--box-shadow-button-close);
+  border-radius: var(--border-radius);
+}
+
+.modal-vessel .ant-modal-close-x {
+  width: 34px;
+  height: 34px;
+  font-size: 12px;
+  display: inherit;
+  line-height: normal;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-dark5);
+  font-size: 12px;
+}
+
+.modal-vessel .ant-modal-close:hover > .ant-modal-close-x {
+  color: var(--label-inactive-text);
+}
+/* -- end modal header -- */
+
+/* -- modal body -- */
+.modal-vessel .ant-modal-body {
+  padding: 20px 40px;
+}
+/* -- end modal body -- */
+
+/* -- modal footer -- */
+.modal-vessel .ant-modal-footer {
+  border-top: 1px solid var(--border-input-2);
+  padding: 10px 20px;
+  background-color: var(--color-white);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+/* -- end modal footer -- */

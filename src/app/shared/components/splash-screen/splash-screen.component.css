@@ -1,0 +1,40 @@
+.app-splash-screen {
+  background: #fefefe;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  opacity: 1;
+}
+
+.app-label {
+  font-family: var(--font-open-sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-heading-text);
+  margin-top: 10px;
+}
+
+.app-splash-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-logo {
+  background: url("../../../../../public/assets/pinnacle-logo.svg");
+  background-repeat: no-repeat;
+  max-width: 100%;
+  background-position: center;
+  background-size: contain;
+  width: 250px;
+  height: 100px;
+}

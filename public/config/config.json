@@ -1,0 +1,9 @@
+{
+  "KEYCLOAK_URL": "https://keycloak.pinnacleaerospace.com",
+  "KEYCLOAK_REALM": "pinnacle-dev",
+  "KEYCLOAK_CLIENT_ID": "global-client-dev",
+  "KEYCLOAK_ON_LOAD": "check-sso",
+  "KEYCLOAK_SILENT_CHECK_SSO_REDIRECT_URI": "/silent-check-sso.html",
+  "ELYSIUM_API_URL": "http://localhost:5107",
+  "JANUS_BAMBOO_API_URL": "https://dev-janus-bamboohr.pinnacleaerospace.com/api/"
+}

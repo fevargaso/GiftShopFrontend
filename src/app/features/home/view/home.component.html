@@ -1,0 +1,32 @@
+<section class="home">
+  <div class="hero">
+    <div class="hero-text">
+      <h1>{{ 'Home.WELCOME' | translate }}</h1>
+      <p>Find the perfect gift for every occasion</p>
+      <button nz-button nzType="primary" routerLink="/products">
+        Shop Now
+      </button>
+    </div>
+    <div class="hero-image">
+      <img src="assets/logo.png" alt="hero" />
+    </div>
+  </div>
+
+<section class="products">
+  <h2>Popular Products</h2>
+  <div class="product-list-container">
+    <ul class="product-list">
+      @for (product of products; track product.id) {
+        <li class="product-card">
+          <img class="product-image" [src]="product.imageUrl || 'assets/logo.png'" />
+          <h3 class="product-title">{{ product.name }}</h3>
+          <p class="product-price">${{ product.price }} MXN</p>
+          <button nz-button nzType="default" (click)="addToCart(product)">
+            Add to cart
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+</section>

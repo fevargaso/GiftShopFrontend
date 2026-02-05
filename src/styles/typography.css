@@ -1,0 +1,130 @@
+.open-sans {
+  font-family: var(--font-open-sans) !important;
+  font-optical-sizing: auto;
+  font-variation-settings: "slnt" 0;
+}
+
+.roboto {
+  font-family: var(--font-roboto) !important;
+  font-optical-sizing: auto;
+  font-variation-settings: "slnt" 0;
+}
+
+.inter {
+  font-family: var(--font-inter) !important;
+  font-optical-sizing: auto;
+  font-variation-settings: "slnt" 0;
+}
+
+.montserrat {
+  font-family: var(--font-montserrat) !important;
+  font-optical-sizing: auto;
+  font-variation-settings: "slnt" 0;
+}
+
+.subheading {
+  font-family: var(--font-open-sans);
+  margin: 0;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--text-muted);
+}
+
+.card-heading,
+.heading-table,
+.heading-h2,
+.heading-h3,
+.heading-h4,
+.heading-h5 {
+  font-family: var(--font-open-sans);
+  margin: 0;
+  color: var(--text-heading);
+  font-weight: 400;
+}
+
+.heading-h2 {
+  font-size: 24px;
+  line-height: 33px;
+}
+
+.heading-h3 {
+  font-size: 21px;
+  line-height: 29px;
+}
+
+.heading-h4 {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.heading-h5 {
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0px;
+}
+
+.card-heading {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.heading-table {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 1px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.paragraph,
+.typography-body,
+.typography-paragraph,
+.typography-footnote,
+.typography-description {
+  font-family: var(--font-open-sans);
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: 0px;
+  color: var(--color-white);
+}
+
+.paragraph,
+.typography-body,
+.typography-paragraph {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.paragraph.sm,
+.typography-body.sm,
+.typography-paragraph.sm {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.paragraph.lead,
+.typography-body.lead,
+.typography-paragraph.lead {
+  font-size: 16px;
+  text-align: center;
+}
+
+.paragraph.semi-bold,
+.typography-body.semi-bold,
+.typography-paragraph.semi-bold {
+  font-weight: 600;
+}
+
+.paragraph.bold,
+.typography-body.bold,
+.typography-paragraph.bold {
+  font-weight: 600;
+}
+
+.typography-footnote,
+.typography-description {
+  font-size: 12px;
+  line-height: 20px;
+}

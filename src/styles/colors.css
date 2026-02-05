@@ -1,0 +1,32 @@
+.muted {
+  color: var(--text-muted) !important;
+}
+
+.color-heading {
+  color: var(--text-heading) !important;
+}
+
+.color-body {
+  color: var(--text-body) !important;
+}
+
+.color-graph-blue {
+  color: var(--graph-blue) !important;
+}
+
+.color-inactive {
+  color: var(--label-inactive-text) !important;
+}
+
+.dark5,
+.color-dark5 {
+  color: var(--color-dark5) !important;
+}
+
+.color-pa-border {
+  border-left-color: var(--division-pa-color) !important;
+}
+
+.color-ss-border {
+  border-left-color: var(--division-ss-color) !important;
+}

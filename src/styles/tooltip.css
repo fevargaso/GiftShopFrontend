@@ -1,0 +1,27 @@
+.ant-tooltip-inner {
+  background-color: var(--border-disabled);
+  color: var(--text-body);
+  min-width: 44px;
+  min-height: 22px;
+  box-shadow: none;
+  text-align: center;
+  border-radius: var(--border-radius-sm);
+
+  /* TODO: move generic style font */
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: var(--font-open-sans);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0px;
+}
+
+.ant-tooltip-arrow {
+  display: none;
+}
+
+.ant-tooltip-placement-top,
+.ant-tooltip-placement-topLeft,
+.ant-tooltip-placement-topRight {
+  padding-bottom: 7px;
+}

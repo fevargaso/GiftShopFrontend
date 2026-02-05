@@ -1,0 +1,56 @@
+nz-content {
+  background-color: var(--color-background) !important;
+  padding: 0 0px;
+}
+
+nz-content .inner-content {
+  background-color: var(--color-background) !important;
+  /* padding-left: 50px;
+  padding-bottom: 24px;
+  padding-right: 50px; */
+  padding-left: 162px;
+  padding-right: 162px;
+  padding-bottom: 40px;
+  padding-top: 24px;
+  min-height: 360px;
+  transition:
+    padding-left 0.5s ease,
+    padding-right 0.5s ease;
+}
+
+@media only screen and (max-width: 1600px) {
+  nz-content .inner-content {
+    padding-left: calc(75px + 1.5625vw);
+    padding-right: calc(75px + 1.5625vw);
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  nz-content .inner-content {
+    background-color: var(--color-teal0) !important;
+    padding-left: calc(55px + 1.5625vw);
+    padding-right: calc(55px + 1.5625vw);
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  nz-content .inner-content {
+    padding-left: calc(25px + 1.5625vw);
+    padding-right: calc(25px + 1.5625vw);
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  nz-content .inner-content {
+    /* https://matthewjamestaylor.com/responsive-padding */
+    padding-left: calc(8px + 1.5625vw);
+    padding-right: calc(8px + 1.5625vw);
+  }
+}
+
+/* @media only screen and (max-width: 576px) {
+  nz-content .inner-content {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
+} */

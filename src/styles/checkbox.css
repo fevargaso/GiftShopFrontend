@@ -1,0 +1,26 @@
+/* checkbox */
+.checkbox .ant-checkbox-inner,
+.checkbox-muted .ant-checkbox-inner {
+  width: 15px;
+  height: 15px;
+  border: none;
+  border-radius: var(--border-radius-xs);
+}
+
+.checkbox .ant-checkbox-inner {
+  border: 1px solid var(--text-body);
+}
+
+.checkbox .ant-checkbox.ant-checkbox-checked > .ant-checkbox-inner {
+  border: 1px solid var(--color-blue8);
+  background-color: var(--color-blue8);
+}
+
+.checkbox .ant-checkbox:not(.ant-checkbox-checked) > .ant-checkbox-inner {
+  background-color: var(--color-white);
+}
+
+.checkbox-muted .ant-checkbox:not(.ant-checkbox-checked) > .ant-checkbox-inner {
+  background-color: var(--color-gray1);
+}
+/* end checkbox */

@@ -1,0 +1,51 @@
+{
+  "General": {
+    "APP_NAME": "Elysium",
+    "COMPANY_NAME": "Copyright © {{ year }} Pinnacle Aerospace. All rights reserved.",
+    "BACK": "Back",
+    "CANCEL": "Cancel",
+    "ACCEPT": "Accept",
+    "OK": "Ok",
+    "SAVE": "Save",
+    "CONFIRM": "Confirm",
+    "RETURN": "Return",
+    "REMOVE": "Remove",
+    "ADD": "Add",
+    "EDIT": "Edit",
+    "NO_FOUND": "No information was found to display.",
+    "NOTHING_SELECTED": "Nothing is selected.",
+    "ERROR_403": "Sorry, you are not authorized to access this page.",
+    "USER_ROLES": "User roles",
+    "LOGOUT": "Log out",
+    "ALT_LOGO": "Image logo"
+  },
+  "Home": {
+    "TITLE": "Home",
+    "WELCOME": "Welcome"
+  },
+  "AppReporter": {
+    "FEATURE_TITLE": "Suggest a feature",
+    "ISSUE_TITLE": "Report an issue",
+    "FEATURE_HINT": "Please provide a short description of your idea. Add any screenshots or visuals that you feel may be important.",
+    "ISSUE_HINT": "Please provide a brief sentence summarizing the problem e.g. “Cancelling a file copy dialog crashes the file manager” and detailed description of the problem. For example: “I was redirected to an error page after attempting to login with valid credentials”. Include any known steps that may help us reproduce the problem. Add any screenshots or visuals that you feel may be important.",
+    "SUBJECT_INPUT": "Subject",
+    "MESSAGE_INPUT": "Message",
+    "ATTACHMENTS_INPUT": "Attachments (optional)",
+    "ATTACHMENTS_HINT": "Maximum of 3 files or with a maximum of ~4MB of total size.",
+    "ATTACHMENTS_BTN": "Browse Files",
+    "REPORT_BTN": "Report",
+    "TABLE_HEADER_FILENAME": "Filename",
+    "TABLE_HEADER_ACTIONS": "Actions",
+    "ERROR_RESPONSE": "Cannot submit the report, try again later.",
+    "SUCCESS_RESPONSE": "Successfully reported!",
+    "TIP_SUBJECT": "Invalid subject!",
+    "TIP_MESSAGE": "Invalid message!",
+    "TIP_ATTACHMENTS": "Invalid attachments"
+  },
+  "standard": "Standard",
+  "qa": "Quality",
+  "sales": "Sales",
+  "pm": "PM",
+  "staff": "Staff",
+  "portfolio-manager": "Portfolio Manager"
+}

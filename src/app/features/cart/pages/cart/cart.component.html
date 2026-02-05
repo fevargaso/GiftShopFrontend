@@ -1,0 +1,63 @@
+<div *ngIf="cartItems.length === 0" class="empty-cart-container">
+  <div class="empty-card">
+    <h2>Tu carrito de Gift Shop está vacío.</h2>
+    <button nz-button nzType="primary" routerLink="/home">Ir a comprar productos</button>
+  </div>
+</div>
+
+<div *ngIf="cartItems.length > 0" class="amazon-cart-wrapper">
+  
+  <div class="cart-left-column">
+    <div class="cart-header">
+      <h1>Carrito de compras</h1>
+      <span class="price-header">Precio</span>
+    </div>
+
+    <div class="cart-item" *ngFor="let item of cartItems">
+      <div class="item-image">
+        <img [src]="item.product.imageUrl || 'assets/logo.png'" [alt]="item.product.name" />
+      </div>
+
+      <div class="item-details">
+        <h3>{{ item.product.description }}</h3>
+        <p class="category-tag">{{ item.product.categoryName }}</p>
+        <p class="stock-status">Disponible</p>
+        
+        <div class="item-actions">
+          <div class="quantity-box">
+            <button (click)="decrease(item)">−</button>
+            <span class="qty-val">{{ item.quantity }}</span>
+            <button (click)="increase(item)">+</button>
+          </div>
+          <span class="divider">|</span>
+          <button class="link-action delete" (click)="remove(item.product.id)">Eliminar</button>
+          <span class="divider">|</span>
+
+        </div>
+      </div>
+
+      <div class="item-price">
+        <strong>${{ item.product.price | number:'1.2-2' }}</strong>
+      </div>
+    </div>
+
+    <div class="cart-footer">
+      <button nz-button nzType="default" (click)="clear()" class="btn-clear">Vaciar carrito</button>
+      <p class="subtotal-text">
+        Subtotal ({{ cartItems.length }} productos): <strong>${{ getTotal() | number:'1.2-2' }}</strong>
+      </p>
+    </div>
+  </div>
+
+  <aside class="cart-right-column">
+    <div class="checkout-card">
+      <p class="checkout-subtotal">
+        Subtotal ({{ cartItems.length }} productos): 
+        <span class="main-total">${{ getTotal() | number:'1.2-2' }}</span>
+      </p>
+      <button nz-button nzType="primary" nzBlock class="amazon-orange-btn">
+        Proceder al pago
+      </button>
+    </div>
+  </aside>
+</div>

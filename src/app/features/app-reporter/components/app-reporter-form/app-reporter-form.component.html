@@ -1,0 +1,188 @@
+<form
+  id="frm_report"
+  [formGroup]="form"
+  (ngSubmit)="handleSubmit()"
+  autocomplete="off"
+  class="text-center border border-light p-5"
+>
+  <h3 id="lbl_report_title">
+    {{ title }}
+  </h3>
+
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <p class="mb-4" id="lbl_report_hint">
+        {{ hint }}
+      </p>
+    </div>
+
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label
+          id="lbl_subject"
+          nzRequired
+          nzFor="txt_subject"
+          [nzSm]="4"
+          [nzXs]="24"
+        >
+          {{ 'AppReporter.SUBJECT_INPUT' | translate }}
+        </nz-form-label>
+        <nz-form-control
+          [nzSm]="19"
+          [nzXs]="24"
+          [nzErrorTip]="'AppReporter.TIP_SUBJECT' | translate"
+        >
+          <input
+            id="txt_subject"
+            nz-input
+            formControlName="subject"
+            [maxLength]="100"
+            [placeholder]="'AppReporter.SUBJECT_INPUT'| translate" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label
+          id="lbl_message"
+          nzRequired
+          nzFor="txt_message"
+          [nzSm]="4"
+          [nzXs]="24"
+        >
+          {{ 'AppReporter.MESSAGE_INPUT' | translate }}
+        </nz-form-label>
+        <nz-form-control
+          [nzSm]="19"
+          [nzXs]="24"
+          [nzErrorTip]="'AppReporter.TIP_MESSAGE' | translate"
+        >
+          <nz-textarea-count [nzMaxCharacterCount]="512">
+            <textarea
+              id="txt_message"
+              formControlName="message"
+              rows="3"
+              [nzAutosize]="{ minRows: 1, maxRows: 1 }"
+              [maxLength]="512"
+              [placeholder]="'AppReporter.MESSAGE_INPUT'| translate"
+              nz-input
+            ></textarea>
+          </nz-textarea-count>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label
+          for="btn_attachments"
+          id="lbl_attachments"
+          [nzSm]="4"
+          [nzXs]="24"
+        >
+          {{ 'AppReporter.ATTACHMENTS_INPUT' | translate }}
+        </nz-form-label>
+        <nz-form-control
+          id="ctn_attachments"
+          [nzSm]="19"
+          [nzXs]="24"
+          [nzErrorTip]="'AppReporter.TIP_ATTACHMENTS' | translate"
+        >
+          <ngx-file-drop
+            (onFileDrop)="handleAddAttachment($event)"
+            [multiple]="true"
+            [accept]="'.png,.jpg,.jpeg,.tiff,.gif'"
+            [disabled]="files.length >= MAX_ATTACHEMENTS"
+          >
+            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+              {{ 'AppReporter.ATTACHMENTS_HINT' | translate }}
+              <button
+                id="btn_attachments"
+                nz-button
+                nzType="dashed"
+                style="margin-left: 10px"
+                type="button"
+                (click)="openFileSelector()"
+                [disabled]="files.length >= MAX_ATTACHEMENTS"
+              >
+                {{ 'AppReporter.ATTACHMENTS_BTN' | translate }}
+              </button>
+            </ng-template>
+          </ngx-file-drop>
+
+          <div
+            style="margin-top: 15px"
+            *ngIf="files.length > 0"
+          >
+            <nz-table
+              id="tbl_attachments"
+              #attachmentsTable
+              [nzData]="files"
+              [nzShowPagination]="false"
+              [nzSize]="'small'"
+            >
+              <thead>
+                <tr>
+                  <th id="lbl_attachment_name">
+                    {{ 'AppReporter.TABLE_HEADER_FILENAME' | translate }}
+                  </th>
+                  <th id="lbl_actions">
+                    {{ 'AppReporter.TABLE_HEADER_ACTIONS' | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="upload-name-style">
+                <tr *ngFor="let item of attachmentsTable.data; let i = index">
+                  <td id="ctn_attachment_name">
+                    <strong>{{ item.relativePath }}</strong>
+                  </td>
+                  <td>
+                    <button
+                      id="btn_remove_attachment"
+                      nz-button
+                      nzType="default"
+                      nzDanger
+                      nzShape="circle"
+                      nzSize="small"
+                      type="button"
+                      (click)="handleRemoveAttachment(item)"
+                    >
+                      <span nz-icon nzType="close" nzTheme="outline"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row class="pb-2">
+    <div>
+      <button
+        id="btn_report"
+        nz-button
+        nzType="primary"
+        [disabled]="!form.valid || isSubmiting"
+        [nzLoading]="isSubmiting"
+      >
+        {{ 'AppReporter.REPORT_BTN' | translate }}
+      </button>
+    </div>
+
+    <div class="px-2">
+      <button
+        id="btn_go_back_apps"
+        nz-button
+        type="button"
+        nzType="default"
+        (click)="handleCancel()"
+      >
+        {{ 'General.CANCEL' | translate }}
+      </button>
+    </div>
+  </div>
+</form>
