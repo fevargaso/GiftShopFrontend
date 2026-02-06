@@ -142,3 +142,25 @@ nz-footer {
   text-align: center;
   background-color: var(--color-background) !important;
 }
+
+.cart-item-img {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    max-width: 60px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #f8f9fa !important;
+    border-radius: 10px !important;
+    border: 1px solid #eee !important;
+}
+
+.cart-item-img img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    display: block !important;
+}
