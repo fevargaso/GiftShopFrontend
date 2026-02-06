@@ -39,38 +39,32 @@
         Ver todos los productos <span nz-icon nzType="arrow-right"></span>
       </button>
     </div>
-    
+
     <div class="product-grid">
       @for (product of products; track product.id) {
-        <div class="product-card-premium">
-          <div class="img-box" (click)="verDetalle(product)">
-            <img [src]="product.imageUrl || 'assets/logo.png'" />
-          </div>
-          <div class="info-box">
-            <div class="rating-box">
-              <span class="stars">★★★★★</span>
-              <span class="reviews">1,240</span>
-            </div>
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-price">${{ product.price | number:'1.0-0' }}</p>
-            <button nz-button class="btn-add-cart" (click)="addToCart(product)">
-              Add to cart
-            </button>
-          </div>
+      <div class="product-card-premium">
+        <div class="img-box" (click)="verDetalle(product)">
+          <img [src]="product.imageUrl || 'assets/logo.png'" />
         </div>
+        <div class="info-box">
+          <div class="rating-box">
+            <span class="stars">★★★★★</span>
+            <span class="reviews">1,240</span>
+          </div>
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-price">${{ product.price | number:'1.0-0' }}</p>
+          <button nz-button class="btn-add-cart" (click)="addToCart(product)">
+            Add to cart
+          </button>
+        </div>
+      </div>
       }
     </div>
   </div>
 
-  <nz-drawer 
-    [nzVisible]="isCartVisible" 
-    nzPlacement="right" 
-    [nzTitle]="drawerTitle"
-    [nzClosable]="false" 
-    [nzMaskClosable]="true"
-    (nzOnCancel)="closeCart()"
-    [nzWidth]="400">
-    
+  <nz-drawer [nzVisible]="isCartVisible" nzPlacement="right" [nzTitle]="drawerTitle" [nzClosable]="false"
+    [nzMaskClosable]="true" (nzOnCancel)="closeCart()" [nzWidth]="400">
+
     <ng-template #drawerTitle>
       <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
         <span style="font-weight: 800; font-size: 1.2rem;">Tu Carrito</span>
@@ -84,39 +78,39 @@
       <div style="display: flex; flex-direction: column; height: 100%;">
         <div style="flex: 1; overflow-y: auto; padding: 10px 0;">
           @if (cartItems.length === 0) {
-            <div style="text-align: center; margin-top: 50px; color: #999;">
-              <span nz-icon nzType="shopping-cart" style="font-size: 60px; opacity: 0.3;"></span>
-              <p style="margin-top: 15px;">Tu carrito está vacío</p>
-            </div>
+          <div style="text-align: center; margin-top: 50px; color: #999;">
+            <span nz-icon nzType="shopping-cart" style="font-size: 60px; opacity: 0.3;"></span>
+            <p style="margin-top: 15px;">Tu carrito está vacío</p>
+          </div>
           }
-          
+
           @for (item of cartItems; track item.product.id) {
-<div class="cart-item-premium">
-  <div class="cart-item-img">
-    <img [src]="item.product.imageUrl || 'assets/logo.png'">
-  </div>
-  
-  <div class="cart-item-info">
-    <span class="cart-item-name">{{ item.product.name }}</span>
-    <span class="cart-item-price">${{ item.product.price | number }}</span>
-    
-<div class="quantity-pill-modern">
-  <button *ngIf="item.quantity === 1" class="btn-qty-action" (click)="removeFromCart(item.product.id)">
-    <span nz-icon nzType="delete"></span>
-  </button>
+          <div class="cart-item-premium">
+            <div class="cart-item-img">
+              <img [src]="item.product.imageUrl || 'assets/logo.png'">
+            </div>
 
-  <button *ngIf="item.quantity > 1" class="btn-qty-action" (click)="decreaseQuantity(item)">
-    <span nz-icon nzType="minus"></span>
-  </button>
+            <div class="cart-item-info">
+              <span class="cart-item-name">{{ item.product.name }}</span>
+              <span class="cart-item-price">${{ item.product.price | number }}</span>
 
-  <span class="qty-num">{{ item.quantity }}</span>
+              <div class="quantity-pill-modern">
+                <button *ngIf="item.quantity === 1" class="btn-qty-action" (click)="removeFromCart(item.product.id)">
+                  <span nz-icon nzType="delete"></span>
+                </button>
 
-  <button class="btn-qty-action" (click)="increaseQuantity(item)">
-    <span nz-icon nzType="plus"></span>
-  </button>
-</div>
-  </div>
-</div>
+                <button *ngIf="item.quantity > 1" class="btn-qty-action" (click)="decreaseQuantity(item)">
+                  <span nz-icon nzType="minus"></span>
+                </button>
+
+                <span class="qty-num">{{ item.quantity }}</span>
+
+                <button class="btn-qty-action" (click)="increaseQuantity(item)">
+                  <span nz-icon nzType="plus"></span>
+                </button>
+              </div>
+            </div>
+          </div>
           }
         </div>
 

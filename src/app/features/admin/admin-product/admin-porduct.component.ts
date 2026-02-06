@@ -62,7 +62,10 @@ currentProduct: Partial<Product> = this.resetProduct();
     };
     this.productService.getProducts(params).subscribe(res => {
       this.products = res.items || [];
-      this.totalItems = res.totalCount || 0;
+      this.totalItems = res.totalItems ?? res.totalCount ?? 0;
+
+      this.pageIndex = res.page ?? this.pageIndex;
+      this.pageSize = res.pageSize ?? this.pageSize;
     });
   }
 
