@@ -4,6 +4,7 @@ import { ProductService } from '@app/core/services/product.services';
 import { CartService } from '@app/core/services/cart.services';
 import { SharedModule } from '@app/shared/shared.module';
 import { Router } from '@angular/router';
+import { CartItem } from '@app/core/models/cart-item.model';
 
 @Component({
   selector: 'app-home',
@@ -13,32 +14,30 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+
   private readonly productsService = inject(ProductService);
-  public cartService = inject(CartService);
-  private router = inject(Router);
+  public readonly cartService = inject(CartService);
+  private readonly router = inject(Router);
+
   products: Product[] = [];
   isCartVisible = false;
 
-  get cartItems() {
-    return this.cartService.items || [];
+  get cartItems(): CartItem[] {
+    return this.cartService.items;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.productsService.getProducts({ page: 1, pageSize: 10 }).subscribe({
-      next: (result) => {
-        this.products = (result.items || []).slice(0, 6);
+      next: result => {
+        this.products = (result.items ?? []).slice(0, 6);
       },
-      error: (err) => {
-        console.error('Error getting products: ', err);
-      }
+      error: err => console.error('Error getting products:', err)
     });
   }
 
   scrollToProducts(): void {
-    const element = document.getElementById('products-target');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById('products-target')
+      ?.scrollIntoView({ behavior: 'smooth' });
   }
 
   goToProductsPage(): void {
@@ -49,55 +48,46 @@ export class HomeComponent implements OnInit {
     this.isCartVisible = true;
   }
 
-  increaseQuantity(item: any): void {
-  item.quantity++;
-}
-
-decreaseQuantity(item: any): void {
-  if (item.quantity > 1) {
-    item.quantity--;
-  } else {
-    this.removeFromCart(item.product.id);
-  }
-}
-
-  verDetalle(producto: any): void {
-    this.router.navigate(['/product-detail', producto.id], { 
-      state: { product: producto } 
-    });
-  }
-
   closeCart(): void {
     this.isCartVisible = false;
   }
 
   handleVisibleChange(visible: boolean): void {
-  this.isCartVisible = visible;
-}
+    this.isCartVisible = visible;
+  }
 
   addToCart(product: Product): void {
     this.cartService.addToCartProduct(product);
   }
 
-removeFromCart(productId: any): void {
-  const index = this.cartItems.findIndex((item: any) => item.product.id === productId);
-  if (index !== -1) {
-    this.cartItems.splice(index, 1);
+  increaseQuantity(item: CartItem): void {
+    this.cartService.increaseQuantity(item.product.id);
   }
-}
+
+  decreaseQuantity(item: CartItem): void {
+    this.cartService.decreaseQuantity(item.product.id);
+  }
+
+  removeFromCart(productId: string): void {
+    this.cartService.removeFromCart(productId);
+  }
 
   goToCartPage(): void {
-  this.closeCart(); 
-  this.router.navigate(['/cart']); 
-}
+    this.closeCart();
+    this.router.navigate(['/cart']);
+  }
 
-calculateTotal(): number {
-   const items = this.cartService.items;
-    if (!items || items.length === 0) return 0;
-    return items.reduce((acc, item) => {
-      const price = item.product?.price || 0;
-      const qty = item.quantity || 1;
-      return acc + (price * qty);
-    }, 0);
-}
+  calculateTotal(): number {
+    return this.cartItems.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
+    );
+  }
+
+  verDetalle(product: Product): void {
+    this.router.navigate(
+      ['/product-detail', product.id],
+      { state: { product } }
+    );
+  }
 }

@@ -38,12 +38,9 @@ ngOnInit(): void {
   }
 }
 
-  addToCart(): void {
-    if (this.product) {
-      this.cartService.addToCart({
-        product: this.product,
-        quantity: 1
-      });
-    }
+addToCart(): void {
+  if (this.product) {
+    this.cartService.addToCartProduct(this.product);
   }
+}
 }

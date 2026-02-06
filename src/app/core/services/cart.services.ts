@@ -8,15 +8,28 @@ import { NotificationUtilService } from '../utils/notification-util.service';
   providedIn: 'root',
 })
 export class CartService {
+  private storageKey = 'giftshop_cart';
   private cartItems: CartItem[] = [];
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
+
   cart$ = this.cartSubject.asObservable();
 
-  get items(): CartItem[] {
-    return this.cartItems;
+  constructor(private notification: NotificationUtilService) {
+    this.loadCart();
   }
 
-  constructor(private notification: NotificationUtilService) {}
+  private loadCart(): void {
+    const saved = localStorage.getItem(this.storageKey);
+    if (saved) {
+      this.cartItems = JSON.parse(saved);
+      this.cartSubject.next(this.cartItems);
+    }
+  }
+
+  private saveCart(): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.cartItems));
+    this.cartSubject.next(this.cartItems);
+  }
 
   addToCartProduct(product: Product): void {
     const item = this.cartItems.find(
@@ -34,12 +47,7 @@ export class CartService {
       this.notification.success('Producto agregado al carrito ✅');
     }
 
-    this.cartSubject.next(this.cartItems);
-  }
-
-    addToCart(item: CartItem) {
-    const current = this.cartSubject.value;
-    this.cartSubject.next([...current, item]);
+    this.saveCart();
   }
 
   increaseQuantity(productId: string): void {
@@ -50,7 +58,7 @@ export class CartService {
     if (!item) return;
 
     item.quantity++;
-    this.cartSubject.next(this.cartItems);
+    this.saveCart();
   }
 
   decreaseQuantity(productId: string): void {
@@ -66,7 +74,7 @@ export class CartService {
     }
 
     item.quantity--;
-    this.cartSubject.next(this.cartItems);
+    this.saveCart();
   }
 
   removeFromCart(productId: string): void {
@@ -75,12 +83,21 @@ export class CartService {
     );
 
     this.notification.warn('Producto eliminado del carrito');
-    this.cartSubject.next(this.cartItems);
+    this.saveCart();
   }
 
   clearCart(): void {
     this.cartItems = [];
     this.notification.info('Carrito vacío');
-    this.cartSubject.next(this.cartItems);
+    this.saveCart();
+  }
+
+  getTotal(): number {
+    return this.cartItems
+      .reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  }
+
+    get items(): CartItem[] {
+    return this.cartItems;
   }
 }
