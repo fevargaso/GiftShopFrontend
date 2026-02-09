@@ -1,7 +1,7 @@
 <div *ngIf="cartItems.length === 0" class="empty-cart-container">
   <div class="empty-card">
-    <h2>Tu carrito de Gift Shop está vacío.</h2>
-    <button nz-button nzType="primary" routerLink="/home">Ir a comprar productos</button>
+    <h2>Your Pinnacle Cart is empty.</h2>
+    <button nz-button nzType="primary" routerLink="/home">Go to products</button>
   </div>
 </div>
 
@@ -9,8 +9,8 @@
   
   <div class="cart-left-column">
     <div class="cart-header">
-      <h1>Carrito de compras</h1>
-      <span class="price-header">Precio</span>
+      <h1>Shopping cart</h1>
+      <span class="price-header">Price</span>
     </div>
 
     <div class="cart-item" *ngFor="let item of cartItems">
@@ -21,7 +21,7 @@
       <div class="item-details">
         <h3>{{ item.product.description }}</h3>
         <p class="category-tag">{{ item.product.categoryName }}</p>
-        <p class="stock-status">Disponible</p>
+        <p class="stock-status">Available</p>
         
         <div class="item-actions">
           <div class="quantity-box">
@@ -30,7 +30,7 @@
             <button (click)="increase(item)">+</button>
           </div>
           <span class="divider">|</span>
-          <button class="link-action delete" (click)="remove(item.product.id)">Eliminar</button>
+          <button class="link-action delete" (click)="remove(item.product.id)">Remove</button>
           <span class="divider">|</span>
 
         </div>
@@ -42,9 +42,9 @@
     </div>
 
     <div class="cart-footer">
-      <button nz-button nzType="default" (click)="clear()" class="btn-clear">Vaciar carrito</button>
+      <button nz-button nzType="default" (click)="clear()" class="btn-clear">Clear cart</button>
       <p class="subtotal-text">
-        Subtotal ({{ cartItems.length }} productos): <strong>${{ getTotal() | number:'1.2-2' }}</strong>
+        Subtotal ({{ cartItems.length }} products): <strong>${{ getTotal() | number:'1.2-2' }}</strong>
       </p>
     </div>
   </div>
@@ -52,11 +52,11 @@
   <aside class="cart-right-column">
     <div class="checkout-card">
       <p class="checkout-subtotal">
-        Subtotal ({{ cartItems.length }} productos): 
+        Subtotal ({{ cartItems.length }} products): 
         <span class="main-total">${{ getTotal() | number:'1.2-2' }}</span>
       </p>
       <button nz-button nzType="primary" nzBlock class="amazon-orange-btn">
-        Proceder al pago
+        Proceed to Buy
       </button>
     </div>
   </aside>

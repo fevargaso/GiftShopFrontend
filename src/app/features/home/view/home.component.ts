@@ -84,9 +84,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  verDetalle(product: Product): void {
+  seeDetails(product: Product): void {
     this.router.navigate(
-      ['/product-detail', product.id],
+      ['/products', product.id],
       { state: { product } }
     );
   }

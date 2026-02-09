@@ -32,7 +32,7 @@ ngOnInit(): void {
     if (id) {
       this.productService.getById(id).subscribe({
         next: (res) => this.product = res,
-        error: (err) => console.error('Error al cargar el detalle', err)
+        error: (err) => console.error('Error loading details', err)
       });
     }
   }

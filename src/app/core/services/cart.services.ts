@@ -38,13 +38,12 @@ export class CartService {
 
     if (item) {
       item.quantity++;
-      this.notification.info('Cantidad actualizada en el carrito 🛒');
     } else {
       this.cartItems.push({
         product,
         quantity: 1
       });
-      this.notification.success('Producto agregado al carrito ✅');
+      this.notification.success('Product added to cart');
     }
 
     this.saveCart();
@@ -82,13 +81,13 @@ export class CartService {
       i => i.product.id !== productId
     );
 
-    this.notification.warn('Producto eliminado del carrito');
+    this.notification.warn('Product removed from cart');
     this.saveCart();
   }
 
   clearCart(): void {
     this.cartItems = [];
-    this.notification.info('Carrito vacío');
+    this.notification.info('Cart cleared');
     this.saveCart();
   }
 

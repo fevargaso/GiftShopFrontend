@@ -64,11 +64,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
 loadProducts() {
   this.productService.getProducts(this.params).subscribe({
     next: (res: any) => {
-      console.log('Productos cargados:', res);
       this.products = res.items || []; 
       this.totalItems = res.totalItems ?? res.totalCount ?? 0;
     },
-    error: (err) => console.error('Error cargando productos', err)
+    error: (err) => console.error('Error loading products', err)
   });
 }
 

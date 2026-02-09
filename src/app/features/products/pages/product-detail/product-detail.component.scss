@@ -5,7 +5,6 @@
 
   .detail-grid {
     display: grid;
-    // 1fr para imagen, 2fr para info, 300px fijos para la caja de compra
     grid-template-columns: 1fr 1.5fr 300px;
     gap: 40px;
   }
@@ -13,7 +12,7 @@
   .image-viewer img {
     width: 100%;
     max-height: 500px;
-    object-fit: contain; // Para que no se deformen los productos
+    object-fit: contain;
   }
 
   .title {
@@ -23,7 +22,7 @@
   }
 
   .price-section .price {
-    color: #B12704; // Rojo Amazon
+    color: #B12704;
     font-size: 21px;
     margin-left: 10px;
   }
@@ -38,25 +37,24 @@
     .stock-status { color: #007600; font-weight: bold; }
 
     .cart-btn {
-      background-color: #ffd814;
-      border-color: #fcd200;
+      background-color: #1890ff;
+      border-color: #1890ff;
       color: #0f1111;
       border-radius: 20px;
       margin-bottom: 10px;
-      &:hover { background-color: #f7ca00; }
+      &:hover { background-color: #ddd; }
     }
 
     .buy-now-btn {
-      background-color: #ffa41c;
-      border-color: #ff8f00;
+      background-color: #1890ff;
+      border-color: #1890ff;
       color: #0f1111;
       border-radius: 20px;
-      &:hover { background-color: #f5961d; }
+      &:hover { background-color: #ddd; }
     }
   }
 }
 
-// Responsivo: En tablets/celulares pasamos a 1 sola columna
 @media (max-width: 992px) {
   .product-container .detail-grid {
     grid-template-columns: 1fr;

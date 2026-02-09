@@ -77,7 +77,7 @@ currentProduct: Partial<Product> = this.resetProduct();
   loadCategories() {
   this.categoryService.getAll().subscribe({
     next: (res) => this.categories = res,
-    error: (err) => console.error('Error cargando categorías', err)
+    error: (err) => console.error('Error loading categories', err)
   });
 }
 
@@ -117,18 +117,18 @@ handleOk(): void {
   if (this.isEdit) {
     this.productService.update(this.currentProduct.id!, this.currentProduct).subscribe({
       next: () => {
-        this.message.success('Producto actualizado');
+        this.message.success('Product updated');
         this.finalizeOperation();
       },
-      error: (err) => this.message.error('Error al actualizar')
+      error: (err) => this.message.error('Error updating product')
     });
   } else {
     this.productService.create(this.currentProduct).subscribe({
       next: (newId) => {
-        this.message.success('Producto creado');
+        this.message.success('Product created');
         this.finalizeOperation();
       },
-      error: (err) => this.message.error('Error al crear')
+      error: (err) => this.message.error('Error creating product')
     });
   }
 }
@@ -156,18 +156,18 @@ private resetProduct() {
 
   handleCategoryOk(): void {
     if (!this.newCategory.name) {
-      this.message.warning('El nombre de la categoría es obligatorio');
+      this.message.warning('The category name is required');
       return;
     }
 
     this.categoryService.create(this.newCategory).subscribe({
       next: () => {
-        this.message.success('Categoría creada correctamente');
+        this.message.success('Category created successfully');
         this.isCategoryVisible = false;
         this.loadCategories(); 
       },
       error: (err) => {
-        this.message.error('Error al crear la categoría');
+        this.message.error('Error creating category');
         console.error(err);
       }
     });
@@ -180,12 +180,12 @@ private resetProduct() {
 
   deleteProduct(id: string) { 
     this.modal.confirm({
-      nzTitle: '¿Estás seguro de eliminar este producto?',
-      nzOkText: 'Eliminar',
+      nzTitle: 'Are you sure you want to delete this product?',
+      nzOkText: 'Delete',
       nzOkDanger: true,
       nzOnOk: () => {
         this.productService.delete(id).subscribe(() => {
-          this.message.info('Producto eliminado');
+          this.message.info('Product deleted');
           this.loadProducts();
         });
       }

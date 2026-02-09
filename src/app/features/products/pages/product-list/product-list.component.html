@@ -5,7 +5,7 @@
         <input 
           type="text" 
           nz-input 
-          placeholder="Buscar en GiftShop..." 
+          placeholder="Search ..." 
           [(ngModel)]="params.search" 
           (ngModelChange)="onFilterChange()" 
         />
@@ -21,8 +21,8 @@
   <main class="content-layout">
     <div class="results-info" *ngIf="products && products.length > 0">
       <span>
-        {{ totalItems }} resultados para 
-        <strong class="orange-text">"{{ params.search || 'Todos los productos' }}"</strong>
+        {{ totalItems }} results for 
+        <strong class="orange-text">"{{ params.search || 'All products' }}"</strong>
       </span>
     </div>
 
@@ -30,7 +30,7 @@
       <div *ngFor="let product of products" class="amazon-list-item" [routerLink]="['/products', product.id]">
         
         <div class="img-wrapper">
-          <span class="best-seller" *ngIf="product.price > 2000">Más vendido</span>
+          <span class="best-seller" *ngIf="product.price > 10000">Best seller</span>
           <img 
     [src]="product.imageUrl || 'assets/logo.png'" 
     [alt]="product.name"
@@ -43,7 +43,7 @@
             <h2 class="item-title">{{ product.description || product.name }}</h2>
             <div class="stars-row">
               <span class="stars">★★★★☆</span>
-              <span class="review-count">245 reseñas</span>
+              <span class="review-count">245 reviews</span>
             </div>
           </div>
           
@@ -61,9 +61,9 @@
 
     <ng-template #emptyState>
       <div class="no-results">
-        <img src="assets/logo.png" alt="No resultados" class="empty-img">
-        <h3>¿No encuentras lo que buscas?</h3>
-        <p>Intenta revisar la ortografía o usa términos más generales.</p>
+        <img src="assets/logo.png" alt="No results" class="empty-img">
+        <h3>Can't find what you're looking for?</h3>
+        <p>Try checking the spelling or using more general terms.</p>
       </div>
     </ng-template>
 

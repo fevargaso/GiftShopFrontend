@@ -1,11 +1,11 @@
 .amazon-cart-wrapper {
   display: grid;
-  grid-template-columns: 1fr 300px; // Proporción tipo Amazon
+  grid-template-columns: 1fr 300px;
   gap: 20px;
   padding: 20px;
   max-width: 1250px;
   margin: 0 auto;
-  background-color: #f0f2f2; // Fondo gris claro sutil
+  background-color: #f0f2f2; 
   font-family: 'Arial', sans-serif;
 
   .cart-left-column {
@@ -96,7 +96,6 @@
   }
 }
 
-// Estilo para carrito vacío
 .empty-cart-container {
   padding: 50px;
   background-color: #f0f2f2;
