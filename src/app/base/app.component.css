@@ -236,6 +236,23 @@ li:focus(:focus-visible) {
   background-color: var(--color-gray1);
 }
 
+.floating-cart-trigger {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.cart-btn {
+  width: 60px !important;
+  height: 60px !important;
+  font-size: 24px !important;
+  background-color: #118ab2 !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
 @media (max-width: 970px) {
   .header-menu {
     display: none;

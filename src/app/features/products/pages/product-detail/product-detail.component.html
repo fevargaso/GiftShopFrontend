@@ -1,35 +1,50 @@
-<div class="product-container" *ngIf="product">
-  <div class="detail-grid">
-<div class="image-viewer">
-  <img [src]="product.imageUrl || 'assets/products/play5slim.png'" 
-       [alt]="product.name"
-       (error)="$any($event.target).src = 'assets/logo.png'">
-</div>
-    <div class="product-info">
-      <h1 class="title">{{ product.description }}</h1>
-      <p class="brand">Category: <a>{{ product.name }}</a></p>
-      
-      <hr>
-      
+<div class="page-wrapper" *ngIf="product">
 
+  <div class="detail-card">
 
-      <div class="description-section">
-        <h3>About this article</h3>
-        <p>{{ product.description }}</p>
+    <h2 class="header-title">Product detail</h2>
+    <hr />
+
+    <div class="detail-grid">
+
+      <!-- BLOQUE DE IMAGEN -->
+      <div class="image-box">
+        <img 
+          [src]="product.imageUrl || 'assets/products/play5slim.png'"
+          [alt]="product.name" />
       </div>
-    </div>
 
-    <aside class="purchase-card">
-      <div class="price-big">${{ product.price | number:'1.2-2' }}</div>
-      <p class="stock-status">Available</p>
-      
-      <button nz-button nzType="primary" nzBlock (click)="addToCart()" class="cart-btn">
-        Add to cart
-      </button>
-      
-      <button nz-button nzBlock class="buy-now-btn" routerLink="/cart">
-        Buy now
-      </button>
-    </aside>
+      <!-- BLOQUE DE INFORMACIÓN -->
+      <div class="info-box">
+        <h1 class="title">{{ product.description }}</h1>
+
+        <p class="brand">
+          Category: <a>{{ product.categoryName }}</a>
+        </p>
+
+        <hr />
+
+        <div class="description-section">
+          <h3>About this article</h3>
+          <p>{{ product.description }}</p>
+        </div>
+      </div>
+
+      <!-- BLOQUE DE COMPRA (tipo carrito) -->
+      <aside class="purchase-card">
+        <div class="price-big">${{ product.price | number:'1.2-2' }}</div>
+        <p class="stock-status">Available</p>
+
+        <button nz-button nzType="primary" nzBlock (click)="addToCart()" class="cart-btn">
+          Add to cart
+        </button>
+
+        <button nz-button nzBlock routerLink="/cart" class="buy-now-btn">
+          Buy now
+        </button>
+      </aside>
+
+    </div>
   </div>
+
 </div>

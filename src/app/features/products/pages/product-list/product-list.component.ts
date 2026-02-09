@@ -7,20 +7,21 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { CartService } from '@app/core/services/cart.services';
 
 @Component({
   standalone: true,
   selector: 'app-product-list',
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule,
-    RouterModule, 
-    ProductCardComponent, 
-    NzSelectModule, 
+    RouterModule,
+    ProductCardComponent,
+    NzSelectModule,
     NzInputModule,
     NzPaginationModule,
     NzIconModule
@@ -29,9 +30,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
+
   products: Product[] = [];
   totalItems = 0;
-  
+
+  viewMode: 'list' = 'list';
+
   private searchSubject = new Subject<string>();
   private searchSubscription?: Subscription;
 
@@ -42,13 +46,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
     pageSize: 9
   };
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
 
     this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(400), 
+      debounceTime(400),
       distinctUntilChanged()
     ).subscribe(searchText => {
       this.params.search = searchText;
@@ -61,23 +69,29 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.searchSubscription?.unsubscribe();
   }
 
-loadProducts() {
-  this.productService.getProducts(this.params).subscribe({
-    next: (res: any) => {
-      this.products = res.items || []; 
-      this.totalItems = res.totalItems ?? res.totalCount ?? 0;
-    },
-    error: (err) => console.error('Error loading products', err)
-  });
-}
+  loadProducts(): void {
+    this.productService.getProducts(this.params).subscribe({
+      next: (res: any) => {
+        this.products = res.items || [];
+        this.totalItems = res.totalItems ?? res.totalCount ?? 0;
+      },
+      error: err => console.error('Error loading products', err)
+    });
+  }
 
-  onFilterChange() {
+  onFilterChange(): void {
     this.searchSubject.next(this.params.search);
   }
 
-  onPageChange(page: number) {
+  onPageChange(page: number): void {
     this.params.page = page;
     this.loadProducts();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  goToDetail(product: Product): void {
+    this.router.navigate(['/products', product.id], {
+      state: { product }
+    });
   }
 }

@@ -1,0 +1,70 @@
+<nz-drawer
+  [nzVisible]="isCartVisible"
+  nzPlacement="right"
+  [nzTitle]="drawerTitle"
+  [nzClosable]="false"
+  [nzMaskClosable]="true"
+  (nzOnCancel)="closeCart()"
+  [nzWidth]="400">
+
+  <ng-template #drawerTitle>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <span style="font-weight: 800; font-size: 1.2rem;">Your Cart</span>
+      <button nz-button nzType="text" (click)="closeCart()">
+        <span nz-icon nzType="close" style="font-size: 20px; color: #999;"></span>
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-container *nzDrawerContent>
+    <div style="display: flex; flex-direction: column; height: 100%;">
+      <div style="flex: 1; overflow-y: auto; padding: 10px 0;">
+        @if (cartItems.length === 0) {
+          <div style="text-align: center; margin-top: 50px; color: #999;">
+            <span nz-icon nzType="shopping-cart" style="font-size: 60px; opacity: 0.3;"></span>
+            <p style="margin-top: 15px;">Your cart is empty</p>
+          </div>
+        }
+
+        @for (item of cartItems; track item.product.id) {
+          <div class="cart-item-premium">
+            <div class="cart-item-img">
+              <img [src]="item.product.imageUrl || 'assets/logo.png'">
+            </div>
+
+            <div class="cart-item-info">
+              <span class="cart-item-name">{{ item.product.name }}</span>
+              <span class="cart-item-price">${{ item.product.price | number }}</span>
+
+              <div class="quantity-pill-modern">
+                <button *ngIf="item.quantity === 1" class="btn-qty-action" (click)="removeFromCart(item.product.id)">
+                  <span nz-icon nzType="delete"></span>
+                </button>
+
+                <button *ngIf="item.quantity > 1" class="btn-qty-action" (click)="decreaseQuantity(item)">
+                  <span nz-icon nzType="minus"></span>
+                </button>
+
+                <span class="qty-num">{{ item.quantity }}</span>
+
+                <button class="btn-qty-action" (click)="increaseQuantity(item)">
+                  <span nz-icon nzType="plus"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="cart-footer-premium">
+        <div class="subtotal-row">
+          <span>Subtotal</span>
+          <strong>${{ calculateTotal() | number }}</strong>
+        </div>
+        <button nz-button nzType="primary" nzBlock class="checkout-button" (click)="goToCartPage()">
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</nz-drawer>

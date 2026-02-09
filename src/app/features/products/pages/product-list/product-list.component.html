@@ -1,61 +1,58 @@
 <div class="amazon-container">
+
   <header class="search-header">
     <div class="search-bar-wrapper">
-      <nz-input-group [nzAddOnAfter]="searchButton" nzSize="large">
-        <input 
-          type="text" 
-          nz-input 
-          placeholder="Search ..." 
-          [(ngModel)]="params.search" 
-          (ngModelChange)="onFilterChange()" 
-        />
+      <nz-input-group nzSize="large">
+        <input
+          type="text"
+          nz-input
+          placeholder="Search..."
+          [(ngModel)]="params.search"
+          (ngModelChange)="onFilterChange()" />
       </nz-input-group>
-      <ng-template #searchButton>
-        <div class="search-btn-container" (click)="onFilterChange()">
-          <span nz-icon nzType="search"></span>
-        </div>
-      </ng-template>
     </div>
   </header>
 
   <main class="content-layout">
-    <div class="results-info" *ngIf="products && products.length > 0">
-      <span>
-        {{ totalItems }} results for 
-        <strong class="orange-text">"{{ params.search || 'All products' }}"</strong>
-      </span>
-    </div>
 
-    <div class="amazon-vertical-list" *ngIf="products && products.length > 0; else emptyState">
-      <div *ngFor="let product of products" class="amazon-list-item" [routerLink]="['/products', product.id]">
-        
-        <div class="img-wrapper">
-          <span class="best-seller" *ngIf="product.price > 10000">Best seller</span>
-          <img 
-    [src]="product.imageUrl || 'assets/logo.png'" 
-    [alt]="product.name"
-    class="product-img"
-  >
-        </div>
-        
-        <div class="details-wrapper">
-          <div class="text-content">
-            <h2 class="item-title">{{ product.description || product.name }}</h2>
-            <div class="stars-row">
-              <span class="stars">★★★★☆</span>
-              <span class="review-count">245 reviews</span>
+    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products?.length">
+
+      <div *ngFor="let product of products" class="amazon-list-item">
+
+        <a class="item-link" [routerLink]="['/products', product.id]">
+
+          <div class="img-wrapper">
+
+            <img
+              [src]="product.imageUrl || 'assets/logo.png'"
+              [alt]="product.name"
+              class="product-img"
+            />
+          </div>
+
+          <div class="details-wrapper">
+            <div class="text-content">
+              <h2 class="item-title">
+                {{ product.description || product.name }}
+              </h2>
+
+              <div class="stars-row">
+                <span class="stars">★★★★☆</span>
+                <span class="review-count">245 reviews</span>
+              </div>
+            </div>
+
+            <div class="price-action-side">
+              <div class="price-amazon">
+                <span class="symbol">$</span>
+                <span class="whole">
+                  {{ product.price | number:'1.0-0' }}
+                </span>
+              </div>
             </div>
           </div>
-          
-          <div class="price-action-side">
-            <div class="price-amazon">
-              <span class="symbol">$</span>
-              <span class="whole">{{ product.price | number:'1.0-0' }}</span>
-              <span class="fraction"></span>
-            </div>
-          </div>
-        </div>
-        
+
+        </a>
       </div>
     </div>
 
@@ -67,13 +64,14 @@
       </div>
     </ng-template>
 
-<footer class="pagination-footer" *ngIf="totalItems > params.pageSize">
-  <nz-pagination 
-    [(nzPageIndex)]="params.page" 
-    [nzTotal]="totalItems" 
-    [nzPageSize]="params.pageSize" 
-    (nzPageIndexChange)="onPageChange($event)">
-  </nz-pagination>
-</footer>
+    <footer class="pagination-footer" *ngIf="totalItems > params.pageSize">
+      <nz-pagination
+        [(nzPageIndex)]="params.page"
+        [nzTotal]="totalItems"
+        [nzPageSize]="params.pageSize"
+        (nzPageIndexChange)="onPageChange($event)">
+      </nz-pagination>
+    </footer>
+
   </main>
 </div>

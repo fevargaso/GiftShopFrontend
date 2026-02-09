@@ -1,7 +1,7 @@
 <div *ngIf="cartItems.length === 0" class="empty-cart-container">
   <div class="empty-card">
     <h2>Your Pinnacle Cart is empty.</h2>
-    <button nz-button nzType="primary" routerLink="/home">Go to products</button>
+    <button nz-button nzType="primary" routerLink="/products">Go to products</button>
   </div>
 </div>
 
@@ -42,7 +42,7 @@
     </div>
 
     <div class="cart-footer">
-      <button nz-button nzType="default" (click)="clear()" class="btn-clear">Clear cart</button>
+      <button nz-button nzType="primary" (click)="clear()" class="btn-clear">Clear cart</button>
       <p class="subtotal-text">
         Subtotal ({{ cartItems.length }} products): <strong>${{ getTotal() | number:'1.2-2' }}</strong>
       </p>

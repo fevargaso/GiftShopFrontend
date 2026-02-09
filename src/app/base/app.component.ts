@@ -12,11 +12,13 @@ import { HeaderService } from '../core/services/header.service';
 import { DateTime } from 'luxon';
 import { CartService } from '@app/core/services/cart.services';
 import { CartItem } from '@app/core/models/cart-item.model';
+import { CartDrawerComponent } from '@app/shared/components/cart-drawer/cart-drawer.component';
+import { CartDrawerService } from '@app/core/services/cart-drawer.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SharedModule, SplashScreenComponent],
+  imports: [RouterOutlet, SharedModule, SplashScreenComponent, CartDrawerComponent],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -24,7 +26,8 @@ import { CartItem } from '@app/core/models/cart-item.model';
 export class AppComponent {
   private keycloak = inject(KeycloakService);
   private headerService = inject(HeaderService);
-  private cartService = inject(CartService);
+  public cartService = inject(CartService);
+  public cartDrawerService = inject(CartDrawerService);
   protected readonly store = inject(Store);
 
   protected readonly $user = toSignal<UserState>(this.store.select('user'));
@@ -36,6 +39,13 @@ export class AppComponent {
   protected readonly $cartItems = toSignal(
   this.cartService.cart$,
   { initialValue: [] as CartItem[] }
+);
+
+protected readonly $carrCount = computed(() =>
+  this.$cartItems().reduce(
+    (total, item) => total + item.quantity,
+    0
+  )
 );
   protected readonly showSplash = computed(
     () =>

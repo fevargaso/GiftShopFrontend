@@ -164,3 +164,77 @@ nz-footer {
     object-fit: contain !important;
     display: block !important;
 }
+
+.ant-input-group-wrapper,
+.ant-input-group-wrapper-focused,
+.ant-input-group-wrapper:focus,
+.ant-input-group-wrapper:focus-within {
+  box-shadow: none !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.ant-input-affix-wrapper,
+.ant-input-affix-wrapper-focused,
+.ant-input-affix-wrapper:focus,
+.ant-input-affix-wrapper:focus-within {
+  box-shadow: none !important;
+  outline: none !important;
+  border: none !important;
+}
+
+.ant-input,
+.ant-input:focus,
+.ant-input-focused,
+.ant-input:focus-visible {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.ant-layout-content, 
+.inner-content, 
+nz-content {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.inner-content {
+    padding: 0 !important;
+}
+
+#ctn_content .inner-content {
+    padding: 0 !important; 
+    margin: 0 !important;
+    max-width: 100% !important;
+}
+
+
+.floating-cart-trigger {
+  position: fixed !important;
+  bottom: 30px; 
+  right: 30px;  
+  z-index: 9999; 
+  cursor: pointer;
+}
+
+.cart-btn {
+  width: 64px !important;
+  height: 64px !important;
+  font-size: 26px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-color: #118ab2 !important; 
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.2s ease;
+}
+
+.cart-btn:hover {
+  transform: scale(1.05);
+  background-color: #007799 !important;
+}
+
+.cart-btn span {
+  color: white !important;
+}

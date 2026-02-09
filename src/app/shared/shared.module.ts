@@ -6,8 +6,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [],
-  imports: [AntdModule],
+  imports: [AntdModule, CommonModule, TranslateModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [CommonModule, TranslateModule, RouterModule, FormsModule, ReactiveFormsModule, AntdModule],
 })
 export class SharedModule {}

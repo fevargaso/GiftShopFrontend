@@ -5,200 +5,75 @@
   [error]="'Fatal Error, application no operational! Please contact to IT Team.'" />
 
 <nz-layout class="layout">
-  <nz-layout>
-    <nz-header id="ctn_navbar">
-      <!-- for mobile -->
-      @if (navItems().length > 0) {
-        <div style="height: 100%; display: flex; align-items: center">
-          <button
-            class="menu-horizontal"
-            nzSize="large"
-            nz-button
-            nz-dropdown
-            [nzDropdownMenu]="menu"
-            nzOverlayClassName="menu-horizontal-actions"
-            nzType="primary"
-            nzTrigger="hover"
-          >
-            <span nz-icon nzType="menu" nzTheme="outline"></span>
-          </button>
-
-          <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul
-              id="navigation-bar"
-              nz-menu
-              class="header-menu-horizontal"
-              nzMode="horizontal">
-              <li
-                [id]="item.id"
-                nz-menu-item
-                *ngFor="let item of navItems()"
-                [routerLink]="item.route"
-                [routerLinkActive]="['ant-menu-item-selected']"
-              >
-                <span class="header-menu-horizontal-item typography-body nav-item-text">
-                  {{ item.name | translate }}
-                </span>
-              </li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
-      }
-
-<div
-  class="navbar-cart"
-  nz-dropdown
-  nzTrigger="click"
-  nzPlacement="bottomRight"
-  [nzDropdownMenu]="cartMenu"
->
-  <button
-    nz-button
-    nzType="text"
-    nzShape="circle"
-    nz-tooltip
-    nzTooltipTitle="Carrito"
-  >
-    <nz-badge [nzCount]="$cartCount()" nzShowZero="false">
-      <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
-    </nz-badge>
-  </button>
-</div>
-
-<nz-dropdown-menu #cartMenu="nzDropdownMenu">
-  <div class="mini-cart">
-    @if ($cartItems().length === 0) {
-      <p class="empty-cart">Tu carrito está vacío</p>
-    } @else {
-      <ul class="mini-cart-list">
-        @for (item of $cartItems(); track item.product.id) {
-          <li class="mini-cart-item">
-            <span>{{ item.product.name }}</span>
-            <span>x{{ item.quantity }}</span>
-          </li>
-        }
-      </ul>
-
-      <div class="mini-cart-footer">
-<button nz-button nzType="default" routerLink="/cart">
-  Ver carrito
-</button>
-      </div>
-    }
-  </div>
-</nz-dropdown-menu>
-
-      <img
-        id="img_navbar_logo"
-        class="logo"
-        src="./assets/pinnacle-logo.svg"
-        [alt]="'General.ALT_LOGO' | translate" />
-
-      <ul
-        id="lst_navigation_bar"
-        nz-menu
-        class="nav-background header-menu"
-        nzMode="horizontal"
-      >
-        <li
-          [id]="item.id"
-          nz-menu-item
-          *ngFor="let item of navItems()"
-          class="nav-background"
-          [routerLink]="item.route"
-          [routerLinkActive]="['ant-menu-item-selected']"
-        >
-          <span class="typography-body align nav-item-text">
-            {{ item.name | translate }}
-          </span>
-        </li>
-      </ul>
-
-      <div class="header-space"></div>
-
-      <div
-        class="navbar_left"
-        nz-dropdown
-        [nzDropdownMenu]="menuUser"
-        nzPlacement="bottomRight"
-        nzOverlayClassName="menu-user-actions"
-      >
-        <div class="navbar_left__container">
-          <h6
-            id="lbl_navbar_employee_name"
-            class="navbar_left__container__name"
-          >
-            {{ $name() }}
-          </h6>
-          <span
-            id="lbl_navbar_employee_role"
-            class="navbar_left__container__role"
-          >
-            {{ $role() | translate }}
-          </span>
-        </div>
-        <div class="rounded-circle navbar_left__container__photo">
-          <nz-avatar
-            id="img_avatar"
-            [nzText]="$initials()"
-          ></nz-avatar>
-        </div>
-
-        <nz-dropdown-menu #menuUser="nzDropdownMenu">
-          <ul id="lst_navbar_user_actions" nz-menu>
-            <li
-              id="itm_user_roles"
-              nz-submenu
-              nzMenuClassName="menu-user-roles"
-              [nzTitle]="rolesTpl"
-              *ngIf="$roles() && $roles().length > 1"
-            >
-              <ng-template #rolesTpl>
-                <span nz-icon nzType="user"></span>
-                <span class="user-action-item">
-                  {{ 'General.USER_ROLES' | translate }}
-                </span>
-              </ng-template>
-              <ul id="lst_user_roles" *ngFor="let userRole of $roles()">
-                <li [id]="'itm_role_' + userRole" nz-menu-item (click)="onChangeRole(userRole)">
-                  {{ userRole | translate }}
-                </li>
-              </ul>
-            </li>
-            <li id="itm_app_reporter_feature" nz-menu-item [routerLink]="'/app-reporter/feature'">
-              <i nz-icon nzType="message" nzTheme="outline"></i>
-              <span class="user-action-item">
-                {{ "AppReporter.FEATURE_TITLE" | translate }}
-              </span>
-            </li>
-            <li id="itm_app_reporter_issue" nz-menu-item [routerLink]="'/app-reporter/issue'">
-              <i nz-icon nzType="warning" nzTheme="outline"></i>
-              <span class="user-action-item">
-                {{ "AppReporter.ISSUE_TITLE" | translate }}
-              </span>
-            </li>
-            <li id="itm_logout" nz-menu-item (click)="logout()">
-              <i nz-icon nzType="logout" nzTheme="outline"></i>
-              <span class="user-action-item">
-                {{ 'General.LOGOUT' | translate }}
+  <nz-header id="ctn_navbar">
+    @if (navItems().length > 0) {
+      <div style="height: 100%; display: flex; align-items: center">
+        <button class="menu-horizontal" nzSize="large" nz-button nz-dropdown [nzDropdownMenu]="menu"
+          nzOverlayClassName="menu-horizontal-actions" nzType="primary" nzTrigger="hover">
+          <span nz-icon nzType="menu" nzTheme="outline"></span>
+        </button>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+          <ul id="navigation-bar" nz-menu class="header-menu-horizontal" nzMode="horizontal">
+            <li *ngFor="let item of navItems()" [id]="item.id" nz-menu-item [routerLink]="item.route" [routerLinkActive]="['ant-menu-item-selected']">
+              <span class="header-menu-horizontal-item typography-body nav-item-text">
+                {{ item.name | translate }}
               </span>
             </li>
           </ul>
         </nz-dropdown-menu>
       </div>
+    }
 
-    </nz-header>
+    <img id="img_navbar_logo" class="logo" src="./assets/pinnacle-logo.svg" [alt]="'General.ALT_LOGO' | translate" />
 
-    <nz-content id="ctn_content">
-      <div class="inner-content">
-        <router-outlet></router-outlet>
+    <ul id="lst_navigation_bar" nz-menu class="nav-background header-menu" nzMode="horizontal">
+      <li *ngFor="let item of navItems()" [id]="item.id" nz-menu-item class="nav-background" [routerLink]="item.route" [routerLinkActive]="['ant-menu-item-selected']">
+        <span class="typography-body align nav-item-text">
+          {{ item.name | translate }}
+        </span>
+      </li>
+    </ul>
+
+    <div class="header-space"></div>
+
+    <div class="navbar_left" nz-dropdown [nzDropdownMenu]="menuUser" nzPlacement="bottomRight" nzOverlayClassName="menu-user-actions">
+      <div class="navbar_left__container">
+        <h6 id="lbl_navbar_employee_name" class="navbar_left__container__name">{{ $name() }}</h6>
+        <span id="lbl_navbar_employee_role" class="navbar_left__container__role">{{ $role() | translate }}</span>
       </div>
-    </nz-content>
+      <div class="rounded-circle navbar_left__container__photo">
+        <nz-avatar id="img_avatar" [nzText]="$initials()"></nz-avatar>
+      </div>
+      <nz-dropdown-menu #menuUser="nzDropdownMenu">
+        <ul id="lst_navbar_user_actions" nz-menu>
+          <li id="itm_logout" nz-menu-item (click)="logout()">
+            <i nz-icon nzType="logout" nzTheme="outline"></i>
+            <span class="user-action-item">{{ 'General.LOGOUT' | translate }}</span>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+  </nz-header>
 
-    <nz-footer id="ctn_footer">
-      <span style="font-size: 14px; font-weight: 600;">
-        {{ "General.COMPANY_NAME" | translate:{year:year} }}
-      </span>
-    </nz-footer>
-  </nz-layout>
+<nz-content id="ctn_content">
+  <div class="inner-content">
+    <router-outlet></router-outlet> </div>
+</nz-content>
+
+<div class="floating-cart-trigger" (click)="cartDrawerService.toggle()">
+  <nz-badge [nzCount]="$cartCount()" [nzOffset]="[-10, 10]">
+    <button nz-button nzType="primary" nzShape="circle" class="cart-btn">
+      <span nz-icon nzType="shopping-cart"></span>
+    </button>
+  </nz-badge>
+</div>
+
+<app-cart-drawer></app-cart-drawer>
+
+  <nz-footer id="ctn_footer">
+    <span style="font-size: 14px; font-weight: 600;">
+      {{ "General.COMPANY_NAME" | translate:{year:year} }}
+    </span>
+  </nz-footer>
+
 </nz-layout>
