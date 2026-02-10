@@ -1,33 +1,20 @@
 <div class="amazon-container">
-
   <header class="search-header">
     <div class="search-bar-wrapper">
       <nz-input-group nzSize="large">
-        <input
-          type="text"
-          nz-input
-          placeholder="Search..."
-          [(ngModel)]="params.search"
+        <input type="text" nz-input placeholder="Search..." [(ngModel)]="params.search"
           (ngModelChange)="onFilterChange()" />
       </nz-input-group>
     </div>
   </header>
 
   <main class="content-layout">
-
-    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products?.length">
-
+    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products?.length; else emptyState">
       <div *ngFor="let product of products" class="amazon-list-item">
-
         <a class="item-link" [routerLink]="['/products', product.id]">
 
           <div class="img-wrapper">
-
-            <img
-              [src]="product.imageUrl || 'assets/logo.png'"
-              [alt]="product.name"
-              class="product-img"
-            />
+            <img [src]="product.imageUrl || 'assets/logo.png'" [alt]="product.name" class="product-img" />
           </div>
 
           <div class="details-wrapper">
@@ -49,6 +36,8 @@
                   {{ product.price | number:'1.0-0' }}
                 </span>
               </div>
+
+              <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
             </div>
           </div>
 
@@ -65,10 +54,7 @@
     </ng-template>
 
     <footer class="pagination-footer" *ngIf="totalItems > params.pageSize">
-      <nz-pagination
-        [(nzPageIndex)]="params.page"
-        [nzTotal]="totalItems"
-        [nzPageSize]="params.pageSize"
+      <nz-pagination [(nzPageIndex)]="params.page" [nzTotal]="totalItems" [nzPageSize]="params.pageSize"
         (nzPageIndexChange)="onPageChange($event)">
       </nz-pagination>
     </footer>

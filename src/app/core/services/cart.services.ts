@@ -28,26 +28,24 @@ export class CartService {
 
   private saveCart(): void {
     localStorage.setItem(this.storageKey, JSON.stringify(this.cartItems));
-    this.cartSubject.next(this.cartItems);
+    this.cartSubject.next([...this.cartItems]);
   }
 
-  addToCartProduct(product: Product): void {
-    const item = this.cartItems.find(
-      i => i.product.id === product.id
-    );
+addToCartProduct(product: Product): void {
+  const index = this.cartItems.findIndex(i => i.product.id === product.id);
 
-    if (item) {
-      item.quantity++;
-    } else {
-      this.cartItems.push({
-        product,
-        quantity: 1
-      });
-      this.notification.success('Product added to cart');
-    }
-
-    this.saveCart();
+  if (index > -1) {
+    this.cartItems[index] = { 
+      ...this.cartItems[index], 
+      quantity: this.cartItems[index].quantity + 1 
+    };
+  } else {
+    this.cartItems.push({ product, quantity: 1 });
+    this.notification.success('Product added to cart');
   }
+
+  this.saveCart();
+}
 
   increaseQuantity(productId: string): void {
     const item = this.cartItems.find(
@@ -90,6 +88,10 @@ export class CartService {
     this.notification.info('Cart cleared');
     this.saveCart();
   }
+
+  getCartItems(): CartItem[] {
+  return this.cartItems;
+}
 
   getTotal(): number {
     return this.cartItems

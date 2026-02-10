@@ -6,7 +6,7 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
-  height: 100%; // Importante para que todas las tarjetas midan lo mismo
+  height: 100%;
 
   &:hover {
     transform: translateY(-4px);
@@ -18,12 +18,13 @@
   width: 100%;
   height: 180px;
   background: #f6f6f6;
-  padding: 10px; // Un poco de aire para la imagen
+  padding: 10px;
+  cursor: pointer;
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: contain; // Cambiado de 'cover' a 'contain' para que no se corten los productos
+    object-fit: contain;
   }
 }
 
@@ -31,7 +32,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  flex: 1; /* Esto hace que la info ocupe el espacio restante */
+  flex: 1;
 }
 
 .category {
@@ -45,20 +46,27 @@
   font-size: 16px;
   font-weight: 600;
   margin: 4px 0 8px;
-  /* Limita el nombre a 2 líneas para mantener la alineación */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 40px; 
+  min-height: 40px;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-main);
+  }
 }
 
 .price {
   font-size: 1.2rem;
   font-weight: bold;
-  color: var(--color-main); /* Usando tu variable azul */
-  margin-top: auto; /* Empuja el precio y el botón hacia abajo */
+  color: var(--color-main);
+  margin-top: auto;
   margin-bottom: 12px;
 }
 
-/* Nota: Eliminamos .btn-cart porque ahora usamos .cart-btn-global de styles.css */
+app-add-to-cart-button {
+  width: 100%;
+  display: block;
+}

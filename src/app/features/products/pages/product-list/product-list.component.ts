@@ -12,6 +12,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CartService } from '@app/core/services/cart.services';
+import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-button/add-to-cart-button.component';
 
 @Component({
   standalone: true,
@@ -24,7 +25,8 @@ import { CartService } from '@app/core/services/cart.services';
     NzSelectModule,
     NzInputModule,
     NzPaginationModule,
-    NzIconModule
+    NzIconModule,
+    AddToCartButtonComponent
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
@@ -34,6 +36,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   totalItems = 0;
   isAdded = false;
+  addedProductId: Set<string> = new Set();
 
   viewMode: 'list' = 'list';
 
@@ -44,14 +47,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     search: '',
     category: '',
     page: 1,
-    pageSize: 3
+    pageSize: 6
   };
 
   constructor(
     private productService: ProductService,
     private router: Router,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -88,11 +91,5 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.params.page = page;
     this.loadProducts();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  goToDetail(product: Product): void {
-    this.router.navigate(['/products', product.id], {
-      state: { product }
-    });
   }
 }

@@ -1,0 +1,11 @@
+<button 
+  nz-button 
+  nzBlock
+  class="cart-btn-global" 
+  [class.added-success]="issuccess"
+  [disabled]="issuccess"
+  (click)="add($event)">
+  
+  <span nz-icon [nzType]="issuccess ? 'check-circle' : 'shopping-cart'"></span>
+  {{ issuccess ? 'Added!' : 'Add to cart' }}
+</button>

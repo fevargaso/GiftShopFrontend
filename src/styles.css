@@ -268,4 +268,28 @@ nz-content {
     cursor: not-allowed;
     opacity: 0.8;
   }
+
+  .cart-btn-global {
+  height: 40px;
+  border-radius: 20px !important;
+  font-weight: 600;
+  background-color: var(--color-orange) !important;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #f3a847;
+  }
+
+  &.added-success {
+    background-color: #28a745 !important;
+    color: white !important;
+    border: none !important;
+    opacity: 1 !important;
+  }
+}
 }

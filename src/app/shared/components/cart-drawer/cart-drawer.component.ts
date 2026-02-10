@@ -33,7 +33,9 @@ export class CartDrawerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(this.drawerSvc.open$.subscribe(v => (this.isCartVisible = v)));
-    this.sub.add(this.cartService.cart$.subscribe(items => (this.cartItems = items)));
+    this.sub.add(this.cartService.cart$.subscribe(items => {
+  this.cartItems = items;
+}));
   }
 
   ngOnDestroy(): void {

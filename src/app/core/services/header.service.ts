@@ -11,7 +11,7 @@ const homeNavItem: NavItem = {
 
 const adminNavItem: NavItem = {
   id: 'itm_navbar_admin',
-  name: 'Admin', // 
+  name: 'Products', // 
   route: ['admin/products'], 
   icon: 'setting',
 };
