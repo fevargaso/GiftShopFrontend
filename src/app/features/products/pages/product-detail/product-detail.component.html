@@ -6,15 +6,11 @@
     <hr />
 
     <div class="detail-grid">
-
-      <!-- BLOQUE DE IMAGEN -->
       <div class="image-box">
         <img 
           [src]="product.imageUrl || 'assets/products/play5slim.png'"
           [alt]="product.name" />
       </div>
-
-      <!-- BLOQUE DE INFORMACIÓN -->
       <div class="info-box">
         <h1 class="title">{{ product.description }}</h1>
 
@@ -30,19 +26,22 @@
         </div>
       </div>
 
-      <!-- BLOQUE DE COMPRA (tipo carrito) -->
-      <aside class="purchase-card">
-        <div class="price-big">${{ product.price | number:'1.2-2' }}</div>
-        <p class="stock-status">Available</p>
+<aside class="purchase-card">
+  <div class="price-big">${{ product.price | number:'1.2-2' }}</div>
+  <p class="stock-status">Available</p>
 
-        <button nz-button nzType="primary" nzBlock (click)="addToCart()" class="cart-btn">
-          Add to cart
-        </button>
-
-        <button nz-button nzBlock routerLink="/cart" class="buy-now-btn">
-          Buy now
-        </button>
-      </aside>
+  <button 
+    nz-button 
+    nzType="primary" 
+    nzBlock 
+    (click)="addToCart()" 
+    class="cart-btn"
+    [class.added-success]="isAdded">
+    
+    <span nz-icon [nzType]="isAdded ? 'check-circle' : 'shopping-cart'"></span>
+    <span class="btn-text">{{ isAdded ? 'Added!' : 'Add to cart' }}</span>
+  </button>
+</aside>
 
     </div>
   </div>

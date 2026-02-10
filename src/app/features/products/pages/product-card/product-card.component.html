@@ -7,15 +7,23 @@
     />
   </div>
 
-  <div class="product-info">
-    <span class="category">{{ product.categoryName }}</span>
-    <h3 class="name">{{ product.name }}</h3>
-    <p class="price">${{ product.price }}</p>
+<div class="product-info">
+  <span class="category">{{ product.categoryName }}</span>
+  <h3 class="name">{{ product.name }}</h3>
+  <p class="price">${{ product.price | number:'1.2-2' }}</p>
 
-    <button class="btn-cart" (click)="addToCart()">
-      Add to cart
-    </button>
-  </div>
+  <button 
+    nz-button 
+    nzType="primary" 
+    nzBlock 
+    class="cart-btn-global" 
+    [class.added-success]="isAdded"
+    [disabled]="isAdded"
+    (click)="addToCart(); $event.stopPropagation()"> 
+    <span nz-icon [nzType]="isAdded ? 'check-circle' : 'shopping-cart'"></span>
+    {{ isAdded ? 'Added!' : 'Add to cart' }}
+  </button>
+</div>
 
 </div>
 

@@ -1,7 +1,11 @@
 <div class="admin-page" style="padding: 24px;">
   <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
     <h2>Category Management</h2>
-    <button nz-button nzType="primary" (click)="showModal()">New Category</button>
+    <div class="action-buttons">
+      <button nz-button nzType="primary" (click)="showModal()">
+        <span nz-icon nzType="plus"></span> New Category
+      </button>
+    </div>
   </div>
 
   <nz-table #catTable [nzData]="categories" nzBordered>
@@ -13,28 +17,53 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let data of catTable.data">
-        <td><strong>{{ data.name }}</strong></td>
-        <td>{{ data.description }}</td>
-        <td>
-          <button nz-button nzType="link" (click)="showModal(data)">Edit</button>
-          <button nz-button nzType="link" nzDanger (click)="deleteCategory(data.id)">Delete</button>
-        </td>
-      </tr>
+<tr *ngFor="let data of catTable.data">
+  <td><strong>{{ data.name }}</strong></td>
+  <td>{{ data.description }}</td>
+  <td>
+    <button nz-button nzType="link" (click)="showModal(data)">Edit</button>
+    
+    <button 
+      nz-button 
+      nzType="link" 
+      nzDanger 
+      nz-tooltip
+      nzTooltipTitle="Caution! This will affect related products."
+      (click)="deleteCategory(data.id)">
+      Delete
+    </button>
+  </td>
+</tr>
     </tbody>
   </nz-table>
 </div>
 
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="isEdit ? 'Editar' : 'Crear'" (nzOnOk)="handleOk()" (nzOnCancel)="isVisible = false">
-  <ng-container *nzModalContent>
+<nz-modal 
+  [(nzVisible)]="isVisible" 
+  [nzTitle]="isEdit ? 'Edit Category' : 'Create Category'" 
+  (nzOnOk)="handleOk()" 
+  (nzOnCancel)="isVisible = false"
+  [nzOkDisabled]="checkDuplicate() || !currentCategory.name"> <ng-container *nzModalContent>
     <form nz-form nzLayout="vertical">
       <nz-form-item>
-        <nz-form-label>Name</nz-form-label>
-        <nz-form-control><input nz-input [(ngModel)]="currentCategory.name" name="name" /></nz-form-control>
+        <nz-form-label nzRequired>Name</nz-form-label>
+        <nz-form-control 
+          [nzValidateStatus]="checkDuplicate() ? 'error' : ''" 
+          nzHasFeedback
+          [nzErrorTip]="duplicateErrorTpl">
+          <input nz-input [(ngModel)]="currentCategory.name" name="name" placeholder="Write the name..." />
+          
+          <ng-template #duplicateErrorTpl>
+            <span *ngIf="checkDuplicate()">There is already a category with this name</span>
+          </ng-template>
+        </nz-form-control>
       </nz-form-item>
+
       <nz-form-item>
         <nz-form-label>Description</nz-form-label>
-        <nz-form-control><textarea nz-input [(ngModel)]="currentCategory.description" name="desc"></textarea></nz-form-control>
+        <nz-form-control>
+          <textarea nz-input [(ngModel)]="currentCategory.description" name="desc" placeholder="Optional..."></textarea>
+        </nz-form-control>
       </nz-form-item>
     </form>
   </ng-container>

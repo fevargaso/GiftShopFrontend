@@ -12,15 +12,18 @@ import { ProductService } from '@app/core/services/product.services';
 import { Product } from '@app/core/models/product-model';
 import { CategoryService } from '@app/core/services/category.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { RouterLink } from "@angular/router";
+import { Router } from '@angular/router';
 
 
 @Component({
   standalone: true,
   selector: 'app-admin-products',
   imports: [
-    CommonModule, FormsModule, NzTableModule, NzButtonModule, 
-    NzModalModule, NzFormModule, NzInputModule, NzIconModule, NzSelectModule
-  ],
+    CommonModule, FormsModule, NzTableModule, NzButtonModule,
+    NzModalModule, NzFormModule, NzInputModule, NzIconModule, NzSelectModule,
+    RouterLink
+],
   templateUrl: './admin-product.component.html',
   styleUrls: ['./admin-product.component.scss']
 })
@@ -47,7 +50,8 @@ currentProduct: Partial<Product> = this.resetProduct();
     private productService: ProductService,
     private categoryService: CategoryService,
     private modal: NzModalService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -79,6 +83,10 @@ currentProduct: Partial<Product> = this.resetProduct();
     next: (res) => this.categories = res,
     error: (err) => console.error('Error loading categories', err)
   });
+}
+
+goToCategories(): void {
+  this.router.navigate(['/admin/categories']);
 }
 
   showModal(product?: Product): void {

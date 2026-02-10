@@ -1,13 +1,9 @@
 <div class="admin-page">
   <div class="admin-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h2>Gestión de Inventario</h2>
+    <h2>Products Inventory</h2>
     <div class="action-buttons">
-      <button nz-button nzType="default" (click)="isCategoryVisible = true" style="margin-right: 8px;">
-        <span nz-icon nzType="tags"></span> Nueva Categoría
-      </button>
-
       <button nz-button nzType="primary" (click)="showModal()">
-        <span nz-icon nzType="plus"></span> Nuevo Producto
+        <span nz-icon nzType="plus"></span> New Product
       </button>
     </div>
   </div>
@@ -19,11 +15,11 @@
   (nzPageIndexChange)="onPageIndexChange($event)">
     <thead>
       <tr>
-        <th nzWidth="100px">Imagen</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Categoría</th>
-        <th>Acciones</th>
+        <th nzWidth="100px">Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -39,8 +35,8 @@
         </td>
         <td>{{ data.price | number:'1.0-0' }}</td>
         <td>{{ data.categoryName }}</td>
-        <td> <button nz-button nzType="link" (click)="showModal(data)">Editar</button>
-          <button nz-button nzType="link" nzDanger (click)="deleteProduct(data.id)">Eliminar</button>
+        <td> <button nz-button nzType="link" (click)="showModal(data)">Edit</button>
+          <button nz-button nzType="link" nzDanger (click)="deleteProduct(data.id)">Delete</button>
         </td>
       </tr>
     </tbody>
@@ -49,7 +45,7 @@
 
 <nz-modal 
   [(nzVisible)]="isVisible" 
-  [nzTitle]="isEdit ? 'Editar Producto' : 'Crear Nuevo Producto'" 
+  [nzTitle]="isEdit ? 'Edit Product' : 'Create New Product'" 
   (nzOnCancel)="handleCancel()" 
   (nzOnOk)="handleOk()"
 >
@@ -57,7 +53,7 @@
     <form nz-form nzLayout="vertical">
       <div style="display: flex; gap: 20px;">
         <div style="flex: 0 0 120px; text-align: center;">
-            <p style="font-size: 12px; margin-bottom: 8px;">Vista previa</p>
+            <p style="font-size: 12px; margin-bottom: 8px;">Preview</p>
             <img [src]="currentProduct.imageUrl || 'assets/logo.png'" 
                  style="width: 120px; height: 120px; object-fit: contain; border: 1px dashed #d9d9d9; border-radius: 8px;"
                  (error)="$any($event.target).src = 'assets/logo.png'">
@@ -65,23 +61,23 @@
 
         <div style="flex: 1;">
           <nz-form-item>
-            <nz-form-label>Nombre del Producto</nz-form-label>
+            <nz-form-label>Product Name</nz-form-label>
             <nz-form-control>
               <input nz-input [(ngModel)]="currentProduct.name" name="name" placeholder="Ej: Laptop Gaming" />
             </nz-form-control>
           </nz-form-item>
 
           <nz-form-item>
-            <nz-form-label>Imagen del Producto</nz-form-label>
+            <nz-form-label>Product Image</nz-form-label>
             <nz-form-control>
               <div style="display: flex; flex-direction: column; gap: 8px;">
                 <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/*" style="display: none" />
                 
                 <button nz-button type="button" nzBlock (click)="fileInput.click()" style="border-radius: 4px;">
-                  <span nz-icon nzType="upload"></span> {{ currentProduct.imageUrl ? 'Cambiar Foto' : 'Subir Foto Local' }}
+                  <span nz-icon nzType="upload"></span> {{ currentProduct.imageUrl ? 'Change Photo' : 'Upload Local Photo' }}
                 </button>
 
-                <input nz-input [(ngModel)]="currentProduct.imageUrl" name="imageUrl" placeholder="O pega el link de la imagen aquí" style="font-size: 12px;" />
+                <input nz-input [(ngModel)]="currentProduct.imageUrl" name="imageUrl" placeholder="Or paste the image link here" style="font-size: 12px;" />
               </div>
             </nz-form-control>
           </nz-form-item>
@@ -90,16 +86,16 @@
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
         <nz-form-item>
-          <nz-form-label>Precio</nz-form-label>
+          <nz-form-label>Price</nz-form-label>
           <nz-form-control>
             <input nz-input type="number" [(ngModel)]="currentProduct.price" name="price" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label nzRequired>Categoría</nz-form-label>
+          <nz-form-label nzRequired>Category</nz-form-label>
           <nz-form-control>
-            <nz-select [(ngModel)]="currentProduct.categoryId" name="categoryId" nzPlaceHolder="Seleccione">
+            <nz-select [(ngModel)]="currentProduct.categoryId" name="categoryId" nzPlaceHolder="Select a category">
               <nz-option *ngFor="let cat of categories" [nzValue]="cat.id" [nzLabel]="cat.name"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -107,7 +103,7 @@
       </div>
 
       <nz-form-item>
-        <nz-form-label>Descripción</nz-form-label>
+        <nz-form-label>Description</nz-form-label>
         <nz-form-control>
           <textarea nz-input [(ngModel)]="currentProduct.description" name="description" rows="3"></textarea>
         </nz-form-control>

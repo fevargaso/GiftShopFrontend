@@ -21,13 +21,14 @@ export class HomeComponent implements OnInit {
 
   products: Product[] = [];
   isCartVisible = false;
+  isAdded = false;
 
   get cartItems(): CartItem[] {
     return this.cartService.items;
   }
 
   ngOnInit(): void {
-    this.productsService.getProducts({ page: 1, pageSize: 10 }).subscribe({
+    this.productsService.getProducts({ page: 1, pageSize: 6 }).subscribe({
       next: result => {
         this.products = (result.items ?? []).slice(0, 6);
       },
@@ -58,6 +59,7 @@ export class HomeComponent implements OnInit {
 
   addToCart(product: Product): void {
     this.cartService.addToCartProduct(product);
+    this.isAdded = true;
   }
 
   increaseQuantity(item: CartItem): void {

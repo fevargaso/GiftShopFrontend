@@ -56,33 +56,80 @@ export class AdminCategoriesComponent implements OnInit {
     }
   }
 
-  handleOk(): void {
+handleOk(): void {
+    const nameToSave = this.currentCategory.name?.trim().toLowerCase();
+
+    if (!nameToSave) {
+      this.message.error('The name is required.');
+      return;
+    }
+
+    const isDuplicate = this.categories.some(cat => 
+      cat.name.trim().toLowerCase() === nameToSave && 
+      cat.id !== this.currentCategory.id 
+    );
+
+    if (isDuplicate) {
+      this.message.error('There is already a category with this name');
+      return;
+    }
+
     if (this.isEdit) {
       this.categoryService.update(this.currentCategory.id!, this.currentCategory).subscribe(() => {
-        this.message.success('Categoría actualizada');
-        this.loadCategories();
-        this.isVisible = false;
+        this.message.success('Category updated');
+        this.finalizeAction();
       });
     } else {
       this.categoryService.create(this.currentCategory).subscribe(() => {
-        this.message.success('Categoría creada');
-        this.loadCategories();
-        this.isVisible = false;
+        this.message.success('Category created');
+        this.finalizeAction();
       });
     }
   }
 
-  deleteCategory(id: string) {
-    this.modal.confirm({
-      nzTitle: '¿Eliminar categoría?',
-      nzContent: 'Ten en cuenta que esto podría afectar a los productos asociados.',
-      nzOkDanger: true,
-      nzOnOk: () => {
-        this.categoryService.delete(id).subscribe(() => {
-          this.message.warning('Categoría eliminada');
-          this.loadCategories();
-        });
-      }
-    });
+  private finalizeAction(): void {
+    this.loadCategories();
+    this.isVisible = false;
   }
+
+  checkDuplicate(): boolean {
+  if (!this.currentCategory.name) return false;
+  
+  const name = this.currentCategory.name.trim().toLowerCase();
+  return this.categories.some(cat => 
+    cat.name.trim().toLowerCase() === name && 
+    cat.id !== this.currentCategory.id
+  );
+}
+
+deleteCategory(id: string) {
+  const category = this.categories.find(c => c.id === id);
+  const categoryName = category ? category.name : 'this category';
+
+  this.modal.confirm({
+    nzTitle: `Are you sure you want to delete category "${categoryName}"?`,
+    nzContent: `<b style="color: red;">CRITICAL WARNING!</b><br>
+                If you delete this category, <b>all linked products</b> will become orphaned or may be deleted depending on system configuration. 
+                <br><br>Do you wish to proceed anyway?`,
+    nzOkText: 'Yes, delete all',
+    nzOkType: 'primary',
+    nzOkDanger: true,
+    nzCancelText: 'Cancel',
+    nzOnOk: () => {
+      this.categoryService.delete(id).subscribe({
+        next: () => {
+          this.message.warning('Category and its links deleted successfully');
+          this.loadCategories();
+        },
+        error: (err) => {
+          if (err.status === 400 || err.status === 409) {
+            this.message.error('Cannot be deleted: This category has active products..');
+          } else {
+            this.message.error('Error while trying to delete the category');
+          }
+        }
+      });
+    }
+  });
+}
 }

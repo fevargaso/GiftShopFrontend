@@ -27,7 +27,6 @@ export const routes: Routes = [
   loadChildren: () => import('@features/cart/pages/cart.routes')
       .then(m => m.CARTS_ROUTES)
   },
-
   {
     path: 'admin',
     children: [

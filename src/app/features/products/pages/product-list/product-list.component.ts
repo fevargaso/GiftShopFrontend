@@ -33,6 +33,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
   totalItems = 0;
+  isAdded = false;
 
   viewMode: 'list' = 'list';
 
@@ -43,7 +44,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     search: '',
     category: '',
     page: 1,
-    pageSize: 9
+    pageSize: 3
   };
 
   constructor(

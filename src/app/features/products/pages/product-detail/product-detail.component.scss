@@ -63,13 +63,12 @@
 
 /* TARJETA DE COMPRA ULTRA SIMILAR AL CARRITO */
 .purchase-card {
-  background: #ffffff;
-  border: 1px solid #dedede;
-  border-radius: 16px;
-  padding: 25px;
-  height: fit-content;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Centra el contenido
+  width: 100%;
+  min-width: 250px;    // Evita que la tarjeta sea muy estrecha
+  padding: 24px;
 }
 
 .price-big {
@@ -85,17 +84,34 @@
 }
 
 /* BOTONES ESTILO CARRITO */
-.cart-btn,
-.buy-now-btn {
-  height: 42px;
-  border-radius: 10px;
-}
 
 .cart-btn {
-  margin-bottom: 12px;
-  background: #108ee9;
-  border-color: #108ee9;
-  color: white;
+  /* Forzamos dimensiones */
+  width: 100% !important;
+  min-height: 50px !important; // Altura fija para que no se vea recortado
+  
+  /* Reset de estilos de Ng-Zorro */
+  padding: 0 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  border-radius: 8px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  margin-top: 15px;
+  
+  /* Colores */
+  background-color: #118ab2 !important;
+  border: none !important;
+
+  .btn-text {
+    margin-left: 8px; // Espacio entre icono y texto
+  }
+
+  &.added-success {
+    background-color: #0f8b2c !important;
+  }
 }
 
 .buy-now-btn {
@@ -109,4 +125,9 @@
   .detail-grid {
     grid-template-columns: 1fr;
   }
+
+  @keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 }

@@ -9,6 +9,20 @@ const homeNavItem: NavItem = {
   icon: 'unordered-list',
 };
 
+const adminNavItem: NavItem = {
+  id: 'itm_navbar_admin',
+  name: 'Admin', // 
+  route: ['admin/products'], 
+  icon: 'setting',
+};
+
+const categoriesNavItem: NavItem = {
+  id: 'itm_navbar_categories',
+  name: 'Categories', // 
+  route: ['admin/categories'], 
+  icon: 'setting',
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,9 +30,7 @@ export class HeaderService {
   private readonly roleService = inject(RoleService);
 
   public getNavItems(): NavItem[] {
-    let items = [
-      homeNavItem
-    ];
+    let items = [homeNavItem, adminNavItem, categoriesNavItem];
 
     return items;
   }
