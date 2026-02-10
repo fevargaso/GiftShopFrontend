@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   products: Product[] = [];
   isCartVisible = false;
-  isAdded = false;
+  addedProductIds = new Set<string>();
 
   get cartItems(): CartItem[] {
     return this.cartService.items;
@@ -57,10 +57,16 @@ export class HomeComponent implements OnInit {
     this.isCartVisible = visible;
   }
 
-  addToCart(product: Product): void {
-    this.cartService.addToCartProduct(product);
-    this.isAdded = true;
-  }
+addToCart(product: Product): void {
+  this.cartService.addToCartProduct(product);
+  
+  const id = product.id.toString();
+  this.addedProductIds.add(id);
+  
+  setTimeout(() => {
+    this.addedProductIds.delete(id);
+  }, 2000);
+}
 
   increaseQuantity(item: CartItem): void {
     this.cartService.increaseQuantity(item.product.id);

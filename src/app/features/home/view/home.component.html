@@ -29,26 +29,35 @@
       </div>
     </div>
 
-    <div class="product-grid">
-      @for (product of products; track product.id) {
-      <div class="product-card-premium">
-        <div class="img-box" (click)="seeDetails(product)">
-          <img [src]="product.imageUrl || 'assets/logo.png'" />
-        </div>
-        <div class="info-box">
-          <div class="rating-box">
-            <span class="stars">★★★★★</span>
-            <span class="reviews">1,240</span>
-          </div>
-          <h3 class="product-name">{{ product.name }}</h3>
-          <p class="product-price">${{ product.price | number:'1.0-0' }}</p>
-          <button nz-button class="btn-add-cart" (click)="addToCart(product)">
-            Add to cart
-          </button>
-        </div>
-      </div>
-      }
+<div class="product-grid">
+  @for (product of products; track product.id) {
+  <div class="product-card-premium">
+    <div class="img-box" (click)="seeDetails(product)">
+      <img [src]="product.imageUrl || 'assets/logo.png'" />
     </div>
+    <div class="info-box">
+      <div class="rating-box">
+        <span class="stars">★★★★★</span>
+        <span class="reviews">1,240</span>
+      </div>
+      <h3 class="product-name">{{ product.name }}</h3>
+      <p class="product-price">${{ product.price | number:'1.0-0' }}</p>
+      
+      <button 
+        nz-button 
+        nzBlock
+        class="cart-btn-global" 
+        [class.added-success]="addedProductIds.has(product.id.toString())"
+        [disabled]="addedProductIds.has(product.id.toString())"
+        (click)="addToCart(product)">
+        
+        <span nz-icon [nzType]="addedProductIds.has(product.id.toString()) ? 'check-circle' : 'shopping-cart'"></span>
+        {{ addedProductIds.has(product.id.toString()) ? 'Added!' : 'Add to cart' }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
   </div>
 
   <nz-drawer [nzVisible]="isCartVisible" nzPlacement="right" [nzTitle]="drawerTitle" [nzClosable]="false"
