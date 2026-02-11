@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { isAppLoaded } from './core/auth/is-app-loaded.guard';
 import { AdminProductsComponent } from './features/admin/admin-product/admin-porduct.component';
 import { AdminCategoriesComponent } from './features/admin/admin-categories/admin-categories.component';
+import { OrderComponent } from './features/orders/pages/order/order.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,12 @@ export const routes: Routes = [
   path: 'products',
   loadChildren: () => import('@features/products/pages/products.routes')
       .then(m => m.PRODUCTS_ROUTES)
+  },
+
+  {
+    path: 'orders',
+    loadChildren: () => import('@features/orders/pages/orders.routes')
+      .then(m => m.ORDERS_ROUTES)
   },
 
   {

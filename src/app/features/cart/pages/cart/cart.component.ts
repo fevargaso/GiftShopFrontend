@@ -1,25 +1,36 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { CartService } from '@app/core/services/cart.services';
 import { CartItem } from '@app/core/models/cart-item.model';
 import { NotificationUtilService } from '@app/core/utils/notification-util.service';
-import { CommonModule } from '@angular/common';
+
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { RouterModule } from '@angular/router';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, NzButtonModule, RouterModule],
+  imports: [
+    CommonModule,
+    NzButtonModule,
+    RouterModule,
+    NzIconModule,
+    NzCheckboxModule
+  ],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
+  isProcessing = false;
 
   constructor(
     private cartService: CartService,
-    private notification: NotificationUtilService
-  ) {}
+    private notification: NotificationUtilService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe(items => {
@@ -29,17 +40,14 @@ export class CartComponent implements OnInit {
 
   increase(item: CartItem): void {
     this.cartService.increaseQuantity(item.product.id);
-    this.notification.success('Product quantity increased');
   }
 
   decrease(item: CartItem): void {
     if (item.quantity === 1) {
       this.remove(item.product.id);
-      return;
+    } else {
+      this.cartService.decreaseQuantity(item.product.id);
     }
-
-    this.cartService.decreaseQuantity(item.product.id);
-    this.notification.info('Product quantity decreased');
   }
 
   remove(productId: string): void {
@@ -47,12 +55,24 @@ export class CartComponent implements OnInit {
     this.notification.warn('Product removed from cart');
   }
 
-    clear(): void {
+  clear(): void {
     this.cartService.clearCart();
+    this.notification.info('Cart cleared');
   }
 
-getTotal(): number {
-  const total = this.cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
-  return Math.round(total * 100) / 100;
-}
+  getTotal(): number {
+    const total = this.cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+    return Math.round(total * 100) / 100;
+  }
+
+  processCheckout(): void {
+    if (this.cartItems.length === 0) return;
+
+    this.isProcessing = true;
+
+    setTimeout(() => {
+      this.isProcessing = false;
+      this.router.navigate(['/orders']);
+    }, 700);
+  }
 }
