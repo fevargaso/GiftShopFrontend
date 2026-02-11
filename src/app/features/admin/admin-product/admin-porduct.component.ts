@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzTableModule } from 'ng-zorro-antd/table';
@@ -8,13 +8,16 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { RouterLink, Router } from "@angular/router";
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
 import { ProductService } from '@app/core/services/product.services';
 import { Product } from '@app/core/models/product-model';
 import { CategoryService } from '@app/core/services/category.service';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { RouterLink } from "@angular/router";
-import { Router } from '@angular/router';
-
 
 @Component({
   standalone: true,
@@ -22,29 +25,33 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule, FormsModule, NzTableModule, NzButtonModule,
     NzModalModule, NzFormModule, NzInputModule, NzIconModule, NzSelectModule,
-    RouterLink
-],
+    NzTagModule, NzDividerModule, RouterLink
+  ],
   templateUrl: './admin-product.component.html',
   styleUrls: ['./admin-product.component.scss']
 })
-
-export class AdminProductsComponent implements OnInit {
+export class AdminProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   categories: any[] = [];
+  
+  params = {
+    search: '',
+    category: '', 
+    page: 1,
+    pageSize: 10
+  };
+
+  private searchSubject = new Subject<string>();
+  private searchSubscription?: Subscription;
+
   isVisible = false;
   isCategoryVisible = false;
   isEdit = false;
-
   totalItems = 0;
-  pageSize = 10;
-  pageIndex = 1;
 
-currentProduct: Partial<Product> = this.resetProduct();
-
-  newCategory = {
-    name: '',
-    description: ''
-  };
+  // Inicialización limpia
+  currentProduct: Partial<Product> = this.resetProduct();
+  newCategory = { name: '', description: '' };
 
   constructor(
     private productService: ProductService,
@@ -55,129 +62,118 @@ currentProduct: Partial<Product> = this.resetProduct();
   ) {}
 
   ngOnInit() {
-    this.loadProducts();
     this.loadCategories();
+    this.loadProducts();
+
+    this.searchSubscription = this.searchSubject.pipe(
+      debounceTime(400), 
+      distinctUntilChanged() 
+    ).subscribe(value => {
+      this.params.search = value;
+      this.params.page = 1;
+      this.loadProducts();
+    });
   }
 
-  loadProducts() {
-    const params = {
-      page: this.pageIndex,
-      pageSize: this.pageSize
-    };
-    this.productService.getProducts(params).subscribe(res => {
-      this.products = res.items || [];
-      this.totalItems = res.totalItems ?? res.totalCount ?? 0;
+  ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
+  }
 
-      this.pageIndex = res.page ?? this.pageIndex;
-      this.pageSize = res.pageSize ?? this.pageSize;
-    });
+  // --- Lógica de Búsqueda ---
+  onSearchChange(value: string): void {
+    this.searchSubject.next(value);
+  }
+
+  onCategoryChange(categoryId: string | null): void {
+    this.params.category = categoryId || ''; 
+    this.params.page = 1; 
+    this.loadProducts();
   }
 
   onPageIndexChange(index: number): void {
-    this.pageIndex = index;
+    this.params.page = index;
     this.loadProducts();
   }
 
+  onPageSizeChange(size: number): void {
+    this.params.pageSize = size;
+    this.params.page = 1;
+    this.loadProducts();
+  }
+
+  // --- Carga de Datos ---
+  loadProducts() {
+    this.productService.getProducts(this.params).subscribe({
+      next: (res: any) => {
+        this.products = res.items || [];
+        this.totalItems = res.totalItems ?? res.totalCount ?? 0;
+      },
+      error: () => this.message.error('Error loading products')
+    });
+  }
+
   loadCategories() {
-  this.categoryService.getAll().subscribe({
-    next: (res) => this.categories = res,
-    error: (err) => console.error('Error loading categories', err)
-  });
-}
+    this.categoryService.getAll().subscribe({
+      next: (res) => this.categories = res,
+      error: (err) => console.error('Error loading categories', err)
+    });
+  }
 
-goToCategories(): void {
-  this.router.navigate(['/admin/categories']);
-}
-
+  // --- Gestión de Modal ---
   showModal(product?: Product): void {
-    this.isVisible = true;
     if (product) {
       this.isEdit = true;
+      // Clonamos para no editar directamente la fila de la tabla
       this.currentProduct = { ...product };
     } else {
       this.isEdit = false;
-      this.currentProduct = { imageUrl: ''};
+      this.currentProduct = this.resetProduct();
     }
-  }
-
-  onFileSelected(event: Event): void {
-  const input = event.target as HTMLInputElement;
-  
-  if (input.files && input.files[0]) {
-    const file = input.files[0];
-
-    if (!file.type.startsWith('image/')) {
-      return;
-    }
-
-    const reader = new FileReader();
-    
-    reader.onload = () => {
-      this.currentProduct.imageUrl = reader.result as string;
-      input.value = '';
-    };
-
-    reader.readAsDataURL(file);
-  }
-}
-
-handleOk(): void {
-  if (this.isEdit) {
-    this.productService.update(this.currentProduct.id!, this.currentProduct).subscribe({
-      next: () => {
-        this.message.success('Product updated');
-        this.finalizeOperation();
-      },
-      error: (err) => this.message.error('Error updating product')
-    });
-  } else {
-    this.productService.create(this.currentProduct).subscribe({
-      next: (newId) => {
-        this.message.success('Product created');
-        this.finalizeOperation();
-      },
-      error: (err) => this.message.error('Error creating product')
-    });
-  }
-}
-
-private finalizeOperation() {
-  this.loadProducts();
-  this.isVisible = false;
-  this.currentProduct = this.resetProduct();
-}
-
-private resetProduct() {
-    return {
-      name: '',
-      price: 0,
-      description: '',
-      imageUrl: '',
-      categoryId: ''
-    };
+    this.isVisible = true;
   }
 
   showCategoryModal(): void {
-    this.newCategory = { name: '', description: '' }; 
+    this.newCategory = { name: '', description: '' };
     this.isCategoryVisible = true;
   }
 
+handleOk(): void {
+  if (!this.currentProduct.name || !this.currentProduct.price) {
+    this.message.warning('Name and Price are required');
+    return;
+  }
+  let request$: import('rxjs').Observable<any>;
+
+  if (this.isEdit) {
+    request$ = this.productService.update(this.currentProduct.id!, this.currentProduct);
+  } else {
+    request$ = this.productService.create(this.currentProduct);
+  }
+
+  request$.subscribe({
+    next: () => {
+      this.message.success(this.isEdit ? 'Product updated' : 'Product created');
+      this.finalizeOperation();
+    },
+    error: (err: any) => { 
+      console.error(err);
+      this.message.error('Error saving product');
+    }
+  });
+}
+
   handleCategoryOk(): void {
     if (!this.newCategory.name) {
-      this.message.warning('The category name is required');
+      this.message.warning('Category name is required');
       return;
     }
-
     this.categoryService.create(this.newCategory).subscribe({
       next: () => {
-        this.message.success('Category created successfully');
+        this.message.success('Category created');
+        this.loadCategories();
         this.isCategoryVisible = false;
-        this.loadCategories(); 
       },
-      error: (err) => {
-        this.message.error('Error creating category');
-        console.error(err);
-      }
+      error: () => this.message.error('Error creating category')
     });
   }
 
@@ -186,14 +182,43 @@ private resetProduct() {
     this.isCategoryVisible = false;
   }
 
+  // --- Auxiliares ---
+  private finalizeOperation() {
+    this.loadProducts();
+    this.isVisible = false;
+  }
+
+  private resetProduct() {
+    return { 
+      name: '', 
+      price: 0, 
+      description: '', 
+      imageUrl: '', 
+      categoryId: undefined // Dejar como undefined para que el placeholder del select funcione
+    };
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.currentProduct.imageUrl = reader.result as string;
+        input.value = ''; // Reset para poder subir la misma imagen si se borra
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   deleteProduct(id: string) { 
     this.modal.confirm({
-      nzTitle: 'Are you sure you want to delete this product?',
-      nzOkText: 'Delete',
+      nzTitle: 'Are you sure?',
+      nzContent: 'This action cannot be undone',
       nzOkDanger: true,
       nzOnOk: () => {
         this.productService.delete(id).subscribe(() => {
-          this.message.info('Product deleted');
+          this.message.info('Deleted successfully');
           this.loadProducts();
         });
       }

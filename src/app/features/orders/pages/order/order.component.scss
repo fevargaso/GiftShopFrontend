@@ -7,6 +7,129 @@
   h1 { font-size: 24px; margin-bottom: 20px; font-weight: 600; }
 }
 
+// --- VISTA DE ÉXITO (Añadir al final de tu .order-page-container) ---
+
+.success-layout {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+  animation: fadeIn 0.5s ease-in-out;
+
+  // Contenedor del listado de productos comprados
+  .purchased-products-list {
+    background: #f9f9f9;
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+
+    h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #118ab2;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .item-row {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+
+      &:last-of-type { border-bottom: none; }
+
+      .mini-img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 4px;
+      }
+
+      .item-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        
+        .name { 
+          font-size: 15px; 
+          font-weight: 500; 
+          color: #111;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .qty { 
+          font-size: 13px; 
+          color: #565959; 
+          margin-top: 2px;
+        }
+      }
+
+      .price { 
+        font-weight: 600; 
+        font-size: 16px;
+        color: #111;
+      }
+    }
+
+    .total-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 2px solid #ddd;
+      font-size: 18px;
+
+      strong { color: #565959; }
+      
+      .amount { 
+        color: #B12704; // Color rojo clásico de precio final
+        font-weight: 700; 
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+// Animación simple para que el mensaje no aparezca de golpe
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Ajustes responsivos
+@media (max-width: 768px) {
+  .main-checkout-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .order-summary-side {
+    order: -1; // El botón de compra sube en móvil
+  }
+
+  .success-layout {
+    padding: 20px;
+    .purchased-products-list {
+      padding: 15px;
+    }
+  }
+}
+
 .main-checkout-layout {
   display: grid;
   grid-template-columns: 1fr 320px;

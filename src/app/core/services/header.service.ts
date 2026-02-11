@@ -9,16 +9,23 @@ const homeNavItem: NavItem = {
   icon: 'unordered-list',
 };
 
+const productsNavItem: NavItem = {
+  id: 'itm_navbar_admin',
+  name: 'Store',
+  route: ['products'],
+  icon: 'setting',
+};
+
 const adminNavItem: NavItem = {
   id: 'itm_navbar_admin',
-  name: 'Products', // 
+  name: 'Products', 
   route: ['admin/products'], 
   icon: 'setting',
 };
 
 const categoriesNavItem: NavItem = {
   id: 'itm_navbar_categories',
-  name: 'Categories', // 
+  name: 'Categories', 
   route: ['admin/categories'], 
   icon: 'setting',
 };
@@ -30,7 +37,7 @@ export class HeaderService {
   private readonly roleService = inject(RoleService);
 
   public getNavItems(): NavItem[] {
-    let items = [homeNavItem, adminNavItem, categoriesNavItem];
+    let items = [homeNavItem, productsNavItem, adminNavItem, categoriesNavItem];
 
     return items;
   }

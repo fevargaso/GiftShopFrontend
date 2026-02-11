@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NotificationUtilService } from '@app/core/utils/notification-util.service';
 import { CartService } from '@app/core/services/cart.services';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -9,61 +9,91 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-order',
-  standalone: true,
-  imports: [ReactiveFormsModule, NzFormModule, NzInputModule, NzButtonModule, NzRadioModule, NzDividerModule, NzCardModule, CommonModule, FormsModule],
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+    selector: 'app-order',
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        NzFormModule,
+        NzInputModule,
+        NzButtonModule,
+        NzRadioModule,
+        NzDividerModule,
+        NzCardModule,
+        NzResultModule, 
+        NzIconModule,
+        CommonModule,
+        FormsModule,
+        RouterModule 
+    ],
+    templateUrl: './order.component.html',
+    styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  paymentForm!: FormGroup;
-  isProcessing = false;
-  cartLength: number = 0;
+    paymentForm!: FormGroup;
+    isSuccess = false;
+    isProcessing = false;
+    cartLength: number = 0;
+    
+    purchasedItems: any[] = []; 
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private notification: NotificationUtilService,
-    private cartService: CartService
-  ) {}
+    constructor(
+        private fb: FormBuilder,
+        private router: Router,
+        private notification: NotificationUtilService,
+        private cartService: CartService
+    ) { }
 
-  ngOnInit(): void {
-    this.cartService.cart$.subscribe(items => {
-      this.cartLength = items.length;
-    });
+    ngOnInit(): void {
+        this.cartService.cart$.subscribe(items => {
+            this.cartLength = items.length;
+            if (!this.isSuccess && items.length > 0) {
+                this.purchasedItems = items.map(item => ({ ...item }));
+            }
+        });
 
-    this.paymentForm = this.fb.group({
-      cardHolder: ['', [Validators.required]],
-      cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-      expiryDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/([0-9]{2})$')]],
-      cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
-    });
-  }
-
-  processPayment(): void {
-    if (this.cartLength === 0) {
-      this.notification.error('Your cart is empty. You cannot proceed with the purchase.');
-      return;
+        this.paymentForm = this.fb.group({
+            cardHolder: ['', [Validators.required]],
+            cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
+            expiryDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/([0-9]{2})$')]],
+            cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
+        });
     }
 
-    if (this.paymentForm.valid || this.useExistingCard()) {
-      this.isProcessing = true;
-      
-      setTimeout(() => {
-        this.isProcessing = false;
-        this.notification.success('¡Pago procesado con éxito!');
-        this.cartService.clearCart();
-        this.router.navigate(['/products']);
-      }, 2000);
-    } else {
-      this.notification.warn('Por favor, completa los datos de la tarjeta');
-    }
-  }
+calculateTotal(): number {
+    return this.purchasedItems.reduce((acc, item) => {
+        const price = item.product?.price || 0;
+        const qty = item.quantity || 1;
+        return acc + (price * qty);
+    }, 0);
+}
+    processPayment(): void {
+        if (this.cartLength === 0) {
+            this.notification.error('Your cart is empty. You cannot proceed with the purchase.');
+            return;
+        }
 
-  private useExistingCard(): boolean {
-    return true; 
-  }
+        if (this.paymentForm.valid) {
+            this.purchasedItems = [...this.cartService.getCartItems()];
+            this.isProcessing = true;
+
+            setTimeout(() => {
+                this.isProcessing = false;
+                console.log('objeto comprado', this.purchasedItems[0])
+                this.isSuccess = true;
+                this.notification.success('Purchase completed successfully!');
+                this.cartService.clearCart(); 
+            }, 2000);
+        } else {
+            Object.values(this.paymentForm.controls).forEach(control => {
+                control.markAsDirty();
+                control.updateValueAndValidity({ onlySelf: true });
+            });
+            this.notification.warn('Please complete the card details correctly');
+        }
+    }
 }

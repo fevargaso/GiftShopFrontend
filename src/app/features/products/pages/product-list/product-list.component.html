@@ -1,12 +1,46 @@
 <div class="amazon-container">
-  <header class="search-header">
-    <div class="search-bar-wrapper">
-      <nz-input-group nzSize="large">
-        <input type="text" nz-input placeholder="Search..." [(ngModel)]="params.search"
-          (ngModelChange)="onFilterChange()" />
-      </nz-input-group>
+  <div class="admin-header">
+    <div class="header-left">
+      <div class="controls-container">
+        
+        <div class="category-selector">
+          <nz-select 
+            class="filter-select"
+            [(ngModel)]="params.category" 
+            (ngModelChange)="onFilterChange()" 
+            nzPlaceHolder="All Categories" 
+            nzAllowClear>
+            <nz-option 
+              *ngFor="let cat of categories" 
+              [nzValue]="cat.id" 
+              [nzLabel]="cat.name">
+            </nz-option>
+          </nz-select>
+        </div>
+
+        <div class="search-wrapper">
+          <input 
+            type="text" 
+            nz-input 
+            placeholder="Search products..." 
+            [(ngModel)]="params.search" 
+            (ngModelChange)="onFilterChange()" />
+          <button class="search-confirm-btn" (click)="onFilterChange()">
+            <span nz-icon nzType="search"></span>
+          </button>
+        </div>
+
+        <div class="show-per-page">
+          <span class="label">Show:</span>
+          <nz-select class="page-size-select" [(ngModel)]="params.pageSize" (ngModelChange)="onFilterChange()">
+            <nz-option [nzValue]="6" nzLabel="6 per page"></nz-option>
+            <nz-option [nzValue]="12" nzLabel="12 per page"></nz-option>
+          </nz-select>
+        </div>
+
+      </div>
     </div>
-  </header>
+  </div>
 
   <main class="content-layout">
     <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products?.length; else emptyState">

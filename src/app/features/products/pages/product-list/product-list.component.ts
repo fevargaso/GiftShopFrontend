@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '@app/core/services/product.services';
+import { CategoryService } from '@app/core/services/category.service';
 import { Product } from '@app/core/models/product-model';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzButtonModule } from 'ng-zorro-antd/button'; // Agregado para el botón de búsqueda
 import { Router, RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { Subject, Subscription } from 'rxjs';
@@ -26,18 +28,16 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
     NzInputModule,
     NzPaginationModule,
     NzIconModule,
+    NzButtonModule,
     AddToCartButtonComponent
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-
   products: Product[] = [];
+  categories: any[] = []; 
   totalItems = 0;
-  isAdded = false;
-  addedProductId: Set<string> = new Set();
-
   viewMode: 'list' = 'list';
 
   private searchSubject = new Subject<string>();
@@ -52,11 +52,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
+    private categoryService: CategoryService, 
     private router: Router,
     private cartService: CartService
   ) { }
 
   ngOnInit(): void {
+    this.loadCategories(); 
     this.loadProducts();
 
     this.searchSubscription = this.searchSubject.pipe(
@@ -64,13 +66,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
       distinctUntilChanged()
     ).subscribe(searchText => {
       this.params.search = searchText;
-      this.params.page = 1;
       this.loadProducts();
     });
   }
 
   ngOnDestroy(): void {
     this.searchSubscription?.unsubscribe();
+  }
+
+  loadCategories(): void {
+    this.categoryService.getAll().subscribe({
+      next: (res) => this.categories = res,
+      error: (err) => console.error('Error loading categories', err)
+    });
   }
 
   loadProducts(): void {
@@ -83,8 +91,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
-  onFilterChange(): void {
+  onSearchChange(): void {
+    this.params.page = 1; 
     this.searchSubject.next(this.params.search);
+  }
+
+  onFilterChange(): void {
+    this.params.page = 1;
+    this.loadProducts();
   }
 
   onPageChange(page: number): void {

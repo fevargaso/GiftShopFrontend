@@ -14,7 +14,7 @@ export class ProductService {
 getProducts(params: any): Observable<any> {
     let httpParams = new HttpParams();
     if (params.search) httpParams = httpParams.set('search', params.search);
-    if (params.category) httpParams = httpParams.set('category', params.category);
+    if (params.category) httpParams = httpParams.set('categoryId', params.category);
     httpParams = httpParams.set('page', params.page.toString());
     httpParams = httpParams.set('pageSize', params.pageSize.toString());
 

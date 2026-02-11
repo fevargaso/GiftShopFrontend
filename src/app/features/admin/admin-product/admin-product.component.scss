@@ -1,19 +1,157 @@
 .admin-page {
   padding: 24px;
-  background: white;
+  background: #f9f9f9;
   min-height: 100vh;
 
   .admin-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: center;
     margin-bottom: 24px;
-    
-    h2 { margin: 0; color: #001529; }
+    padding: 16px 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    flex-wrap: nowrap; 
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      flex: 1; 
+
+      h2 { 
+        margin: 0; 
+        color: #001529; 
+        font-weight: 700; 
+        white-space: nowrap;
+        flex: 0 0 auto; 
+      }
+
+      .controls-container {
+        display: flex;
+        align-items: center;
+        gap: 20px; // Aumentado el espacio entre componentes
+        flex: 1; 
+        justify-content: center; 
+
+        .filter-select {
+          min-width: 150px; 
+        }
+
+        .search-wrapper {
+          display: flex;
+          align-items: center;
+          // AJUSTE DE LARGO:
+          min-width: 300px; // Aumentado el mínimo
+          max-width: 550px; // Aumentado el máximo para que sea más largo
+          flex: 1; 
+
+          input {
+            border-radius: 8px 0 0 8px !important;
+            height: 32px;
+            font-size: 14px;
+          }
+
+          .search-confirm-btn {
+            background-color: #008ba3;
+            color: white;
+            border: 1px solid #008ba3;
+            height: 32px; 
+            padding: 0 16px; // Un poco más de aire al botón
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+
+            &:hover {
+              background-color: #006d80;
+            }
+          }
+        }
+
+        .show-per-page {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          white-space: nowrap;
+
+          .page-size-select {
+            width: 140px;
+          }
+        }
+      }
+    }
+
+    .btn-new {
+      background-color: #008ba3 !important;
+      border-color: #008ba3 !important;
+      border-radius: 8px !important;
+      height: 40px;
+      font-weight: 600;
+      white-space: nowrap;
+      margin-left: 16px;
+      flex: 0 0 auto; 
+    }
   }
 }
 
-::ng-deep .ant-table-thead > tr > th {
-  background: #f0f2f5;
-  font-weight: 700;
+// ESTILOS DEL MODAL (MANTENIDOS)
+::ng-deep {
+  .pro-modal-content {
+    padding: 10px 0;
+    display: flex !important;
+    gap: 30px !important;
+    align-items: flex-start !important;
+    max-width: 100% !important;
+
+    div[style*="flex: 1"] {
+      flex: 0 0 200px !important; 
+      width: 200px !important;
+      max-width: 200px !important;
+    }
+
+    .image-dropzone {
+      width: 200px !important;
+      height: 200px !important; 
+      max-height: 200px !important;
+      border: 2px dashed #e2e8f0 !important;
+      border-radius: 12px !important;
+      overflow: hidden !important; 
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #f8fafc !important;
+
+      .preview-img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important; 
+      }
+    }
+
+    div[style*="flex: 1.5"] {
+      flex: 1 !important;
+      min-width: 0 !important; 
+    }
+
+    input.ant-input, 
+    textarea.ant-input, 
+    .ant-select-selector {
+      border-radius: 10px !important;
+      border: 1px solid #e2e8f0 !important;
+      
+      &:hover, &:focus {
+        border-color: #008ba3 !important;
+        box-shadow: 0 0 0 3px rgba(0, 139, 163, 0.1) !important;
+      }
+    }
+  }
+
+  .ant-modal-footer .ant-btn-primary {
+    background: #008ba3 !important;
+    border-radius: 8px !important;
+  }
 }
