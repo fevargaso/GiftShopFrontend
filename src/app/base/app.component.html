@@ -39,14 +39,32 @@
 
     <div class="header-space"></div>
 
-    <div class="navbar_left" nz-dropdown [nzDropdownMenu]="menuUser" nzPlacement="bottomRight" nzOverlayClassName="menu-user-actions">
-      <div class="navbar_left__container">
-        <h6 id="lbl_navbar_employee_name" class="navbar_left__container__name">{{ $name() }}</h6>
-        <span id="lbl_navbar_employee_role" class="navbar_left__container__role">{{ $role() | translate }}</span>
+    <div class="navbar_left" 
+         nz-dropdown 
+         [nzDropdownMenu]="$role() !== 'unauthorize' ? menuUser : emptyMenu" 
+         nzPlacement="bottomRight" 
+         nzOverlayClassName="menu-user-actions">
+      
+      <div class="navbar_left__container" (click)="$role() === 'unauthorize' ? goToLogin() : null" [style.cursor]="'pointer'">
+        @if ($role() !== 'unauthorize') {
+          <h6 id="lbl_navbar_employee_name" class="navbar_left__container__name">{{ $name() }}</h6>
+          <span id="lbl_navbar_employee_role" class="navbar_left__container__role">{{ $role() | translate }}</span>
+        } @else {
+          <h6 class="navbar_left__container__name">{{ 'GUEST' | translate }}</h6>
+          <span class="navbar_left__container__role" style="color: #1890ff;">{{ 'LOGIN' | translate }}</span>
+        }
       </div>
-      <div class="rounded-circle navbar_left__container__photo">
-        <nz-avatar id="img_avatar" [nzText]="$initials()"></nz-avatar>
+
+      <div class="rounded-circle navbar_left__container__photo" 
+           (click)="$role() === 'unauthorize' ? goToLogin() : null" 
+           [style.cursor]="'pointer'">
+        @if ($role() !== 'unauthorize') {
+          <nz-avatar id="img_avatar" [nzText]="$initials()"></nz-avatar>
+        } @else {
+          <nz-avatar id="img_avatar" nzIcon="user"></nz-avatar>
+        }
       </div>
+
       <nz-dropdown-menu #menuUser="nzDropdownMenu">
         <ul id="lst_navbar_user_actions" nz-menu>
           <li id="itm_logout" nz-menu-item (click)="logout()">
@@ -54,6 +72,10 @@
             <span class="user-action-item">{{ 'General.LOGOUT' | translate }}</span>
           </li>
         </ul>
+      </nz-dropdown-menu>
+
+      <nz-dropdown-menu #emptyMenu="nzDropdownMenu">
+        <ul nz-menu style="display: none;"></ul>
       </nz-dropdown-menu>
     </div>
   </nz-header>
@@ -65,8 +87,8 @@
   </nz-content>
 
   <div class="floating-cart-trigger" 
-       *ngIf="!isLoginPage()" 
-       (click)="cartDrawerService.toggle()">
+        *ngIf="!isLoginPage()" 
+        (click)="cartDrawerService.toggle()">
     <nz-badge [nzCount]="$cartCount()" [nzOffset]="[-10, 10]">
       <button nz-button nzType="primary" nzShape="circle" class="cart-btn">
         <span nz-icon nzType="shopping-cart"></span>

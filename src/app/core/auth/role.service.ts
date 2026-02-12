@@ -42,21 +42,21 @@ export class RoleService {
     }
   }
 
-selectRole(roles: string[]): Role {
+  // Este es el método que usa tu Effect 'assingRole$'
+  selectRole(roles: string[]): Role {
     if (!roles || roles.length === 0) return Role.UNAUTHORIZE;
 
-    const normalized = roles.map(r => r.toUpperCase());
+    const firstRole = roles[0].toString().toLowerCase();
 
-    if (roles.includes(Role.STAFF)) return Role.STAFF;
-    if (roles.includes(Role.PORTFOLIO_MANAGER)) return Role.PORTFOLIO_MANAGER;
-    if (roles.includes(Role.SALES)) return Role.SALES;
-    if (roles.includes(Role.PM)) return Role.PM;
-    if (roles.includes(Role.QA)) return Role.QA;
+    // Mapeo directo para asegurar que STAFF se active
+    if (firstRole === 'admin' || firstRole === '1' || firstRole === 'staff') {
+      return Role.STAFF;
+    }
 
-    if (normalized.includes('USER') || normalized.includes(Role.STANDARD.toUpperCase())) {
+    if (firstRole === 'user' || firstRole === '0' || firstRole === 'standard') {
       return Role.STANDARD;
     }
-    
+
     return Role.UNAUTHORIZE;
   }
 
@@ -66,25 +66,32 @@ selectRole(roles: string[]): Role {
   hasStaffAccess(): boolean { return this.$userStore()?.actualRole === Role.STAFF; }
   hasPortfolioManagerAccess(): boolean { return this.$userStore()?.actualRole === Role.PORTFOLIO_MANAGER; }
 
-defaultUserAppRole(userRoles: string[]) {
+  defaultUserAppRole(userRoles: string[]): string {
     if (!userRoles || userRoles.length <= 0) return Role.UNAUTHORIZE;
     
+    // Si detectamos Admin en la lista, devolvemos STAFF de inmediato
+    if (userRoles.some(r => r.toLowerCase() === 'admin' || r === '1')) {
+      return Role.STAFF;
+    }
+
     const filteredUserRoles = this.removeUnmatchedAppRoles(userRoles);
     
     if (filteredUserRoles.length === 0 && userRoles.some(r => r.toUpperCase() === 'USER')) {
       return Role.STANDARD;
     }
 
-    return (filteredUserRoles[0] as Role) || Role.UNAUTHORIZE;
+    // Mapeo manual para asegurar que el string se convierta en el valor del Enum correcto
+    const firstRole = filteredUserRoles[0];
+    if (firstRole === 'Admin' || firstRole === '1') return Role.STAFF;
+    if (firstRole === 'User' || firstRole === '0') return Role.STANDARD;
+
+    return (firstRole as Role) || Role.UNAUTHORIZE;
   }
 
-
-removeUnmatchedAppRoles(userRoles: string[]) {
-    return allAppRoles.filter((appRole: string) => 
-      userRoles.some(ur => ur.toUpperCase() === appRole.toUpperCase() || ur.toUpperCase() === 'USER')
-    );
+  public removeUnmatchedAppRoles(roles: string[]): string[] {
+    const allowedRoles = ['Admin', 'User', 'Staff', 'Standard', '1', '0'];
+    return roles.filter(role => allowedRoles.includes(role));
   }
-
 
   getRoles(): string[] {
     const storeRoles = this.$userStore()?.roles;
@@ -94,7 +101,8 @@ removeUnmatchedAppRoles(userRoles: string[]) {
     if (savedUser) {
       try {
         const user = JSON.parse(savedUser);
-        return user.roles || [Role.UNAUTHORIZE];
+        // Nos aseguramos de devolver el array con el rol del backend
+        return user.roles || (user.role ? [user.role] : [Role.UNAUTHORIZE]);
       } catch {
         return [Role.UNAUTHORIZE];
       }

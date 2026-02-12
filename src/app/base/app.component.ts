@@ -45,7 +45,11 @@ export class AppComponent {
   protected readonly $app = toSignal<AppState>(this.store.select('app'));
   protected readonly $name = computed(() => this.$user()!.name);
   protected readonly $initials = computed(() => this.$user()!.initials);
-  protected readonly $role = computed(() => this.$user()!.actualRole);
+  protected readonly $role = computed(() => {
+  const current = this.$user()!.actualRole;
+  console.log('Rol actual en la App:', current);
+  return current;
+});
   protected readonly $roles = computed(() => this.$user()!.roles);
   protected readonly $cartItems = toSignal(
     this.cartService.cart$,
@@ -72,10 +76,10 @@ export class AppComponent {
     () => !this.$app()!.initializing && !this.$app()!.operational
   );
 
-  protected readonly navItems = computed(() => {
-    this.$user();
-    return this.headerService.getNavItems();
-  });
+protected readonly navItems = computed(() => {
+  const role = this.$role(); 
+  return this.headerService.getNavItems(role);
+});
 
   protected readonly $cartCount = computed(() =>
     this.$cartItems().reduce(
@@ -85,6 +89,10 @@ export class AppComponent {
   );
 
   protected readonly year: number = DateTime.now().year;
+
+  goToLogin(): void {
+  this.router.navigate(['/login']);
+}
 
   logout(): void {
   localStorage.removeItem('loggedUser'); 

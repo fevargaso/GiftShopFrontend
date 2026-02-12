@@ -3,7 +3,7 @@ import { isAppLoaded } from './core/auth/is-app-loaded.guard';
 import { AdminProductsComponent } from './features/admin/admin-product/admin-porduct.component';
 import { AdminCategoriesComponent } from './features/admin/admin-categories/admin-categories.component';
 import { OrderComponent } from './features/orders/pages/order/order.component';
-import { authGuard } from './core/auth/auth.guard';
+import { authGuard, adminGuard } from './core/auth/auth.guard'; 
 
 export const routes: Routes = [
   {
@@ -43,8 +43,10 @@ export const routes: Routes = [
   path: 'register',
   loadComponent: () => import('@features/login/register.component').then(m => m.RegisterComponent)
   },
+
   {
     path: 'admin',
+    canActivate: [adminGuard], 
     children: [
       {
         path: 'products',

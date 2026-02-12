@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { RoleService } from '../auth/role.service';
 import { NavItem } from '../models/nav-item.model';
+import { Role } from '../auth/roles';
 
 const homeNavItem: NavItem = {
   id: 'itm_navbar_home',
@@ -36,17 +37,19 @@ const categoriesNavItem: NavItem = {
 export class HeaderService {
   private readonly roleService = inject(RoleService);
 
-  public getNavItems(): NavItem[] {
-    let items = [homeNavItem, productsNavItem, adminNavItem, categoriesNavItem];
+  public getNavItems(role: Role | string | undefined): NavItem[] {
+    let items = [homeNavItem, productsNavItem];
+
+    if (role === Role.STAFF) {
+      items.push(adminNavItem, categoriesNavItem);
+    }
 
     return items;
   }
 
   public getDisplayRoles(): string[] {
-    let roles = this.roleService.removeUnmatchedAppRoles(
+    return this.roleService.removeUnmatchedAppRoles(
       this.roleService.getRoles(),
     );
-    return roles;
   }
-
 }

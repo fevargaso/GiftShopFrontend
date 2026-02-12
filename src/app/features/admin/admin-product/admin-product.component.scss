@@ -30,7 +30,7 @@
       .controls-container {
         display: flex;
         align-items: center;
-        gap: 20px; // Aumentado el espacio entre componentes
+        gap: 20px; 
         flex: 1; 
         justify-content: center; 
 
@@ -41,9 +41,8 @@
         .search-wrapper {
           display: flex;
           align-items: center;
-          // AJUSTE DE LARGO:
-          min-width: 300px; // Aumentado el mínimo
-          max-width: 550px; // Aumentado el máximo para que sea más largo
+          min-width: 300px; 
+          max-width: 550px; 
           flex: 1; 
 
           input {
@@ -57,7 +56,7 @@
             color: white;
             border: 1px solid #008ba3;
             height: 32px; 
-            padding: 0 16px; // Un poco más de aire al botón
+            padding: 0 16px; 
             border-radius: 0 8px 8px 0;
             cursor: pointer;
             display: flex;
@@ -96,7 +95,7 @@
   }
 }
 
-// ESTILOS DEL MODAL (MANTENIDOS)
+
 ::ng-deep {
   .pro-modal-content {
     padding: 10px 0;

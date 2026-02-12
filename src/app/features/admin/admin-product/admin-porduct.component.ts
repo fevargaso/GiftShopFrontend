@@ -49,7 +49,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   isEdit = false;
   totalItems = 0;
 
-  // Inicialización limpia
+
   currentProduct: Partial<Product> = this.resetProduct();
   newCategory = { name: '', description: '' };
 
@@ -79,7 +79,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     this.searchSubscription?.unsubscribe();
   }
 
-  // --- Lógica de Búsqueda ---
+ 
   onSearchChange(value: string): void {
     this.searchSubject.next(value);
   }
@@ -119,11 +119,11 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // --- Gestión de Modal ---
+
   showModal(product?: Product): void {
     if (product) {
       this.isEdit = true;
-      // Clonamos para no editar directamente la fila de la tabla
+
       this.currentProduct = { ...product };
     } else {
       this.isEdit = false;
@@ -182,7 +182,7 @@ handleOk(): void {
     this.isCategoryVisible = false;
   }
 
-  // --- Auxiliares ---
+
   private finalizeOperation() {
     this.loadProducts();
     this.isVisible = false;
@@ -194,7 +194,7 @@ handleOk(): void {
       price: 0, 
       description: '', 
       imageUrl: '', 
-      categoryId: undefined // Dejar como undefined para que el placeholder del select funcione
+      categoryId: undefined 
     };
   }
 
@@ -205,7 +205,7 @@ handleOk(): void {
       const reader = new FileReader();
       reader.onload = () => {
         this.currentProduct.imageUrl = reader.result as string;
-        input.value = ''; // Reset para poder subir la misma imagen si se borra
+        input.value = ''; 
       };
       reader.readAsDataURL(file);
     }
