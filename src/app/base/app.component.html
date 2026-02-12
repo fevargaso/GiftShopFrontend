@@ -5,7 +5,10 @@
   [error]="'Fatal Error, application no operational! Please contact to IT Team.'" />
 
 <nz-layout class="layout">
-  <nz-header id="ctn_navbar">
+  <nz-header id="ctn_navbar" 
+             [style.pointer-events]="isLoginPage() ? 'none' : 'auto'"
+             [style.opacity]="isLoginPage() ? '0.6' : '1'">
+    
     @if (navItems().length > 0) {
       <div style="height: 100%; display: flex; align-items: center">
         <button class="menu-horizontal" nzSize="large" nz-button nz-dropdown [nzDropdownMenu]="menu"
@@ -55,20 +58,23 @@
     </div>
   </nz-header>
 
-<nz-content id="ctn_content">
-  <div class="inner-content">
-    <router-outlet></router-outlet> </div>
-</nz-content>
+  <nz-content id="ctn_content">
+    <div class="inner-content">
+      <router-outlet></router-outlet> 
+    </div>
+  </nz-content>
 
-<div class="floating-cart-trigger" (click)="cartDrawerService.toggle()">
-  <nz-badge [nzCount]="$cartCount()" [nzOffset]="[-10, 10]">
-    <button nz-button nzType="primary" nzShape="circle" class="cart-btn">
-      <span nz-icon nzType="shopping-cart"></span>
-    </button>
-  </nz-badge>
-</div>
+  <div class="floating-cart-trigger" 
+       *ngIf="!isLoginPage()" 
+       (click)="cartDrawerService.toggle()">
+    <nz-badge [nzCount]="$cartCount()" [nzOffset]="[-10, 10]">
+      <button nz-button nzType="primary" nzShape="circle" class="cart-btn">
+        <span nz-icon nzType="shopping-cart"></span>
+      </button>
+    </nz-badge>
+  </div>
 
-<app-cart-drawer></app-cart-drawer>
+  <app-cart-drawer></app-cart-drawer>
 
   <nz-footer id="ctn_footer">
     <span style="font-size: 14px; font-weight: 600;">

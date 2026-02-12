@@ -1,6 +1,6 @@
 import { Component, computed, inject, ViewEncapsulation } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
+import { Router, RouterOutlet, NavigationEnd, Event } from '@angular/router'; // Se añade Event para tipar
+import { filter, map } from 'rxjs'; // Se añaden estas importaciones de RxJS
 import { SplashScreenComponent } from '../shared/components/splash-screen/splash-screen.component';
 import { Store } from '@ngrx/store';
 import { changeRole, UserState } from '../core/auth/user.store';
@@ -15,6 +15,7 @@ import { CartItem } from '@app/core/models/cart-item.model';
 import { CartDrawerComponent } from '@app/shared/components/cart-drawer/cart-drawer.component';
 import { CartDrawerService } from '@app/core/services/cart-drawer.service';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -24,8 +25,18 @@ import { CartDrawerService } from '@app/core/services/cart-drawer.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  private keycloak = inject(KeycloakService);
+
+  private router = inject(Router);
   private headerService = inject(HeaderService);
+  
+  private currentUrl = toSignal(
+    this.router.events.pipe(
+      filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => event.urlAfterRedirects)
+    ),
+    { initialValue: window.location.pathname }
+  );
+
   public cartService = inject(CartService);
   public cartDrawerService = inject(CartDrawerService);
   protected readonly store = inject(Store);
@@ -37,22 +48,26 @@ export class AppComponent {
   protected readonly $role = computed(() => this.$user()!.actualRole);
   protected readonly $roles = computed(() => this.$user()!.roles);
   protected readonly $cartItems = toSignal(
-  this.cartService.cart$,
-  { initialValue: [] as CartItem[] }
-);
+    this.cartService.cart$,
+    { initialValue: [] as CartItem[] }
+  );
 
-protected readonly $carrCount = computed(() =>
-  this.$cartItems().reduce(
-    (total, item) => total + item.quantity,
-    0
-  )
-);
+  protected readonly $carrCount = computed(() =>
+    this.$cartItems().reduce(
+      (total, item) => total + item.quantity,
+      0
+    )
+  );
+
+  protected readonly isLoginPage = computed(() => this.currentUrl()?.includes('/login'));
+
   protected readonly showSplash = computed(
     () =>
       this.$app()!.initializing ||
       !this.$app()!.operational ||
       this.$app()!.checking
   );
+  
   protected readonly noOperational = computed(
     () => !this.$app()!.initializing && !this.$app()!.operational
   );
@@ -63,17 +78,21 @@ protected readonly $carrCount = computed(() =>
   });
 
   protected readonly $cartCount = computed(() =>
-  this.$cartItems().reduce(
-    (total, item) => total + item.quantity,
-    0
-  )
-);
+    this.$cartItems().reduce(
+      (total, item) => total + item.quantity,
+      0
+    )
+  );
 
   protected readonly year: number = DateTime.now().year;
 
   logout(): void {
-    this.keycloak.logout(location.origin);
-  }
+  localStorage.removeItem('loggedUser'); 
+  localStorage.removeItem('elysiumCurrentUserRole'); 
+  this.router.navigate(['/home']).then(() => {
+    window.location.reload(); 
+  });
+}
 
   onChangeRole(role: string | null = null): void {
     if (role !== null) {

@@ -1,22 +1,14 @@
 import { inject } from "@angular/core";
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from "@angular/router";
-import { KeycloakService } from "keycloak-angular";
-import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
-export const isAuthenticated = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-):
-  | boolean
-  | UrlTree
-  | Observable<boolean | UrlTree>
-  | Promise<boolean | UrlTree> => {
-  const keycloakService = inject(KeycloakService);
+export const isAuthenticated = () => {
+  const router = inject(Router);
+  
+  const isLoggedIn = !!localStorage.getItem('loggedUser');
 
-  if (!keycloakService.getKeycloakInstance().authenticated) {
-    keycloakService.login();
-    return Promise.resolve(false);
+  if (isLoggedIn) {
+    return true;
   }
 
-  return Promise.resolve(true);
+  return router.parseUrl('/login');
 };

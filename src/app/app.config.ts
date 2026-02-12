@@ -86,18 +86,6 @@ export const appConfig: ApplicationConfig = {
       multi: true,
       deps: [ConfigService, TranslateService],
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: KeycloakBearerInterceptor,
-      multi: true,
-    },
-    KeycloakService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService, ConfigService, Store],
-    },
     provideAnimationsAsync(),
   ],
 };

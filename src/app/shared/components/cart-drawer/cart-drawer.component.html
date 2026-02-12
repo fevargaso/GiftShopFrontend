@@ -61,7 +61,14 @@
           <span>Subtotal</span>
           <strong>${{ calculateTotal() | number }}</strong>
         </div>
-        <button nz-button nzType="primary" nzBlock class="checkout-button" (click)="goToCartPage()">
+        
+        <button 
+          nz-button 
+          nzType="primary" 
+          nzBlock 
+          class="checkout-button" 
+          [disabled]="cartItems.length === 0"
+          (click)="goToCheckout()">
           Proceed to Checkout
         </button>
       </div>

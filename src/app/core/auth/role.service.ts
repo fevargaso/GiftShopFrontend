@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { Role, allAppRoles, noneRole } from './roles';
-import { KeycloakService } from 'keycloak-angular';
 import { Store } from '@ngrx/store';
 import { UserState } from './user.store';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -15,14 +14,12 @@ export class RoleService {
   private currentUserRoleKey: string = 'elysiumCurrentUserRole';
   private userRole: string = noneRole;
 
-  constructor(private readonly keycloak: KeycloakService) {}
+  constructor() {}
 
   get currentUserRole(): string {
-    const userRoleCached: string | null = localStorage.getItem(
-      this.currentUserRoleKey
-    );
+    const userRoleCached = localStorage.getItem(this.currentUserRoleKey);
     if (userRoleCached && this.userRole.includes(noneRole)) {
-      this.currentUserRole = userRoleCached;
+      this.userRole = userRoleCached;
     }
     return this.userRole;
   }
@@ -35,85 +32,73 @@ export class RoleService {
   init(): void {
     const userRoles: string[] = this.getRoles();
     const defaultUserRole: string = this.defaultUserAppRole(userRoles);
-    const isValidRoleCached = userRoles.some((userRole: string) =>
-      userRole.includes(this.currentUserRole)
+    
+    const isValidRoleCached = userRoles.some((role: string) =>
+      role.includes(this.currentUserRole)
     );
+
     if (this.currentUserRole.includes(noneRole) || !isValidRoleCached) {
       this.currentUserRole = defaultUserRole;
     }
   }
 
-  selectRole(roles: string[]): Role {
-    if (roles.includes(Role.STAFF)) {
-      return Role.STAFF;
-    } else if (roles.includes(Role.PORTFOLIO_MANAGER)) {
-      return Role.PORTFOLIO_MANAGER;
-    } else if (roles.includes(Role.SALES)) {
-      return Role.SALES;
-    } else if (roles.includes(Role.PM)) {
-      return Role.PM;
-    } else if (roles.includes(Role.QA)) {
-      return Role.QA;
-    } else if (roles.includes(Role.STANDARD)) {
+selectRole(roles: string[]): Role {
+    if (!roles || roles.length === 0) return Role.UNAUTHORIZE;
+
+    const normalized = roles.map(r => r.toUpperCase());
+
+    if (roles.includes(Role.STAFF)) return Role.STAFF;
+    if (roles.includes(Role.PORTFOLIO_MANAGER)) return Role.PORTFOLIO_MANAGER;
+    if (roles.includes(Role.SALES)) return Role.SALES;
+    if (roles.includes(Role.PM)) return Role.PM;
+    if (roles.includes(Role.QA)) return Role.QA;
+
+    if (normalized.includes('USER') || normalized.includes(Role.STANDARD.toUpperCase())) {
       return Role.STANDARD;
     }
+    
     return Role.UNAUTHORIZE;
   }
 
-  userBelongsToRole(role: Role): boolean {
-    return false;
-  }
+  hasQaAccess(): boolean { return this.$userStore()?.actualRole === Role.QA; }
+  hasSalesAccess(): boolean { return this.$userStore()?.actualRole === Role.SALES; }
+  hasPmAccess(): boolean { return this.$userStore()?.actualRole === Role.PM; }
+  hasStaffAccess(): boolean { return this.$userStore()?.actualRole === Role.STAFF; }
+  hasPortfolioManagerAccess(): boolean { return this.$userStore()?.actualRole === Role.PORTFOLIO_MANAGER; }
 
-  onChangeRole(role: string): void {
-    const userRoles: string[] = this.removeUnmatchedAppRoles(this.getRoles());
-    this.currentUserRole = role;
-    const isValidRoleChanged = userRoles.some((userRole: string) =>
-      userRole.includes(this.currentUserRole)
-    );
-    if (!isValidRoleChanged) {
-      this.init();
+defaultUserAppRole(userRoles: string[]) {
+    if (!userRoles || userRoles.length <= 0) return Role.UNAUTHORIZE;
+    
+    const filteredUserRoles = this.removeUnmatchedAppRoles(userRoles);
+    
+    if (filteredUserRoles.length === 0 && userRoles.some(r => r.toUpperCase() === 'USER')) {
+      return Role.STANDARD;
     }
+
+    return (filteredUserRoles[0] as Role) || Role.UNAUTHORIZE;
   }
 
-  hasQaAccess(): boolean {
-    return Role.QA.includes(this.$userStore()!.actualRole);
-  }
 
-  hasSalesAccess(): boolean {
-    return Role.SALES.includes(this.$userStore()!.actualRole);
-  }
-
-  hasPmAccess(): boolean {
-    return Role.PM.includes(this.$userStore()!.actualRole);
-  }
-
-  hasStaffAccess(): boolean {
-    return Role.STAFF.includes(this.$userStore()!.actualRole);
-  }
-
-  hasPortfolioManagerAccess(): boolean {
-    return Role.PORTFOLIO_MANAGER.includes(this.$userStore()!.actualRole);
-  }
-
-  defaultUserAppRole(userRoles: string[]) {
-    if (!userRoles || userRoles.length <= 0) {
-      return noneRole;
-    }
-    const filteredUserRoles: string[] = this.removeUnmatchedAppRoles(userRoles);
-
-    return filteredUserRoles[0];
-  }
-
-  removeUnmatchedAppRoles(userRoles: string[]) {
-    let exclude: string[] = [];
-    // Add roles to exclude
-    return allAppRoles.filter(
-      (item: string) => userRoles.includes(item) && !exclude.includes(item)
+removeUnmatchedAppRoles(userRoles: string[]) {
+    return allAppRoles.filter((appRole: string) => 
+      userRoles.some(ur => ur.toUpperCase() === appRole.toUpperCase() || ur.toUpperCase() === 'USER')
     );
   }
+
 
   getRoles(): string[] {
-    let roles = this.keycloak.getKeycloakInstance().realmAccess?.roles || [];
-    return roles;
+    const storeRoles = this.$userStore()?.roles;
+    if (storeRoles && storeRoles.length > 0) return storeRoles;
+
+    const savedUser = localStorage.getItem('loggedUser');
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        return user.roles || [Role.UNAUTHORIZE];
+      } catch {
+        return [Role.UNAUTHORIZE];
+      }
+    }
+    return [Role.UNAUTHORIZE];
   }
 }

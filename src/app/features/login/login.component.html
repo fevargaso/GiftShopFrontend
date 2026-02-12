@@ -1,0 +1,35 @@
+<div style="max-width: 400px; margin: 100px auto; padding: 20px; border: 1px solid #f0f0f0; border-radius: 8px; background: #fff;">
+  <h2 nz-title style="text-align: center; margin-bottom: 24px;">Iniciar Sesión</h2>
+  
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Por favor ingresa tu email">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="email" placeholder="Email" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Por favor ingresa tu contraseña">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" placeholder="Password" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Entrar</button>
+  </form>
+
+  <div style="margin-top: 24px; text-align: center;">
+    <div style="display: flex; align-items: center; margin-bottom: 16px;">
+      <div style="flex: 1; height: 1px; background: #f0f0f0;"></div>
+      <span style="padding: 0 10px; color: #bfbfbf; font-size: 12px;">¿NUEVO AQUÍ?</span>
+      <div style="flex: 1; height: 1px; background: #f0f0f0;"></div>
+    </div>
+    
+    <button nz-button nzType="default" nzBlock (click)="goToRegister()">
+      Crear una cuenta nueva
+    </button>
+  </div>
+</div>

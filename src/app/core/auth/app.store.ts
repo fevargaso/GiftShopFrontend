@@ -7,8 +7,8 @@ export type AppState = {
 };
 
 const initialState: AppState = {
-  initializing: true,
-  operational: false,
+  initializing: false,
+  operational: true,
   checking: false,
 };
 

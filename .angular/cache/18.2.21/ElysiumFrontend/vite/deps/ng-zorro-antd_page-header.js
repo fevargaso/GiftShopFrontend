@@ -1,31 +1,31 @@
 import {
-  NzResizeObserver
-} from "./chunk-YGNPLH3G.js";
+  NzIconDirective,
+  NzIconModule
+} from "./chunk-24FD55U4.js";
+import "./chunk-BQ76GOFF.js";
 import {
   NzOutletModule,
   NzStringTemplateOutletDirective
-} from "./chunk-O2KJ4HO4.js";
+} from "./chunk-KCKBRW5C.js";
+import {
+  NzResizeObserver
+} from "./chunk-U2GBWPPE.js";
+import "./chunk-R6IJAHEZ.js";
 import {
   Directionality
-} from "./chunk-JWXJAX4E.js";
-import {
-  NzIconDirective,
-  NzIconModule
-} from "./chunk-VPMN4NOA.js";
-import "./chunk-BQ76GOFF.js";
-import "./chunk-NT2VFEI2.js";
+} from "./chunk-CGJQYKLH.js";
 import {
   NzConfigService,
   WithConfig
-} from "./chunk-VBRHEHWF.js";
+} from "./chunk-XRYSGYAF.js";
 import {
   PREFIX
-} from "./chunk-45PTXMFP.js";
-import "./chunk-TAIIUZZD.js";
-import "./chunk-6HQWDNO4.js";
+} from "./chunk-WKKYJIDN.js";
+import "./chunk-HHQ7MW3F.js";
+import "./chunk-FADEYHXQ.js";
 import {
   Location
-} from "./chunk-P7XZQWMR.js";
+} from "./chunk-VFHRQ4OU.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -68,15 +68,15 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-E2LL2ENA.js";
-import "./chunk-XSUPIODI.js";
-import "./chunk-RRANXKLR.js";
+} from "./chunk-ZREUISJD.js";
+import "./chunk-ISM5WLAM.js";
+import "./chunk-IC62NIWK.js";
 import {
   Subject,
   __decorate,
   map,
   takeUntil
-} from "./chunk-V7EGFIMY.js";
+} from "./chunk-ZZ67MR3E.js";
 import "./chunk-TXDUYLVM.js";
 
 // node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-page-header.mjs

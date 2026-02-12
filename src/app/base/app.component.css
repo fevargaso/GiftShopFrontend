@@ -175,13 +175,13 @@ li:focus(:focus-visible) {
 
 .navbar_left .ant-avatar {
   color: var(--color-white);
-  background: #0E6E8E; /* TODO: move to vars */
+  background: #0E6E8E; 
   font-family: var(--font-open-sans);
   font-size: 15px;
   font-weight: 600;
   width: 38px;
   height: 38px;
-  line-height: 38px; /* must be 36 like width and height */
+  line-height: 38px; 
   display: inline-block;
 }
 
@@ -234,6 +234,12 @@ li:focus(:focus-visible) {
 .ant-dropdown-menu.menu-user-roles .ant-dropdown-menu-item:hover,
 .ant-dropdown-menu.menu-user-roles .ant-dropdown-menu-submenu:hover {
   background-color: var(--color-gray1);
+}
+
+.navigation-hidden nav {
+  pointer-events: none; 
+  opacity: 0.5;        
+  cursor: not-allowed;
 }
 
 .floating-cart-trigger {
