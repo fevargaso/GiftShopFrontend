@@ -101,7 +101,6 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     this.loadProducts();
   }
 
-  // --- Carga de Datos ---
   loadProducts() {
     this.productService.getProducts(this.params).subscribe({
       next: (res: any) => {

@@ -44,8 +44,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
       if (isAdmin) {
         return true;
       }
-
-      console.warn('Acceso denegado a Admin: Redirigiendo a página principal.');
       
       return router.createUrlTree(['/']);
     })

@@ -7,8 +7,6 @@
   h1 { font-size: 24px; margin-bottom: 20px; font-weight: 600; }
 }
 
-// --- VISTA DE ÉXITO (Añadir al final de tu .order-page-container) ---
-
 .success-layout {
   background: #fff;
   padding: 40px;
@@ -18,7 +16,6 @@
   margin-top: 20px;
   animation: fadeIn 0.5s ease-in-out;
 
-  // Contenedor del listado de productos comprados
   .purchased-products-list {
     background: #f9f9f9;
     padding: 24px;
@@ -98,7 +95,7 @@
       strong { color: #565959; }
       
       .amount { 
-        color: #B12704; // Color rojo clásico de precio final
+        color: #B12704;
         font-weight: 700; 
         font-size: 22px;
       }
@@ -106,20 +103,18 @@
   }
 }
 
-// Animación simple para que el mensaje no aparezca de golpe
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-// Ajustes responsivos
 @media (max-width: 768px) {
   .main-checkout-layout {
     grid-template-columns: 1fr;
   }
   
   .order-summary-side {
-    order: -1; // El botón de compra sube en móvil
+    order: -1; 
   }
 
   .success-layout {

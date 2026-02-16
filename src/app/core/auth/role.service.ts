@@ -42,13 +42,11 @@ export class RoleService {
     }
   }
 
-  // Este es el método que usa tu Effect 'assingRole$'
   selectRole(roles: string[]): Role {
     if (!roles || roles.length === 0) return Role.UNAUTHORIZE;
 
     const firstRole = roles[0].toString().toLowerCase();
 
-    // Mapeo directo para asegurar que STAFF se active
     if (firstRole === 'admin' || firstRole === '1' || firstRole === 'staff') {
       return Role.STAFF;
     }
@@ -69,7 +67,6 @@ export class RoleService {
   defaultUserAppRole(userRoles: string[]): string {
     if (!userRoles || userRoles.length <= 0) return Role.UNAUTHORIZE;
     
-    // Si detectamos Admin en la lista, devolvemos STAFF de inmediato
     if (userRoles.some(r => r.toLowerCase() === 'admin' || r === '1')) {
       return Role.STAFF;
     }
@@ -80,7 +77,6 @@ export class RoleService {
       return Role.STANDARD;
     }
 
-    // Mapeo manual para asegurar que el string se convierta en el valor del Enum correcto
     const firstRole = filteredUserRoles[0];
     if (firstRole === 'Admin' || firstRole === '1') return Role.STAFF;
     if (firstRole === 'User' || firstRole === '0') return Role.STANDARD;
@@ -101,7 +97,6 @@ export class RoleService {
     if (savedUser) {
       try {
         const user = JSON.parse(savedUser);
-        // Nos aseguramos de devolver el array con el rol del backend
         return user.roles || (user.role ? [user.role] : [Role.UNAUTHORIZE]);
       } catch {
         return [Role.UNAUTHORIZE];

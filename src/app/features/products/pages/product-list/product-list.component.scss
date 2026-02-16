@@ -1,17 +1,15 @@
-/* Variables de marca */
-$accent-color: #007185; // Estilo Amazon links
+$accent-color: #007185; 
 $text-main: #0f1111;
 $amazon-dark: #232f3e;
 $amazon-orange: #ffa41c;
 $border-light: #ddd;
-$admin-teal: #008ba3; // Color del botón de admin
+$admin-teal: #008ba3; 
 
 .amazon-container {
   background-color: #f8f9fa;
   min-height: 100vh;
   padding: 24px;
 
-  // --- SECCIÓN DE CONTROLES CENTRADA ---
   .admin-header {
     display: flex;
     justify-content: center; 
@@ -36,7 +34,7 @@ $admin-teal: #008ba3; // Color del botón de admin
         display: flex;
         align-items: center;
         justify-content: center; 
-        gap: 20px; // Espacio aumentado para mayor claridad
+        gap: 20px; 
         flex: 1;
 
         .category-selector {
@@ -53,9 +51,8 @@ $admin-teal: #008ba3; // Color del botón de admin
         .search-wrapper {
           display: flex;
           align-items: center;
-          // AJUSTE DE LARGO:
           min-width: 350px; 
-          max-width: 650px; // Barra más larga para la tienda
+          max-width: 650px; 
           flex: 1;
 
           input {
@@ -105,7 +102,6 @@ $admin-teal: #008ba3; // Color del botón de admin
   }
 }
 
-// --- LISTADO DE PRODUCTOS (SE MANTIENE IGUAL) ---
 .amazon-vertical-list {
   max-width: 1150px;
   margin: 0 auto;

@@ -38,11 +38,9 @@ export class CartService {
     if (this.storageKey === newKey) return;
 
     if (this.storageKey === 'giftshop_cart_guest' && isRegistered) {
-      console.log('Login detectado: Fusionando carrito de invitado con usuario...');
       this.mergeGuestCartToUser(newKey);
     } 
     else {
-      console.log('Cambio de usuario simple. Cargando nuevo carrito.');
       this.storageKey = newKey;
       this.loadCartFromStorage();
     }

@@ -6,7 +6,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '@app/core/services/auth.service'; // Asegúrate de que la ruta sea correcta
+import { AuthService } from '@app/core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ export class RegisterComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private message = inject(NzMessageService);
-  private authService = inject(AuthService); // Inyectamos el servicio real
+  private authService = inject(AuthService); 
 
   loading = false;
 

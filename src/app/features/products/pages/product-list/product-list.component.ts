@@ -8,7 +8,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { NzButtonModule } from 'ng-zorro-antd/button'; // Agregado para el botón de búsqueda
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { Router, RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { Subject, Subscription } from 'rxjs';

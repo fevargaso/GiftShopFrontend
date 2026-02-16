@@ -243,24 +243,24 @@ nz-content {
   width: 100% !important;
   min-height: 48px !important;
   border: none !important;
-  border-radius: var(--border-radius) !important; /* Usando tu variable de 6px */
+  border-radius: var(--border-radius) !important;
   font-weight: 600 !important;
-  font-family: var(--font-montserrat); /* Aplicando tu fuente de marca */
+  font-family: var(--font-montserrat);
   display: flex !important;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: all 0.3s ease;
-  background-color: var(--color-main) !important; /* Usando tu variable #118ab2 */
+  background-color: var(--color-main) !important; 
   color: white !important;
 
   &:hover:not(:disabled) {
-    filter: brightness(0.9); /* Oscurece un poco el color automáticamente */
+    filter: brightness(0.9); 
     transform: translateY(-2px);
   }
 
   &.added-success {
-    background-color: var(--tag-available) !important; /* Usando tu verde #28C76F */
+    background-color: var(--tag-available) !important; 
     box-shadow: 0 4px 12px rgba(40, 199, 111, 0.3);
   }
 
