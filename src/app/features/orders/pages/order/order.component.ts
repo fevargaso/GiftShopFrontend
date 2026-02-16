@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms'; // Añadido AbstractControl y ValidationErrors
 import { Router, RouterModule } from '@angular/router';
 import { NotificationUtilService } from '@app/core/utils/notification-util.service';
 import { CartService } from '@app/core/services/cart.services';
@@ -59,18 +59,50 @@ export class OrderComponent implements OnInit {
         this.paymentForm = this.fb.group({
             cardHolder: ['', [Validators.required]],
             cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-            expiryDate: ['', [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\/([0-9]{2})$')]],
+            expiryDate: ['', [
+                Validators.required, 
+                Validators.pattern('^(0[1-9]|1[0-2])\\/([0-9]{2})$'),
+                this.expiryDateValidator() 
+            ]],
             cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
         });
     }
 
-calculateTotal(): number {
-    return this.purchasedItems.reduce((acc, item) => {
-        const price = item.product?.price || 0;
-        const qty = item.quantity || 1;
-        return acc + (price * qty);
-    }, 0);
-}
+    expiryDateValidator(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const value = control.value;
+            if (!value || !/^\d{2}\/\d{2}$/.test(value)) {
+                return null;
+            }
+
+            const parts = value.split('/');
+            const month = parseInt(parts[0], 10);
+            const year = parseInt(parts[1], 10);
+
+            const now = new Date();
+            const currentYear = now.getFullYear() % 100;
+            const currentMonth = now.getMonth() + 1;
+
+            if (year < currentYear) {
+                return { yearExpired: true };
+            }
+
+            if (year === currentYear && month < currentMonth) {
+                return { monthExpired: true };
+            }
+
+            return null;
+        };
+    }
+
+    calculateTotal(): number {
+        return this.purchasedItems.reduce((acc, item) => {
+            const price = item.product?.price || 0;
+            const qty = item.quantity || 1;
+            return acc + (price * qty);
+        }, 0);
+    }
+
     processPayment(): void {
         if (this.cartLength === 0) {
             this.notification.error('Your cart is empty. You cannot proceed with the purchase.');
@@ -83,7 +115,6 @@ calculateTotal(): number {
 
             setTimeout(() => {
                 this.isProcessing = false;
-                console.log('objeto comprado', this.purchasedItems[0])
                 this.isSuccess = true;
                 this.notification.success('Purchase completed successfully!');
                 this.cartService.clearCart(); 

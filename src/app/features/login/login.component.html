@@ -3,7 +3,7 @@
   
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-control nzErrorTip="Por favor ingresa tu email">
+      <nz-form-control nzErrorTip="Enter your email address">
         <nz-input-group nzPrefixIcon="user">
           <input type="text" nz-input formControlName="email" placeholder="Email" />
         </nz-input-group>
@@ -11,25 +11,25 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="Por favor ingresa tu contraseña">
+      <nz-form-control nzErrorTip="Enter your password">
         <nz-input-group nzPrefixIcon="lock">
           <input type="password" nz-input formControlName="password" placeholder="Password" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
-    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Entrar</button>
+    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Login</button>
   </form>
 
   <div style="margin-top: 24px; text-align: center;">
     <div style="display: flex; align-items: center; margin-bottom: 16px;">
       <div style="flex: 1; height: 1px; background: #f0f0f0;"></div>
-      <span style="padding: 0 10px; color: #bfbfbf; font-size: 12px;">¿NUEVO AQUÍ?</span>
+      <span style="padding: 0 10px; color: #bfbfbf; font-size: 12px;">NEW HERE?</span>
       <div style="flex: 1; height: 1px; background: #f0f0f0;"></div>
     </div>
     
     <button nz-button nzType="default" nzBlock (click)="goToRegister()">
-      Crear una cuenta nueva
+      Create a new account
     </button>
   </div>
 </div>

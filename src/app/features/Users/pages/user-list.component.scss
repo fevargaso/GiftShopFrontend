@@ -1,11 +1,9 @@
-/* Contenedor principal */
 .admin-page {
   padding: 24px;
   background-color: #f0f2f5;
   min-height: 100vh;
 }
 
-/* Header alineado en una sola línea */
 .admin-header {
   background: #ffffff;
   padding: 16px 24px;
@@ -13,9 +11,9 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   margin-bottom: 16px;
   display: flex;
-  justify-content: space-between; /* Título a la izquierda, controles a la derecha */
+  justify-content: space-between; 
   align-items: center;
-  flex-wrap: nowrap; /* Fuerza una sola línea */
+  flex-wrap: nowrap; 
   gap: 20px;
 
   .header-left {
@@ -29,7 +27,7 @@
       font-weight: 700;
       margin: 0;
       color: #001529;
-      white-space: nowrap; /* Evita que el título se rompa */
+      white-space: nowrap; 
     }
   }
 
@@ -38,7 +36,6 @@
   }
 }
 
-/* Contenedor de controles (Filtro, Búsqueda, Show) */
 .controls-container {
   display: flex;
   align-items: center;
@@ -63,12 +60,11 @@
   }
 }
 
-/* Buscador con estilo de Inventario (Botón integrado) */
 .search-wrapper {
   display: flex;
   align-items: center;
   flex: 1;
-  max-width: 400px; /* Ancho similar al de productos */
+  max-width: 400px;
 
   input {
     border-radius: 4px 0 0 4px;
@@ -82,7 +78,7 @@
   }
 
   .search-confirm-btn {
-    background-color: #008ba3; // Color Teal
+    background-color: #008ba3; 
     border: 1px solid #008ba3;
     color: white;
     height: 35px;
@@ -99,7 +95,6 @@
   }
 }
 
-/* Botón "Nuevo Usuario" con estilo Teal */
 .btn-new {
   background-color: #008ba3 !important;
   border-color: #008ba3 !important;
@@ -116,7 +111,6 @@
   }
 }
 
-/* Estilo de la tabla para que coincida con el inventario */
 .table-container {
   background: white;
   border-radius: 8px;
@@ -136,7 +130,6 @@
   }
 }
 
-/* Ajustes de Avatar y texto */
 nz-avatar {
   border: 1px solid #f0f0f0;
 }

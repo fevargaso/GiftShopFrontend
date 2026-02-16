@@ -7,13 +7,7 @@ import "./chunk-SGUDVZWQ.js";
 import {
   DEFAULT_MENTION_BOTTOM_POSITIONS,
   DEFAULT_MENTION_TOP_POSITIONS
-} from "./chunk-ZPMDZRZG.js";
-import {
-  ConnectionPositionPair,
-  Overlay,
-  OverlayConfig
-} from "./chunk-PAGRRVRD.js";
-import "./chunk-PBM4W3SG.js";
+} from "./chunk-EB7A2QNA.js";
 import {
   NzFormItemFeedbackIconComponent,
   NzFormNoStatusService,
@@ -21,8 +15,11 @@ import {
   NzFormStatusService
 } from "./chunk-NWQUYI4M.js";
 import {
-  TemplatePortal
-} from "./chunk-CAI4R2EN.js";
+  ConnectionPositionPair,
+  Overlay,
+  OverlayConfig
+} from "./chunk-TDWUPWIH.js";
+import "./chunk-PBM4W3SG.js";
 import {
   DOWN_ARROW,
   ENTER,
@@ -32,6 +29,9 @@ import {
   TAB,
   UP_ARROW
 } from "./chunk-3YLFXDIK.js";
+import {
+  TemplatePortal
+} from "./chunk-CAI4R2EN.js";
 import {
   NzIconDirective,
   NzIconModule
@@ -52,11 +52,11 @@ import {
   getMentions,
   getStatusClassNames
 } from "./chunk-WKKYJIDN.js";
-import "./chunk-HHQ7MW3F.js";
-import "./chunk-FADEYHXQ.js";
 import {
   NG_VALUE_ACCESSOR
 } from "./chunk-RQXZNNU5.js";
+import "./chunk-HHQ7MW3F.js";
+import "./chunk-FADEYHXQ.js";
 import {
   DOCUMENT,
   NgTemplateOutlet
@@ -121,11 +121,11 @@ import {
   ɵɵtextInterpolate1,
   ɵɵviewQuery
 } from "./chunk-ZREUISJD.js";
-import "./chunk-ISM5WLAM.js";
 import {
   fromEvent,
   merge
 } from "./chunk-IC62NIWK.js";
+import "./chunk-ISM5WLAM.js";
 import {
   Observable,
   Subject,

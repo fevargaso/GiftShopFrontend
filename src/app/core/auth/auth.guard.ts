@@ -24,7 +24,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         return true;
       }
       
-      console.warn('Acceso denegado: Token faltante o usuario no válido. Redirigiendo...');
+      console.warn('Access denied: Missing token or invalid user. Redirecting...');
       
       return router.createUrlTree(['/login'], { 
         queryParams: { returnUrl: state.url } 

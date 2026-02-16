@@ -34,12 +34,19 @@
               </nz-form-item>
 
               <div class="grid-inputs">
-                <nz-form-item>
-                  <nz-form-label nzRequired>Expiration date (MM/AA)</nz-form-label>
-                  <nz-form-control nzErrorTip="Format MM/AA">
-                    <input nz-input formControlName="expiryDate" placeholder="MM/AA" maxlength="5" />
-                  </nz-form-control>
-                </nz-form-item>
+<nz-form-item>
+  <nz-form-label nzRequired>Expiration date (MM/AA)</nz-form-label>
+  <nz-form-control [nzErrorTip]="expiryErrorTpl">
+    <input nz-input formControlName="expiryDate" placeholder="MM/AA" maxlength="5" />
+    
+    <ng-template #expiryErrorTpl let-control>
+      <ng-container *ngIf="control.hasError('required')">Date is required</ng-container>
+      <ng-container *ngIf="control.hasError('pattern')">Format must be MM/AA</ng-container>
+      <ng-container *ngIf="control.hasError('yearExpired')">Year cannot be in the past</ng-container>
+      <ng-container *ngIf="control.hasError('monthExpired')">The month has already passed</ng-container>
+    </ng-template>
+  </nz-form-control>
+</nz-form-item>
 
                 <nz-form-item>
                   <nz-form-label nzRequired>CVV</nz-form-label>

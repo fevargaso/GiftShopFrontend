@@ -44,17 +44,15 @@ submitForm(): void {
       password: this.validateForm.value.password
     };
 
-    console.log(credentials)
-
     this.authService.login(credentials).subscribe({
       next: (user) => {
         this.loading = false;
-        this.message.success(`Bienvenido`);
+        this.message.success(`Welcome`);
         this.router.navigateByUrl(this.returnUrl);
       },
       error: (err) => {
         this.loading = false;
-        this.message.error('Usuario o contraseña incorrectos');
+        this.message.error('incorrect email or password');
       }
     });
     } else {

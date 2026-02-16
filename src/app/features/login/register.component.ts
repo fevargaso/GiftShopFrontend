@@ -34,7 +34,7 @@ export class RegisterComponent {
       const { name, email, password, confirm } = this.validateForm.value;
       
       if (password !== confirm) {
-        this.message.error('Las contraseñas no coinciden');
+        this.message.error('Passwords do not match');
         return;
       }
 
@@ -47,12 +47,12 @@ export class RegisterComponent {
       this.authService.register(command).subscribe({
         next: (response) => {
           this.loading = false;
-          this.message.success('¡Cuenta creada con éxito! Ahora puedes iniciar sesión.');
+          this.message.success('Account successfully created! You can now log in.');
           this.router.navigate(['/login']);
         },
         error: (err) => {
           this.loading = false;
-          const errorMsg = err.error?.message || 'Error al crear la cuenta. Inténtalo de nuevo.';
+          const errorMsg = err.error?.message || 'Error creating account. Please try again.';
           this.message.error(errorMsg);
         }
       });

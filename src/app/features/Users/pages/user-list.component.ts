@@ -20,7 +20,6 @@ export class UserListComponent implements OnInit {
     users: any[] = [];
     loading = false;
     totalItems = 0;
-
     isVisible = false;
     isEdit = false;
     currentUser: any = {};
@@ -129,7 +128,7 @@ handleOk(): void {
             this.currentUser = {};
         },
         error: (err) => {
-            console.error("Error en la petición:", err);
+            console.error("Request error:", err);
             this.loading = false;
         }
     });
@@ -137,9 +136,9 @@ handleOk(): void {
 
     deleteUser(id: string): void {
         this.modalService.confirm({
-            nzTitle: '¿Estás seguro de eliminar este usuario?',
-            nzContent: '<b style="color: red;">Esta acción es permanente.</b>',
-            nzOkText: 'Sí, eliminar',
+            nzTitle: 'Are you sure you want to delete this user?',
+            nzContent: '<b style="color: red;">This action is permanent.</b>',
+            nzOkText: 'Yes, Delete',
             nzOkType: 'primary',
             nzOkDanger: true,
             nzOnOk: () => {

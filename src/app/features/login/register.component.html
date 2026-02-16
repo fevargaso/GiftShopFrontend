@@ -1,17 +1,17 @@
 <div style="max-width: 400px; margin: 60px auto; padding: 20px; border: 1px solid #f0f0f0; border-radius: 8px; background: #fff;">
-  <h2 style="text-align: center; margin-bottom: 24px;">Crear Cuenta</h2>
+  <h2 style="text-align: center; margin-bottom: 24px;">Create Account</h2>
   
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-control nzErrorTip="Por favor ingresa tu nombre completo">
+      <nz-form-control nzErrorTip="Please enter your full name">
         <nz-input-group nzPrefixIcon="user">
-          <input type="text" nz-input formControlName="name" placeholder="Nombre completo" />
+          <input type="text" nz-input formControlName="name" placeholder="Full name" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="Ingresa un correo válido">
+      <nz-form-control nzErrorTip="Enter a valid email address">
         <nz-input-group nzPrefixIcon="mail">
           <input type="email" nz-input formControlName="email" placeholder="Email" />
         </nz-input-group>
@@ -19,25 +19,25 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="La contraseña debe tener al menos 6 caracteres">
+      <nz-form-control nzErrorTip="The password must be at least 6 characters long.">
         <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password" placeholder="Contraseña" />
+          <input type="password" nz-input formControlName="password" placeholder="Password" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="Confirma tu contraseña">
+      <nz-form-control nzErrorTip="Confirm your password">
         <nz-input-group nzPrefixIcon="check-circle">
-          <input type="password" nz-input formControlName="confirm" placeholder="Confirmar contraseña" />
+          <input type="password" nz-input formControlName="confirm" placeholder="Confim Password" />
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
 
-    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Registrarse</button>
+    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Sign up</button>
   </form>
 
   <div style="margin-top: 16px; text-align: center;">
-    <a routerLink="/login" style="color: #1890ff;">¿Ya tienes cuenta? Inicia sesión aquí</a>
+    <a routerLink="/login" style="color: #1890ff;">Already have an account? Sign in here.</a>
   </div>
 </div>

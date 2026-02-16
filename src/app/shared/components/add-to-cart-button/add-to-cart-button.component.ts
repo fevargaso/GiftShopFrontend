@@ -11,7 +11,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   standalone: true,
   imports: [CommonModule, NzButtonModule, NzIconModule],
   templateUrl: './add-to-cart-button.component.html',
-  styleUrl: './add-to-cart-button.component.css'
 })
 export class AddToCartButtonComponent implements OnInit, OnDestroy {
   @Input() product!: Product;

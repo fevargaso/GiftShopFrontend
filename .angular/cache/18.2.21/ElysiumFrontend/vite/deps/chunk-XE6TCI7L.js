@@ -10,12 +10,7 @@ import {
 import {
   NzConnectedOverlayDirective,
   NzOverlayModule
-} from "./chunk-ZPMDZRZG.js";
-import {
-  CdkConnectedOverlay,
-  CdkOverlayOrigin,
-  OverlayModule
-} from "./chunk-PAGRRVRD.js";
+} from "./chunk-EB7A2QNA.js";
 import {
   NzFormItemFeedbackIconComponent,
   NzFormNoStatusService,
@@ -23,15 +18,20 @@ import {
   NzFormStatusService
 } from "./chunk-NWQUYI4M.js";
 import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  OverlayModule
+} from "./chunk-TDWUPWIH.js";
+import {
   NzButtonComponent,
   NzButtonModule
-} from "./chunk-NUYRIQZ2.js";
-import {
-  NzTransitionPatchDirective
-} from "./chunk-SLHUMG2Z.js";
+} from "./chunk-W4O35MSO.js";
 import {
   NzWaveDirective
 } from "./chunk-TL6W2KGG.js";
+import {
+  NzTransitionPatchDirective
+} from "./chunk-SLHUMG2Z.js";
 import {
   slideMotion
 } from "./chunk-PLSH35S5.js";
@@ -1960,4 +1960,4 @@ export {
   NzTimePickerComponent,
   NzTimePickerModule
 };
-//# sourceMappingURL=chunk-Z2SS3M6O.js.map
+//# sourceMappingURL=chunk-XE6TCI7L.js.map

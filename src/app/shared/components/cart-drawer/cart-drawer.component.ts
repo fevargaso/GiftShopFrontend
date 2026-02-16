@@ -70,10 +70,10 @@ goToCheckout() {
 
   private showLoginRequiredModal(): void {
     this.modal.confirm({
-      nzTitle: 'Confirmación requerida',
-      nzContent: 'Para proceder con la compra y finalizar tu pedido, necesitas iniciar sesión o registrarte.',
-      nzOkText: 'Iniciar Sesión',
-      nzCancelText: 'Continuar viendo',
+      nzTitle: 'Confirmation required',
+      nzContent: 'To proceed with your purchase and complete your order, you need to log in or register.',
+      nzOkText: 'Log in',
+      nzCancelText: 'Keep watching',
       nzCentered: true,
       nzOnOk: () => {
         this.closeCart();
