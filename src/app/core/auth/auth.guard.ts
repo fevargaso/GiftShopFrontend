@@ -13,17 +13,18 @@ export const authGuard: CanActivateFn = (route, state) => {
     take(1),
     map(userState => {
       const persistedUser = localStorage.getItem('loggedUser');
-      
+      const token = localStorage.getItem('token');
+
       const hasId = !!userState?.id && userState.id !== '';
       const isNotGuest = userState?.actualRole !== Role.UNAUTHORIZE;
       
-      const isAutenticated = (hasId || !!persistedUser) && isNotGuest;
+      const isAutenticated = (hasId || !!persistedUser) && !!token && isNotGuest;
 
       if (isAutenticated) {
         return true;
       }
       
-      console.warn('Acceso denegado: Redirigiendo a login desde:', state.url);
+      console.warn('Acceso denegado: Token faltante o usuario no válido. Redirigiendo...');
       
       return router.createUrlTree(['/login'], { 
         queryParams: { returnUrl: state.url } 

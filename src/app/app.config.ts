@@ -14,13 +14,12 @@ import {
 import { routes } from './app.routes';
 import { ConfigService } from './core/services/config.service';
 import {
-  HTTP_INTERCEPTORS,
   HttpClient,
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
-import { initializeKeycloak } from './core/auth/keycloak.config';
+
 import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
@@ -33,10 +32,12 @@ import {
 } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
-import { provideStore, Store } from '@ngrx/store';
+import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { appReducer } from './core/auth/app.store';
 import { UserEffects, userReducer } from './core/auth/user.store';
+
+import { jwtInterceptor } from './core/auth/jwt.interceptor'; 
 
 registerLocaleData(en);
 
@@ -60,15 +61,23 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     provideZoneChangeDetection({ eventCoalescing: true }),
+    
     provideRouter(
       routes,
       withPreloading(PreloadAllModules),
       withComponentInputBinding()
     ),
-    provideHttpClient(withInterceptorsFromDi()),
+
+    provideHttpClient(
+      withInterceptorsFromDi(),
+      withInterceptors([jwtInterceptor]) 
+    ),
+
     provideStore({ app: appReducer, user: userReducer }),
     provideEffects(UserEffects),
+
     provideNzI18n(en_US),
+    
     importProvidersFrom([
       FormsModule,
       TranslateModule.forRoot({
@@ -80,12 +89,12 @@ export const appConfig: ApplicationConfig = {
         },
       }),
     ]),
+
     {
       provide: APP_INITIALIZER,
       useFactory: appConfigInit,
       multi: true,
       deps: [ConfigService, TranslateService],
     },
-    provideAnimationsAsync(),
   ],
 };

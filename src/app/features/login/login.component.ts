@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string = '/home'; 
 
   validateForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email]], 
     password: ['', [Validators.required]],
     remember: [true]
   });
@@ -35,33 +35,28 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register']); 
   }
 
-  submitForm(): void {
-    if (this.validateForm.valid) {
-      this.loading = true;
-      
-      this.authService.login(this.validateForm.value).subscribe({
-        next: (user) => {
-          this.loading = false;
-          this.message.success(`Bienvenido, ${user.name}`);
-          
-          this.router.navigateByUrl(this.returnUrl)
-            .then((navigated) => {
-              if (navigated) {
-                window.location.reload();
-              } else {
-                this.router.navigate(['/home']).then(() => window.location.reload());
-              }
-            })
-            .catch(() => {
-              this.router.navigate(['/']).then(() => window.location.reload());
-            });
-        },
-        error: (err) => {
-          this.loading = false;
-          const errorMsg = err.error?.message || 'Credenciales incorrectas';
-          this.message.error(errorMsg);
-        }
-      });
+submitForm(): void {
+  if (this.validateForm.valid) {
+    this.loading = true;
+    
+    const credentials = {
+      email: this.validateForm.value.email, 
+      password: this.validateForm.value.password
+    };
+
+    console.log(credentials)
+
+    this.authService.login(credentials).subscribe({
+      next: (user) => {
+        this.loading = false;
+        this.message.success(`Bienvenido`);
+        this.router.navigateByUrl(this.returnUrl);
+      },
+      error: (err) => {
+        this.loading = false;
+        this.message.error('Usuario o contraseña incorrectos');
+      }
+    });
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
