@@ -4,6 +4,7 @@ import { AdminProductsComponent } from './features/admin/admin-product/admin-por
 import { AdminCategoriesComponent } from './features/admin/admin-categories/admin-categories.component';
 import { OrderComponent } from './features/orders/pages/order/order.component';
 import { authGuard, adminGuard } from './core/auth/auth.guard'; 
+import { UserListComponent } from './features/Users/pages/user-list.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,10 @@ export const routes: Routes = [
       {
         path: 'categories',
         component: AdminCategoriesComponent
+      },
+            {
+        path: 'users',
+        component: UserListComponent
       },
       { path: '', redirectTo: 'products', pathMatch: 'full' }
     ]

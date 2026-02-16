@@ -1,0 +1,146 @@
+/* Contenedor principal */
+.admin-page {
+  padding: 24px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+/* Header alineado en una sola línea */
+.admin-header {
+  background: #ffffff;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between; /* Título a la izquierda, controles a la derecha */
+  align-items: center;
+  flex-wrap: nowrap; /* Fuerza una sola línea */
+  gap: 20px;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+      color: #001529;
+      white-space: nowrap; /* Evita que el título se rompa */
+    }
+  }
+
+  .header-right {
+    flex-shrink: 0;
+  }
+}
+
+/* Contenedor de controles (Filtro, Búsqueda, Show) */
+.controls-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+
+  .filter-select {
+    width: 160px;
+  }
+
+  .show-per-page {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    color: #8c8c8c;
+    font-size: 13px;
+
+    .page-size-select {
+      width: 130px;
+    }
+  }
+}
+
+/* Buscador con estilo de Inventario (Botón integrado) */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 400px; /* Ancho similar al de productos */
+
+  input {
+    border-radius: 4px 0 0 4px;
+    border-right: none;
+    height: 35px;
+
+    &:focus {
+      border-color: #008ba3;
+      box-shadow: none;
+    }
+  }
+
+  .search-confirm-btn {
+    background-color: #008ba3; // Color Teal
+    border: 1px solid #008ba3;
+    color: white;
+    height: 35px;
+    padding: 0 12px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s;
+
+    &:hover {
+      background-color: #006d80;
+    }
+  }
+}
+
+/* Botón "Nuevo Usuario" con estilo Teal */
+.btn-new {
+  background-color: #008ba3 !important;
+  border-color: #008ba3 !important;
+  height: 38px;
+  font-weight: 600;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover {
+    background-color: #007a8f !important;
+    border-color: #007a8f !important;
+  }
+}
+
+/* Estilo de la tabla para que coincida con el inventario */
+.table-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  ::ng-deep {
+    .ant-table-thead > tr > th {
+      background: #fafafa;
+      font-weight: 700;
+      color: #262626;
+    }
+
+    .ant-table-tbody > tr > td {
+      padding: 12px 16px;
+    }
+  }
+}
+
+/* Ajustes de Avatar y texto */
+nz-avatar {
+  border: 1px solid #f0f0f0;
+}
+
+strong {
+  color: #262626;
+}

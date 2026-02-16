@@ -31,6 +31,13 @@ const categoriesNavItem: NavItem = {
   icon: 'setting',
 };
 
+const usersNavItem: NavItem = {
+  id: 'itm_navbar_users',
+  name: 'Users', 
+  route: ['admin/users'], 
+  icon: 'setting',
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,7 +48,7 @@ export class HeaderService {
     let items = [homeNavItem, productsNavItem];
 
     if (role === Role.STAFF) {
-      items.push(adminNavItem, categoriesNavItem);
+      items.push(adminNavItem, categoriesNavItem, usersNavItem);
     }
 
     return items;

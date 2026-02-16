@@ -1,0 +1,134 @@
+<div class="admin-page">
+  <div class="admin-header">
+    <div class="header-left">
+      <h2>Gestión de Usuarios</h2>
+      
+      <div class="controls-container">
+        <nz-select 
+          class="filter-select"
+          [(ngModel)]="params.role" 
+          (ngModelChange)="onRoleChange($event)" 
+          nzPlaceHolder="Todos los Roles"
+          nzAllowClear>
+          <nz-option nzValue="Admin" nzLabel="Administrador"></nz-option>
+          <nz-option nzValue="User" nzLabel="Usuario Estándar"></nz-option>
+        </nz-select>
+
+        <div class="search-wrapper">
+          <input 
+            type="text" 
+            nz-input 
+            placeholder="Buscar por nombre o email..." 
+            [(ngModel)]="params.search" 
+            (ngModelChange)="onSearchChange($event)" />
+          <button class="search-confirm-btn">
+            <span nz-icon nzType="search"></span>
+          </button>
+        </div>
+
+        <div class="show-per-page">
+          <span>Mostrar:</span>
+          <nz-select class="page-size-select" [(ngModel)]="params.pageSize" (ngModelChange)="onPageSizeChange($event)">
+            <nz-option [nzValue]="10" nzLabel="10 por página"></nz-option>
+            <nz-option [nzValue]="20" nzLabel="20 por página"></nz-option>
+            <nz-option [nzValue]="50" nzLabel="50 por página"></nz-option>
+          </nz-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button nz-button nzType="primary" class="btn-new" (click)="showModal()">
+        <span nz-icon nzType="user-add"></span> Nuevo Usuario
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <nz-table 
+      #userTable 
+      [nzData]="users" 
+      nzBordered 
+      [nzLoading]="loading"
+      [nzFrontPagination]="false" 
+      [nzTotal]="totalItems" 
+      [nzPageIndex]="params.page" 
+      [nzPageSize]="params.pageSize" 
+      (nzPageIndexChange)="onPageIndexChange($event)">
+      <thead>
+        <tr>
+          <th nzWidth="80px">Perfil</th>
+          <th>Nombre Completo</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th nzWidth="150px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of userTable.data">
+          <td style="text-align: center;">
+            <nz-avatar [nzSize]="40" [nzText]="data.name.substring(0,1).toUpperCase()" style="background-color: #1890ff;"></nz-avatar>
+          </td>
+          <td>
+            <strong>{{ data.name }}</strong>
+            <p style="font-size: 12px; color: #888; margin: 0;">ID: {{ data.id.substring(0,8) }}</p>
+          </td>
+          <td>{{ data.email }}</td>
+          <td>
+            <nz-tag [nzColor]="data.role === 'Admin' ? 'volcano' : 'blue'">
+              {{ data.role | uppercase }}
+            </nz-tag>
+          </td>
+          <td> 
+            <button nz-button nzType="link" (click)="showModal(data)">Editar</button>
+            <button nz-button nzType="link" nzDanger (click)="deleteUser(data.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <nz-modal 
+    [(nzVisible)]="isVisible" 
+    [nzTitle]="isEdit ? 'Editar Usuario' : 'Nuevo Usuario'" 
+    [nzWidth]="500"
+    (nzOnCancel)="handleCancel()" 
+    (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+      <form nz-form nzLayout="vertical">
+        <nz-form-item>
+          <nz-form-label nzRequired>Nombre Completo</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="currentUser.name" name="name" placeholder="Ej: Juan Pérez" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>Email</nz-form-label>
+          <nz-form-control>
+            <input nz-input type="email" [(ngModel)]="currentUser.email" name="email" [disabled]="isEdit" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <div style="display: flex; gap: 15px;">
+          <nz-form-item style="flex: 1;">
+            <nz-form-label nzRequired>Rol</nz-form-label>
+            <nz-form-control>
+              <nz-select [(ngModel)]="currentUser.role" name="role">
+                <nz-option nzValue="Admin" nzLabel="Administrador"></nz-option>
+                <nz-option nzValue="User" nzLabel="Usuario"></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item style="flex: 1;" *ngIf="!isEdit">
+            <nz-form-label nzRequired>Contraseña</nz-form-label>
+            <nz-form-control>
+              <input nz-input type="password" [(ngModel)]="currentUser.password" name="password" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </form>
+    </ng-container>
+  </nz-modal>
+</div>
