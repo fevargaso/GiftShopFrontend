@@ -13,27 +13,33 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-
   private readonly productsService = inject(ProductService);
   private readonly router = inject(Router);
 
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.productsService.getProducts({ page: 1, pageSize: 6 }).subscribe({
+    this.loadFeaturedProducts();
+  }
+
+  private loadFeaturedProducts(): void {
+    this.productsService.getProducts({ page: 1, pageSize: 5 }).subscribe({
       next: result => {
-        this.products = (result.items ?? []).map((p: any) => ({
+        const items = result.items ?? [];
+        this.products = items.map((p: any) => ({
           ...p,
           imageUrl: p.imageUrl || p.ImageUrl
-        })).slice(0, 6);
+        }));
       },
       error: err => console.error('Error getting products:', err)
     });
   }
 
   scrollToProducts(): void {
-    document.getElementById('products-target')
-      ?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('products-target')?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   }
 
   goToProductsPage(): void {
@@ -41,9 +47,8 @@ export class HomeComponent implements OnInit {
   }
 
   seeDetails(product: Product): void {
-    this.router.navigate(
-      ['/products', product.id],
-      { state: { product } }
-    );
+    this.router.navigate(['/products', product.id], { 
+      state: { product } 
+    });
   }
 }

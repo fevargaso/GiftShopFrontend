@@ -2,6 +2,10 @@
   padding: 24px;
   background-color: #f0f2f5;
   min-height: 100vh;
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
 }
 
 .admin-header {
@@ -16,6 +20,13 @@
   flex-wrap: nowrap; 
   gap: 20px;
 
+  @media (max-width: 992px) {
+    flex-direction: column; 
+    align-items: stretch;
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+
   .header-left {
     display: flex;
     align-items: center;
@@ -29,10 +40,25 @@
       color: #001529;
       white-space: nowrap; 
     }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
   }
 
   .header-right {
     flex-shrink: 0;
+
+    @media (max-width: 992px) {
+      width: 100%;
+      
+      .btn-new {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   }
 }
 
@@ -42,8 +68,14 @@
   gap: 12px;
   width: 100%;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .filter-select {
     width: 160px;
+    @media (max-width: 768px) { width: 100%; }
   }
 
   .show-per-page {
@@ -54,8 +86,11 @@
     color: #8c8c8c;
     font-size: 13px;
 
+    @media (max-width: 768px) { justify-content: space-between; }
+
     .page-size-select {
       width: 130px;
+      @media (max-width: 768px) { width: 100%; max-width: 150px; }
     }
   }
 }
@@ -65,6 +100,11 @@
   align-items: center;
   flex: 1;
   max-width: 400px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 100%;
+  }
 
   input {
     border-radius: 4px 0 0 4px;
@@ -116,16 +156,23 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  
+  overflow-x: auto; 
 
   ::ng-deep {
     .ant-table-thead > tr > th {
       background: #fafafa;
       font-weight: 700;
       color: #262626;
+      white-space: nowrap;
     }
 
     .ant-table-tbody > tr > td {
       padding: 12px 16px;
+    }
+    
+    .ant-table {
+      min-width: 800px; 
     }
   }
 }

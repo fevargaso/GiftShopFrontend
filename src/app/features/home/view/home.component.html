@@ -30,23 +30,29 @@
 
     <div class="product-grid">
       @for (product of products; track product.id) {
-      <div class="product-card-premium">
-        <div class="img-box" (click)="seeDetails(product)">
-          <img [src]="product.imageUrl || 'assets/logo.png'" />
-        </div>
-        <div class="info-box">
-          <div class="rating-box">
-            <span class="stars">★★★★★</span>
-            <span class="reviews">1,240</span>
+        <div class="product-card-premium">
+          <div class="img-box" (click)="seeDetails(product)">
+            <img [src]="product.imageUrl || 'assets/logo.png'" [alt]="product.name" />
           </div>
-          <h3 class="product-name">{{ product.name }}</h3>
-          <p class="product-price">${{ product.price | number:'1.0-0' }}</p>
 
-          <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+          <div class="info-box">
+            <div class="rating-box">
+              <span class="stars">★★★★★</span>
+              <span class="reviews">1,240</span>
+            </div>
+
+            <h3 class="product-name">{{ product.name }}</h3>
+
+            <div class="product-price-container">
+              <span class="currency-symbol">$</span>
+              <span class="price-whole">{{ product.price | number:'1.0-0' }}</span>
+              <span class="price-fraction">{{ (product.price % 1 * 100) | number:'2.0-0' }}</span>
+            </div>
+
+            <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+          </div>
         </div>
-      </div>
       }
     </div>
   </div>
-
 </section>

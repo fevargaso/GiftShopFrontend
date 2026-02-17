@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -22,7 +22,7 @@ export class RegisterComponent {
 
   loading = false;
 
-  validateForm: FormGroup = this.fb.group({
+  validateForm = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
@@ -30,40 +30,39 @@ export class RegisterComponent {
   });
 
   submitForm(): void {
-    if (this.validateForm.valid) {
-      const { name, email, password, confirm } = this.validateForm.value;
-      
-      if (password !== confirm) {
-        this.message.error('Passwords do not match');
-        return;
-      }
-
-      this.loading = true;
-      
-  
-      const command = { name, email, password };
-
-
-      this.authService.register(command).subscribe({
-        next: (response) => {
-          this.loading = false;
-          this.message.success('Account successfully created! You can now log in.');
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          this.loading = false;
-          const errorMsg = err.error?.message || 'Error creating account. Please try again.';
-          this.message.error(errorMsg);
-        }
-      });
-      
-    } else {
-      Object.values(this.validateForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
+    if (!this.validateForm.valid) {
+      this.markFieldsDirty();
+      return;
     }
+
+    const { name, email, password, confirm } = this.validateForm.getRawValue();
+
+    if (password !== confirm) {
+      this.message.error('Passwords do not match');
+      return;
+    }
+
+    this.loading = true;
+    this.authService.register({ name, email, password }).subscribe({
+      next: () => {
+        this.loading = false;
+        this.message.success('Account successfully created! You can now log in.');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        this.loading = false;
+        const errorMsg = err.error?.message || 'Error creating account. Please try again.';
+        this.message.error(errorMsg);
+      }
+    });
+  }
+
+  private markFieldsDirty(): void {
+    Object.values(this.validateForm.controls).forEach(control => {
+      if (control.invalid) {
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
+      }
+    });
   }
 }

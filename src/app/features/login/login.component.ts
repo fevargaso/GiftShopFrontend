@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   private message = inject(NzMessageService);
 
   loading = false;
-  returnUrl: string = '/home'; 
+  returnUrl = '/home'; 
 
   validateForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]], 
@@ -35,33 +35,34 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/register']); 
   }
 
-submitForm(): void {
-  if (this.validateForm.valid) {
+  submitForm(): void {
+    if (!this.validateForm.valid) {
+      this.markFormControlsAsDirty();
+      return;
+    }
+
     this.loading = true;
-    
-    const credentials = {
-      email: this.validateForm.value.email, 
-      password: this.validateForm.value.password
-    };
+    const credentials = this.validateForm.getRawValue();
 
     this.authService.login(credentials).subscribe({
-      next: (user) => {
+      next: () => {
         this.loading = false;
-        this.message.success(`Welcome`);
+        this.message.success('Welcome');
         this.router.navigateByUrl(this.returnUrl);
       },
-      error: (err) => {
+      error: () => {
         this.loading = false;
-        this.message.error('incorrect email or password');
+        this.message.error('Incorrect email or password');
       }
     });
-    } else {
-      Object.values(this.validateForm.controls).forEach(control => {
-        if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
-        }
-      });
-    }
+  }
+
+  private markFormControlsAsDirty(): void {
+    Object.values(this.validateForm.controls).forEach(control => {
+      if (control.invalid) {
+        control.markAsDirty();
+        control.updateValueAndValidity({ onlySelf: true });
+      }
+    });
   }
 }

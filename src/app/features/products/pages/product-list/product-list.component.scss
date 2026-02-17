@@ -10,6 +10,8 @@ $admin-teal: #008ba3;
   min-height: 100vh;
   padding: 24px;
 
+  @media (max-width: 768px) { padding: 12px; }
+
   .admin-header {
     display: flex;
     justify-content: center; 
@@ -19,9 +21,15 @@ $admin-teal: #008ba3;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    
     max-width: 1150px; 
     width: 92%;
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      gap: 16px;
+    }
 
     .header-left {
       display: flex;
@@ -29,6 +37,12 @@ $admin-teal: #008ba3;
       justify-content: center; 
       gap: 24px;
       flex: 1;
+      width: 100%;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 16px;
+      }
 
       .controls-container {
         display: flex;
@@ -36,9 +50,16 @@ $admin-teal: #008ba3;
         justify-content: center; 
         gap: 20px; 
         flex: 1;
+        width: 100%;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: stretch;
+        }
 
         .category-selector {
           min-width: 180px;
+          @media (max-width: 768px) { width: 100%; }
           ::ng-deep .ant-select-selector {
             height: 32px !important;
             border-radius: 8px !important;
@@ -51,9 +72,10 @@ $admin-teal: #008ba3;
         .search-wrapper {
           display: flex;
           align-items: center;
-          min-width: 350px; 
+          min-width: 300px;
           max-width: 650px; 
           flex: 1;
+          @media (max-width: 768px) { width: 100%; min-width: 100%; }
 
           input {
             border-radius: 8px 0 0 8px !important;
@@ -73,7 +95,6 @@ $admin-teal: #008ba3;
             display: flex;
             align-items: center;
             transition: background 0.2s;
-
             &:hover { background-color: darken($admin-teal, 10%); }
           }
         }
@@ -84,11 +105,12 @@ $admin-teal: #008ba3;
           gap: 8px;
           white-space: nowrap;
           font-size: 13px;
+          @media (max-width: 768px) { justify-content: space-between; }
           
           .label { font-weight: 700; color: #888; }
-
           .page-size-select { 
             width: 130px; 
+            @media (max-width: 768px) { width: 100%; max-width: 150px; }
             ::ng-deep .ant-select-selector { 
               border-radius: 8px !important; 
               height: 32px !important;
@@ -126,6 +148,12 @@ $admin-teal: #008ba3;
     gap: 30px;
     text-decoration: none;
     color: inherit;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
   }
 
   &:hover {
@@ -145,6 +173,11 @@ $admin-teal: #008ba3;
   background: #f9f9f9;
   border-radius: 12px;
 
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 180px;
+  }
+
   img {
     max-width: 90%;
     max-height: 90%;
@@ -159,10 +192,18 @@ $admin-teal: #008ba3;
   justify-content: space-between;
   align-items: flex-start;
   gap: 40px;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
 }
 
 .text-content {
   flex: 1;
+  width: 100%;
   .item-title {
     font-size: 1.25rem;
     font-weight: 600;
@@ -177,6 +218,7 @@ $admin-teal: #008ba3;
   .stars-row {
     display: flex;
     align-items: center;
+    @media (max-width: 900px) { justify-content: center; }
     .stars { color: $amazon-orange; font-size: 16px; }
     .review-count { margin-left: 10px; color: #007185; font-size: 14px; }
   }
@@ -188,6 +230,12 @@ $admin-teal: #008ba3;
   align-items: flex-end;
   min-width: 200px;
   gap: 15px;
+
+  @media (max-width: 900px) {
+    align-items: center;
+    width: 100%;
+    min-width: unset;
+  }
 
   .price-amazon {
     color: #0f1111;
@@ -218,21 +266,4 @@ $admin-teal: #008ba3;
   margin: 50px 0;
   display: flex;
   justify-content: center;
-}
-
-@media (max-width: 900px) {
-  .item-link {
-    flex-direction: column !important;
-    gap: 20px;
-  }
-  .details-wrapper {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-  .price-action-side {
-    align-items: center;
-    width: 100%;
-  }
 }

@@ -11,8 +11,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { RouterLink, Router } from "@angular/router";
-import { Subject, Subscription } from 'rxjs';
+import { RouterLink } from "@angular/router";
+import { Subject, Subscription, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { ProductService } from '@app/core/services/product.services';
@@ -38,27 +38,23 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     search: '',
     category: '', 
     page: 1,
-    pageSize: 10
+    pageSize: 6
   };
 
   private searchSubject = new Subject<string>();
   private searchSubscription?: Subscription;
 
   isVisible = false;
-  isCategoryVisible = false;
   isEdit = false;
   totalItems = 0;
 
-
   currentProduct: Partial<Product> = this.resetProduct();
-  newCategory = { name: '', description: '' };
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
     private modal: NzModalService,
-    private message: NzMessageService,
-    private router: Router
+    private message: NzMessageService
   ) {}
 
   ngOnInit() {
@@ -79,7 +75,6 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     this.searchSubscription?.unsubscribe();
   }
 
- 
   onSearchChange(value: string): void {
     this.searchSubject.next(value);
   }
@@ -118,11 +113,9 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     });
   }
 
-
   showModal(product?: Product): void {
     if (product) {
       this.isEdit = true;
-
       this.currentProduct = { ...product };
     } else {
       this.isEdit = false;
@@ -131,56 +124,31 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     this.isVisible = true;
   }
 
-  showCategoryModal(): void {
-    this.newCategory = { name: '', description: '' };
-    this.isCategoryVisible = true;
-  }
-
-handleOk(): void {
-  if (!this.currentProduct.name || !this.currentProduct.price) {
-    this.message.warning('Name and Price are required');
-    return;
-  }
-  let request$: import('rxjs').Observable<any>;
-
-  if (this.isEdit) {
-    request$ = this.productService.update(this.currentProduct.id!, this.currentProduct);
-  } else {
-    request$ = this.productService.create(this.currentProduct);
-  }
-
-  request$.subscribe({
-    next: () => {
-      this.message.success(this.isEdit ? 'Product updated' : 'Product created');
-      this.finalizeOperation();
-    },
-    error: (err: any) => { 
-      console.error(err);
-      this.message.error('Error saving product');
-    }
-  });
-}
-
-  handleCategoryOk(): void {
-    if (!this.newCategory.name) {
-      this.message.warning('Category name is required');
+  handleOk(): void {
+    if (!this.currentProduct.name || !this.currentProduct.price) {
+      this.message.warning('Name and Price are required');
       return;
     }
-    this.categoryService.create(this.newCategory).subscribe({
+
+    const request$: Observable<any> = this.isEdit 
+      ? this.productService.update(this.currentProduct.id!, this.currentProduct)
+      : this.productService.create(this.currentProduct);
+
+    request$.subscribe({
       next: () => {
-        this.message.success('Category created');
-        this.loadCategories();
-        this.isCategoryVisible = false;
+        this.message.success(this.isEdit ? 'Product updated' : 'Product created');
+        this.finalizeOperation();
       },
-      error: () => this.message.error('Error creating category')
+      error: (err: any) => { 
+        console.error(err);
+        this.message.error('Error saving product');
+      }
     });
   }
 
   handleCancel(): void {
     this.isVisible = false;
-    this.isCategoryVisible = false;
   }
-
 
   private finalizeOperation() {
     this.loadProducts();

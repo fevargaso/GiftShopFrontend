@@ -8,16 +8,16 @@
     <div class="main-checkout-layout">
       <div class="payment-methods-section">
         <nz-card class="payment-card">
-          <div class="existing-cards">
-            <p *ngIf="cartLength === 0" style="color: #d48806;">
-              <span nz-icon nzType="warning"></span> 
-              Your cart is empty. Please add items before checking out.
-            </p>
+          <div *ngIf="cartLength === 0" class="empty-cart-warning">
+             <p style="color: #d48806;">
+               <span nz-icon nzType="warning"></span> 
+               Your cart is empty. Please add items before checking out.
+             </p>
           </div>
 
           <nz-divider nzText="Add a card"></nz-divider>
 
-          <form [formGroup]="paymentForm">
+          <form [formGroup]="paymentForm" (ngSubmit)="processPayment()">
             <div class="new-card-form">
               <nz-form-item>
                 <nz-form-label nzRequired>Name</nz-form-label>
@@ -34,19 +34,19 @@
               </nz-form-item>
 
               <div class="grid-inputs">
-<nz-form-item>
-  <nz-form-label nzRequired>Expiration date (MM/AA)</nz-form-label>
-  <nz-form-control [nzErrorTip]="expiryErrorTpl">
-    <input nz-input formControlName="expiryDate" placeholder="MM/AA" maxlength="5" />
-    
-    <ng-template #expiryErrorTpl let-control>
-      <ng-container *ngIf="control.hasError('required')">Date is required</ng-container>
-      <ng-container *ngIf="control.hasError('pattern')">Format must be MM/AA</ng-container>
-      <ng-container *ngIf="control.hasError('yearExpired')">Year cannot be in the past</ng-container>
-      <ng-container *ngIf="control.hasError('monthExpired')">The month has already passed</ng-container>
-    </ng-template>
-  </nz-form-control>
-</nz-form-item>
+                <nz-form-item>
+                  <nz-form-label nzRequired>Expiration date (MM/AA)</nz-form-label>
+                  <nz-form-control [nzErrorTip]="expiryErrorTpl">
+                    <input nz-input formControlName="expiryDate" placeholder="MM/AA" maxlength="5" />
+                    
+                    <ng-template #expiryErrorTpl let-control>
+                      <ng-container *ngIf="control.hasError('required')">Date is required</ng-container>
+                      <ng-container *ngIf="control.hasError('pattern')">Format must be MM/AA</ng-container>
+                      <ng-container *ngIf="control.hasError('yearExpired')">Year cannot be in the past</ng-container>
+                      <ng-container *ngIf="control.hasError('monthExpired')">The month has already passed</ng-container>
+                    </ng-template>
+                  </nz-form-control>
+                </nz-form-item>
 
                 <nz-form-item>
                   <nz-form-label nzRequired>CVV</nz-form-label>
@@ -66,52 +66,50 @@
             nz-button 
             nzType="primary" 
             nzBlock 
-            class="cart-btn-global payment-btn" 
+            class="payment-btn" 
             [nzLoading]="isProcessing"
             [disabled]="cartLength === 0 || paymentForm.invalid"
             (click)="processPayment()">
             Purchase
           </button>
-          <p class="disclaimer">By continuing, you agree to the terms of use of Pinnacle Store.</p>
+          <p class="disclaimer">By continuing, you agree to the terms of use.</p>
         </div>
       </aside>
     </div>
   </ng-container>
 
-<div class="success-layout" *ngIf="isSuccess">
-  <nz-result
-    nzStatus="success"
-    nzTitle="Successfully Purchased!"
-    nzSubTitle="Your order is being prepared. Here is your summary:">
-    
-    <div nz-result-content>
-      <div class="purchased-products-list">
-        <h4 style="margin-bottom: 16px;">Order Summary</h4>
-        
-<div *ngFor="let item of purchasedItems" class="item-row">
-  <img [src]="item.product.imageUrl" class="mini-img" alt="product">
-  
-  <div class="item-details">
-    <span class="name">{{ item.product.name }}</span>
-    <span class="qty">Qty: {{ item.quantity }}</span>
-  </div>
-  
-  <span class="price">{{ item.product.price | currency }}</span>
-</div>
+  <div class="success-layout" *ngIf="isSuccess">
+    <nz-result
+      nzStatus="success"
+      nzTitle="Successfully Purchased!"
+      nzSubTitle="Your order is being prepared. Here is your summary:">
+      
+      <div nz-result-content>
+        <div class="purchased-products-list">
+          <h4 style="margin-bottom: 16px;">Order Summary</h4>
+          
+          <div *ngFor="let item of purchasedItems" class="item-row">
+            <img [src]="item.product.imageUrl" class="mini-img" alt="product">
+            <div class="item-details">
+              <span class="name">{{ item.product.name }}</span>
+              <span class="qty">Qty: {{ item.quantity }}</span>
+            </div>
+            <span class="price">{{ (item.product.price * item.quantity) | currency }}</span>
+          </div>
 
-<nz-divider></nz-divider>
+          <nz-divider></nz-divider>
 
-<div class="total-summary">
-  <strong>Total Paid:</strong>
-  <span class="amount">{{ calculateTotal() | currency }}</span>
-</div>
+          <div class="total-summary">
+            <strong>Total Paid:</strong>
+            <span class="amount">{{ calculateTotal() | currency }}</span>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div nz-result-extra>
-      <button nz-button nzType="primary" routerLink="/products">Continue Shopping</button>
-    </div>
-  </nz-result>
-</div>
+      <div nz-result-extra>
+        <button nz-button nzType="primary" routerLink="/products">Continue Shopping</button>
+      </div>
+    </nz-result>
+  </div>
 
 </div>

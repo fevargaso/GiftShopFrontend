@@ -1,9 +1,8 @@
-import { Component, Input } from "@angular/core";
-import { Product } from "@app/core/models/product-model";
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { RouterLink } from "@angular/router";
+import { Product } from "@app/core/models/product-model";
 import { AddToCartButtonComponent } from "@app/shared/components/add-to-cart-button/add-to-cart-button.component";
-
 
 @Component({
   standalone: true,
@@ -14,8 +13,9 @@ import { AddToCartButtonComponent } from "@app/shared/components/add-to-cart-but
     CommonModule,
     RouterLink,
     AddToCartButtonComponent
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class ProductCardComponent {
-  @Input() product!: Product;
+  @Input({ required: true }) product!: Product;
 }

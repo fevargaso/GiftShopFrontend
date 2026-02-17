@@ -1,17 +1,90 @@
+$primary-blue: #118ab2;
+$text-main: #111;
+$text-muted: #565959;
+$border-color: #ddd;
+
 .order-page-container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-  h1 { font-size: 24px; margin-bottom: 20px; font-weight: 600; }
+  h1 { 
+    font-size: 24px; 
+    margin-bottom: 20px; 
+    font-weight: 600; 
+  }
+}
+
+.main-checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 30px;
+}
+
+.payment-card {
+  border-radius: 8px;
+  border: 1px solid $border-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  .new-card-form {
+    max-width: 450px;
+    margin-top: 20px;
+
+    .grid-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+  }
+}
+
+.order-summary-side {
+  .summary-box {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    position: sticky;
+    top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    .payment-btn {
+      background-color: $primary-blue !important;
+      border: none !important;
+      color: white !important;
+      height: 44px !important;
+      font-weight: 600;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background-color: darken($primary-blue, 10%) !important;
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        background-color: #e7e9ec !important;
+        border-color: #adb1b8 !important;
+        color: #8d9096 !important;
+        cursor: not-allowed;
+      }
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      color: $text-muted;
+      margin-top: 15px;
+      text-align: center;
+      line-height: 1.4;
+    }
+  }
 }
 
 .success-layout {
   background: #fff;
   padding: 40px;
   border-radius: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid $border-color;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-top: 20px;
   animation: fadeIn 0.5s ease-in-out;
@@ -28,9 +101,9 @@
     h4 {
       font-size: 18px;
       font-weight: 600;
-      color: #111;
+      color: $text-main;
       margin-bottom: 20px;
-      border-bottom: 2px solid #118ab2;
+      border-bottom: 2px solid $primary-blue;
       display: inline-block;
       padding-bottom: 5px;
     }
@@ -49,38 +122,26 @@
         height: 60px;
         object-fit: contain;
         background: white;
-        border: 1px solid #ddd;
+        border: 1px solid $border-color;
         border-radius: 6px;
         padding: 4px;
       }
 
       .item-details {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        
         .name { 
           font-size: 15px; 
           font-weight: 500; 
-          color: #111;
+          color: $text-main;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
-        
-        .qty { 
-          font-size: 13px; 
-          color: #565959; 
-          margin-top: 2px;
-        }
+        .qty { font-size: 13px; color: $text-muted; }
       }
 
-      .price { 
-        font-weight: 600; 
-        font-size: 16px;
-        color: #111;
-      }
+      .price { font-weight: 600; font-size: 16px; }
     }
 
     .total-summary {
@@ -89,11 +150,9 @@
       align-items: center;
       margin-top: 15px;
       padding-top: 15px;
-      border-top: 2px solid #ddd;
+      border-top: 2px solid $border-color;
       font-size: 18px;
 
-      strong { color: #565959; }
-      
       .amount { 
         color: #B12704;
         font-weight: 700; 
@@ -119,99 +178,5 @@
 
   .success-layout {
     padding: 20px;
-    .purchased-products-list {
-      padding: 15px;
-    }
-  }
-}
-
-.main-checkout-layout {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 30px;
-}
-
-.payment-card {
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-
-  h3 { font-size: 18px; margin-bottom: 15px; }
-
-  .card-option {
-    padding: 15px;
-    border: 1px solid #fbd8b4;
-    background-color: #fcf5ee; 
-    border-radius: 4px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-
-    .card-brand { font-weight: bold; color: #111; }
-    .owner, .expiry { margin-left: 20px; color: #555; font-size: 13px; }
-  }
-}
-
-.new-card-form {
-  max-width: 450px;
-  margin-top: 20px;
-
-  .grid-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-  }
-}
-
-.order-summary-side {
-  .summary-box {
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    position: sticky;
-    top: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-
-    .payment-btn {
-      background-color: #118ab2 !important; 
-      border: none !important;
-      color: white !important;
-      height: 44px !important;
-      font-weight: 600;
-      transition: all 0.2s ease;
-
-      &:hover:not(:disabled) {
-        background-color: darken(#118ab2, 10%) !important;
-        transform: translateY(-1px);
-      }
-
-      &:disabled {
-        background-color: #e7e9ec !important;
-        border-color: #adb1b8 !important;
-        color: #8d9096 !important;
-        cursor: not-allowed;
-        box-shadow: none;
-      }
-    }
-
-    .error-text {
-      color: #c40000;
-      font-size: 12px;
-      margin-top: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-weight: 500;
-    }
-
-    .disclaimer {
-      font-size: 11px;
-      color: #565959;
-      margin-top: 15px;
-      text-align: center;
-      line-height: 1.4;
-    }
   }
 }

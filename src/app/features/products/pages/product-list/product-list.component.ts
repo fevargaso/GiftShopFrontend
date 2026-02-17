@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '@app/core/services/product.services';
@@ -35,10 +35,13 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
+  private readonly productService = inject(ProductService);
+  private readonly categoryService = inject(CategoryService);
+
   products: Product[] = [];
   categories: any[] = []; 
   totalItems = 0;
-  viewMode: 'list' = 'list';
+  viewMode: 'list' | 'grid' = 'list';
 
   private searchSubject = new Subject<string>();
   private searchSubscription?: Subscription;
@@ -50,17 +53,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
     pageSize: 6
   };
 
-  constructor(
-    private productService: ProductService,
-    private categoryService: CategoryService, 
-    private router: Router,
-    private cartService: CartService
-  ) { }
-
   ngOnInit(): void {
+    this.initSearchDebounce();
     this.loadCategories(); 
     this.loadProducts();
+  }
 
+  private initSearchDebounce(): void {
     this.searchSubscription = this.searchSubject.pipe(
       debounceTime(400),
       distinctUntilChanged()
@@ -84,7 +83,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   loadProducts(): void {
     this.productService.getProducts(this.params).subscribe({
       next: (res: any) => {
-        this.products = res.items || [];
+        this.products = (res.items || []).map((p: any) => ({
+          ...p,
+          imageUrl: p.imageUrl || p.ImageUrl
+        }));
         this.totalItems = res.totalItems ?? res.totalCount ?? 0;
       },
       error: err => console.error('Error loading products', err)
@@ -106,4 +108,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.loadProducts();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  toggleViewMode(mode: 'list' | 'grid'): void {
+  this.viewMode = mode;
+}
 }

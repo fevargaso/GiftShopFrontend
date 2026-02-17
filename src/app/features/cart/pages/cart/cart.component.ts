@@ -7,7 +7,6 @@ import { NotificationUtilService } from '@app/core/utils/notification-util.servi
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 @Component({
   selector: 'app-cart',
@@ -16,8 +15,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
     CommonModule,
     NzButtonModule,
     RouterModule,
-    NzIconModule,
-    NzCheckboxModule
+    NzIconModule
   ],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
@@ -33,9 +31,7 @@ export class CartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cartService.cart$.subscribe(items => {
-      this.cartItems = items;
-    });
+    this.cartService.cart$.subscribe(items => this.cartItems = items);
   }
 
   increase(item: CartItem): void {
@@ -43,11 +39,9 @@ export class CartComponent implements OnInit {
   }
 
   decrease(item: CartItem): void {
-    if (item.quantity === 1) {
-      this.remove(item.product.id);
-    } else {
-      this.cartService.decreaseQuantity(item.product.id);
-    }
+    item.quantity === 1 
+      ? this.remove(item.product.id) 
+      : this.cartService.decreaseQuantity(item.product.id);
   }
 
   remove(productId: string): void {
@@ -69,7 +63,6 @@ export class CartComponent implements OnInit {
     if (this.cartItems.length === 0) return;
 
     this.isProcessing = true;
-
     setTimeout(() => {
       this.isProcessing = false;
       this.router.navigate(['/orders']);

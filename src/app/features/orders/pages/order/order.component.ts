@@ -43,7 +43,6 @@ export class OrderComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private router: Router,
         private notification: NotificationUtilService,
         private cartService: CartService
     ) { }

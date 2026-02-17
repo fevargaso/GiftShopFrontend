@@ -1,38 +1,63 @@
-<div class="page-wrapper" *ngIf="product">
+<div class="page-wrapper" *ngIf="product; else loadingTpl">
 
   <div class="detail-card">
-    <h2 class="header-title">Product detail</h2>
-    <hr />
+<header class="detail-header">
+  <h2 class="header-title">Product details</h2>
+</header>
+    
+    <hr class="separator" />
 
     <div class="detail-grid">
       <div class="image-box">
-        <img [src]="product?.imageUrl || 'assets/logo.png'" [alt]="product?.name" />
+        <img [src]="product.imageUrl || 'assets/logo.png'" 
+             [alt]="product.name" 
+             class="main-product-img" />
       </div>
 
       <div class="info-box">
         <h1 class="title">{{ product.name }}</h1>
 
-        <p class="brand">
-          Category: <a>{{ product.categoryName }}</a>
+        <p class="category-tag">
+          Category: <strong>{{ product.categoryName || 'General' }}</strong>
         </p>
 
-        <hr />
+        <hr class="soft-separator" />
 
-        <div class="description-section">
+        <section class="description-section">
           <h3>About this article</h3>
-          <p>{{ product.description || 'No description available for this product.' }}</p>
-        </div>
+          <p class="description-text">
+            {{ product.description || 'No description available for this product.' }}
+          </p>
+        </section>
       </div>
 
       <aside class="purchase-card">
-        <div class="price-big">${{ product.price | number:'1.2-2' }}</div>
-        <p class="stock-status">Available</p>
-
-        <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+        <div class="price-container">
+          <span class="currency-symbol">$</span>
+          <span class="price-big">{{ product.price | number:'1.2-2' }}</span>
+        </div>
         
+        <p class="stock-status in-stock">
+          <span nz-icon nzType="check-circle" nzTheme="outline"></span>
+          In Stock
+        </p>
+
+        <div class="action-box">
+          <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+        </div>
+        
+        <p class="secure-note">
+          <span nz-icon nzType="lock"></span> Secure transaction
+        </p>
       </aside>
 
     </div>
   </div>
-
 </div>
+
+<ng-template #loadingTpl>
+  <div class="loading-container">
+    <nz-spin nzSimple nzSize="large"></nz-spin>
+    <p>Loading product details...</p>
+  </div>
+</ng-template>

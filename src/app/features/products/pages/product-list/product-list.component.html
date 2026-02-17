@@ -2,30 +2,18 @@
   <div class="admin-header">
     <div class="header-left">
       <div class="controls-container">
-        
+
         <div class="category-selector">
-          <nz-select 
-            class="filter-select"
-            [(ngModel)]="params.category" 
-            (ngModelChange)="onFilterChange()" 
-            nzPlaceHolder="All Categories" 
-            nzAllowClear>
-            <nz-option 
-              *ngFor="let cat of categories" 
-              [nzValue]="cat.id" 
-              [nzLabel]="cat.name">
+          <nz-select class="filter-select" [(ngModel)]="params.category" (ngModelChange)="onFilterChange()"
+            nzPlaceHolder="All Categories" nzAllowClear>
+            <nz-option *ngFor="let cat of categories" [nzValue]="cat.id" [nzLabel]="cat.name">
             </nz-option>
           </nz-select>
         </div>
 
         <div class="search-wrapper">
-          <input 
-            type="text" 
-            nz-input 
-            placeholder="Search products..." 
-            [(ngModel)]="params.search" 
-            (ngModelChange)="onFilterChange()" />
-          <button class="search-confirm-btn" (click)="onFilterChange()">
+          <input type="text" nz-input placeholder="Search products..." [(ngModel)]="params.search"
+            (ngModelChange)="onSearchChange()" /> <button class="search-confirm-btn" (click)="onFilterChange()">
             <span nz-icon nzType="search"></span>
           </button>
         </div>
@@ -68,6 +56,9 @@
                 <span class="symbol">$</span>
                 <span class="whole">
                   {{ product.price | number:'1.0-0' }}
+                </span>
+                <span class="fraction">
+                  {{ (product.price % 1 * 100) | number:'2.0-0' }}
                 </span>
               </div>
 
