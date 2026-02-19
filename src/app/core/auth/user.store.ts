@@ -5,6 +5,28 @@ import { map } from 'rxjs';
 import { RoleService } from './role.service';
 import { Role } from './roles';
 
+const EMPTY_USER_STATE: UserState = {
+  id: '',
+  email: '',
+  username: undefined,
+  name: 'Guest',
+  initials: 'G',
+  roles: [Role.UNAUTHORIZE],
+  actualRole: Role.UNAUTHORIZE,
+  isLoading: false,
+};
+
+export type UserState = {
+  id: string;
+  email: string;
+  username?: string;
+  name: string;
+  initials: string;
+  roles: string[];
+  actualRole: Role;
+  isLoading: boolean;
+};
+
 @Injectable()
 export class UserEffects {
   private readonly actions$ = inject(Actions);
@@ -27,15 +49,12 @@ export class UserEffects {
       ofType(addUser),
       map(({ roles }) => {
         let role = this.roleService.selectRole(roles);
-
         const cached = localStorage.getItem(this.CURRENT_ROLE_KEY);
-
         if (cached && roles.includes(cached)) {
           role = cached as Role;
         } else {
           localStorage.setItem(this.CURRENT_ROLE_KEY, role);
         }
-
         return assignRole({ role });
       })
     )
@@ -52,52 +71,25 @@ export class UserEffects {
   );
 }
 
-export type UserState = {
-  id: string;
-  email: string;
-  username?: string;
-  name: string;
-  initials: string;
-  roles: string[];
-  actualRole: Role;
-  isLoading: boolean;
-};
-
 const getPersistedUser = () => {
   const data = localStorage.getItem('loggedUser');
   if (!data) return null;
-
   try {
     const user = JSON.parse(data);
     const cachedRole = localStorage.getItem('CurrentUserRole');
-
     const isAdmin =
       user.roles?.some(
         (r: any) =>
           r.toString().toLowerCase() === 'admin' || r.toString() === '1'
       ) ?? false;
-
     const actualRole = cachedRole || (isAdmin ? Role.STAFF : Role.STANDARD);
-
     return { ...user, actualRole };
   } catch {
     return null;
   }
 };
 
-const persistedUser = getPersistedUser();
-
-const initialState: UserState = {
-  id: persistedUser?.id || '',
-  email: persistedUser?.email || '',
-  username: persistedUser?.username,
-  name: persistedUser?.name || 'Guest',
-  initials: persistedUser?.initials || 'G',
-  roles: persistedUser?.roles || [Role.UNAUTHORIZE],
-  actualRole:
-    (persistedUser?.actualRole as Role) || Role.UNAUTHORIZE,
-  isLoading: false,
-};
+export const clearUser = createAction('[User] Clear');
 
 export const addUser = createAction(
   '[User] Add',
@@ -126,6 +118,20 @@ export const changeRole = createAction(
   props<{ role: Role }>()
 );
 
+const persistedUser = getPersistedUser();
+const initialState: UserState = persistedUser 
+  ? {
+      id: persistedUser.id,
+      email: persistedUser.email,
+      username: persistedUser.username,
+      name: persistedUser.name || 'Guest',
+      initials: persistedUser.initials || 'G',
+      roles: persistedUser.roles || [Role.UNAUTHORIZE],
+      actualRole: (persistedUser.actualRole as Role) || Role.UNAUTHORIZE,
+      isLoading: false,
+    }
+  : EMPTY_USER_STATE;
+
 export const userReducer = createReducer(
   initialState,
 
@@ -134,9 +140,7 @@ export const userReducer = createReducer(
     const lastI = action.lastName?.charAt(0) || '';
     const initials = (firstI + lastI).toUpperCase() || 'U';
 
-    const rawRole =
-      action.roles?.[0]?.toString().toLowerCase() || '';
-
+    const rawRole = action.roles?.[0]?.toString().toLowerCase() || '';
     let assignedRole: Role = Role.UNAUTHORIZE;
 
     if (['admin', '1', 'staff'].includes(rawRole)) {
@@ -165,5 +169,7 @@ export const userReducer = createReducer(
   on(filterRoles, (state, action) => ({
     ...state,
     roles: action.roles,
-  }))
+  })),
+
+  on(clearUser, () => ({ ...EMPTY_USER_STATE }))
 );

@@ -22,9 +22,17 @@ export class LoginComponent implements OnInit {
   loading = false;
   private returnUrl = '/home'; 
 
-  validateForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]], 
-    password: ['', [Validators.required]]
+validateForm = this.fb.group({
+    email: ['', [
+      Validators.required, 
+      Validators.email, 
+      Validators.maxLength(255)
+    ]], 
+    password: ['', [
+      Validators.required,
+      Validators.minLength(6), 
+      Validators.maxLength(50) 
+    ]]
   });
 
   ngOnInit(): void {

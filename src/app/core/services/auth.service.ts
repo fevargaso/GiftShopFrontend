@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { addUser } from '../auth/user.store';
+import { addUser, clearUser } from '../auth/user.store';
 import { tap, EMPTY } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -28,9 +28,7 @@ export class AuthService {
       .pipe(
         tap(response => {
           localStorage.setItem(this.TOKEN_KEY, response.token);
-
           const user = response.user;
-
           const userData = {
             id: user.id,
             name: user.name,
@@ -43,6 +41,8 @@ export class AuthService {
             this.USER_KEY,
             JSON.stringify(userData)
           );
+
+          window.location.href = '/';
 
           this.store.dispatch(
             addUser({
@@ -64,5 +64,8 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
+    localStorage.clear();
+
+    this.store.dispatch(clearUser());
   }
 }

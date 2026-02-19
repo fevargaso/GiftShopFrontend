@@ -1,36 +1,58 @@
-<div class="register-container">
+<div class="register-container" [class.shake]="formError">
   <h2 class="register-title">Create Account</h2>
   
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    
     <nz-form-item>
-      <nz-form-control nzErrorTip="Please enter your full name">
+      <nz-form-control [nzErrorTip]="nameErrorTpl">
         <nz-input-group nzPrefixIcon="user">
           <input type="text" nz-input formControlName="name" placeholder="Full name" />
         </nz-input-group>
+        <ng-template #nameErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Name is required</ng-container>
+          <ng-container *ngIf="control.hasError('pattern')">Name can only contain letters</ng-container>
+          <ng-container *ngIf="control.hasError('maxlength')">Name is too long (max 100)</ng-container>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="Enter a valid email address">
+      <nz-form-control [nzErrorTip]="emailErrorTpl">
         <nz-input-group nzPrefixIcon="mail">
           <input type="email" nz-input formControlName="email" placeholder="Email" />
         </nz-input-group>
+        <ng-template #emailErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Email is required</ng-container>
+          <ng-container *ngIf="control.hasError('email')">Invalid email address</ng-container>
+          <ng-container *ngIf="control.hasError('maxlength')">Email is too long</ng-container>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="The password must be at least 6 characters long.">
+      <nz-form-control [nzErrorTip]="passErrorTpl">
         <nz-input-group nzPrefixIcon="lock">
           <input type="password" nz-input formControlName="password" placeholder="Password" />
         </nz-input-group>
+        <ng-template #passErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Password is required</ng-container>
+          <ng-container *ngIf="control.hasError('minlength')">Minimum 6 characters</ng-container>
+          <ng-container *ngIf="control.hasError('pattern')">
+            Must contain uppercase, lowercase, number and special character
+          </ng-container>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-control nzErrorTip="Confirm your password">
+      <nz-form-control [nzErrorTip]="confirmErrorTpl">
         <nz-input-group nzPrefixIcon="check-circle">
           <input type="password" nz-input formControlName="confirm" placeholder="Confirm Password" />
         </nz-input-group>
+        <ng-template #confirmErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Please confirm your password</ng-container>
+          <ng-container *ngIf="control.hasError('mismatch')">Passwords do not match</ng-container>
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
 
