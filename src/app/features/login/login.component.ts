@@ -9,7 +9,8 @@ import { SharedModule } from '@shared/shared.module';
   selector: 'app-login',
   standalone: true,
   imports: [SharedModule, ReactiveFormsModule],
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
@@ -19,50 +20,46 @@ export class LoginComponent implements OnInit {
   private message = inject(NzMessageService);
 
   loading = false;
-  returnUrl = '/home'; 
+  private returnUrl = '/home'; 
 
   validateForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]], 
-    password: ['', [Validators.required]],
-    remember: [true]
+    password: ['', [Validators.required]]
   });
 
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
   }
 
+  submitForm(): void {
+    if (this.validateForm.valid) {
+      this.loading = true;
+      const credentials = this.validateForm.getRawValue();
+
+      this.authService.login(credentials).subscribe({
+        next: () => {
+          this.loading = false;
+          this.message.success('Welcome back!');
+          this.router.navigateByUrl(this.returnUrl);
+        },
+        error: () => {
+          this.loading = false;
+          this.message.error('Incorrect email or password');
+        }
+      });
+    } else {
+      this.markFormControlsAsDirty();
+    }
+  }
+
   goToRegister(): void {
     this.router.navigate(['/register']); 
   }
 
-  submitForm(): void {
-    if (!this.validateForm.valid) {
-      this.markFormControlsAsDirty();
-      return;
-    }
-
-    this.loading = true;
-    const credentials = this.validateForm.getRawValue();
-
-    this.authService.login(credentials).subscribe({
-      next: () => {
-        this.loading = false;
-        this.message.success('Welcome');
-        this.router.navigateByUrl(this.returnUrl);
-      },
-      error: () => {
-        this.loading = false;
-        this.message.error('Incorrect email or password');
-      }
-    });
-  }
-
   private markFormControlsAsDirty(): void {
     Object.values(this.validateForm.controls).forEach(control => {
-      if (control.invalid) {
-        control.markAsDirty();
-        control.updateValueAndValidity({ onlySelf: true });
-      }
+      control.markAsDirty();
+      control.updateValueAndValidity({ onlySelf: true });
     });
   }
 }
