@@ -3,10 +3,20 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CartDrawerService {
-  private _open$ = new BehaviorSubject<boolean>(false);
-  open$ = this._open$.asObservable();
 
-  open() { this._open$.next(true); }
-  close() { this._open$.next(false); }
-  toggle() { this._open$.next(!this._open$.value); }
+  private readonly openSubject = new BehaviorSubject<boolean>(false);
+
+  readonly open$ = this.openSubject.asObservable();
+
+  open(): void {
+    this.openSubject.next(true);
+  }
+
+  close(): void {
+    this.openSubject.next(false);
+  }
+
+  toggle(): void {
+    this.openSubject.next(!this.openSubject.getValue());
+  }
 }

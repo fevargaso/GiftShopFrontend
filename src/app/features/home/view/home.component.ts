@@ -19,10 +19,10 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
 
   ngOnInit(): void {
-    this.loadFeaturedProducts();
+    this.loadProducts();
   }
 
-  private loadFeaturedProducts(): void {
+  private loadProducts(): void {
     this.productsService.getProducts({ page: 1, pageSize: 5 }).subscribe({
       next: result => {
         const items = result.items ?? [];

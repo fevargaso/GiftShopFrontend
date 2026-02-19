@@ -1,11 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
 import { CartItem } from '../models/cart-item.model';
 import { Product } from '../models/product-model';
 import { NotificationUtilService } from '../utils/notification-util.service';
-import { UserState } from '../auth/user.store'; 
+import { UserState } from '../auth/user.store';
 import { Role } from '../auth/roles';
 
 @Injectable({
@@ -13,62 +12,70 @@ import { Role } from '../auth/roles';
 })
 export class CartService {
 
-  private store = inject(Store<{ user: UserState }>);
-  private notification = inject(NotificationUtilService);
+  private readonly store = inject(Store<{ user: UserState }>);
+  private readonly notification = inject(NotificationUtilService);
 
-  private storageKey = 'giftshop_cart_guest'; 
+  private readonly GUEST_KEY = 'giftshop_cart_guest';
+
+  private storageKey = this.GUEST_KEY;
   private cartItems: CartItem[] = [];
-  private cartSubject = new BehaviorSubject<CartItem[]>([]);
-  
-  cart$ = this.cartSubject.asObservable();
+
+  private readonly cartSubject = new BehaviorSubject<CartItem[]>([]);
+  readonly cart$ = this.cartSubject.asObservable();
 
   constructor() {
-
     this.loadCartFromStorage();
 
-    this.store.select('user').subscribe((user) => {
+    this.store.select('user').subscribe(user => {
       this.handleUserTransition(user);
     });
   }
 
-  private handleUserTransition(user: UserState) {
-    const isRegistered = user?.id && user.actualRole !== Role.UNAUTHORIZE;
-    const newKey = isRegistered ? `giftshop_cart_${user.id}` : 'giftshop_cart_guest';
+  private handleUserTransition(user: UserState): void {
+    const isRegistered =
+      !!user?.id && user.actualRole !== Role.UNAUTHORIZE;
+
+    const newKey = isRegistered
+      ? `giftshop_cart_${user.id}`
+      : this.GUEST_KEY;
 
     if (this.storageKey === newKey) return;
 
-    if (this.storageKey === 'giftshop_cart_guest' && isRegistered) {
+    if (this.storageKey === this.GUEST_KEY && isRegistered) {
       this.mergeGuestCartToUser(newKey);
-    } 
-    else {
+    } else {
       this.storageKey = newKey;
       this.loadCartFromStorage();
     }
   }
 
-  private mergeGuestCartToUser(userKey: string) {
+  private mergeGuestCartToUser(userKey: string): void {
     const guestItems = [...this.cartItems];
 
     this.storageKey = userKey;
 
     const savedUserCartJson = localStorage.getItem(this.storageKey);
-    let userSavedItems: CartItem[] = savedUserCartJson ? JSON.parse(savedUserCartJson) : [];
+    let userSavedItems: CartItem[] =
+      savedUserCartJson ? JSON.parse(savedUserCartJson) : [];
 
     guestItems.forEach(gItem => {
-      const exists = userSavedItems.find(u => u.product.id === gItem.product.id);
-      if (exists) {
-        exists.quantity += gItem.quantity; 
+      const existing = userSavedItems.find(
+        u => u.product.id === gItem.product.id
+      );
+
+      if (existing) {
+        existing.quantity += gItem.quantity;
       } else {
-        userSavedItems.push(gItem); 
+        userSavedItems.push(gItem);
       }
     });
 
     this.cartItems = userSavedItems;
-    this.saveCartToStorage();
-    
-    localStorage.removeItem('giftshop_cart_guest'); 
-  }
 
+    this.saveCartToStorage();
+
+    localStorage.removeItem(this.GUEST_KEY);
+  }
 
   private loadCartFromStorage(): void {
     const saved = localStorage.getItem(this.storageKey);
@@ -77,47 +84,63 @@ export class CartService {
   }
 
   private saveCartToStorage(): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(
+      this.storageKey,
+      JSON.stringify(this.cartItems)
+    );
     this.cartSubject.next([...this.cartItems]);
   }
 
 
   addToCartProduct(product: Product): void {
-    const index = this.cartItems.findIndex(i => i.product.id === product.id);
+    const existing = this.cartItems.find(
+      i => i.product.id === product.id
+    );
 
-    if (index > -1) {
-      this.cartItems[index] = { 
-        ...this.cartItems[index], 
-        quantity: this.cartItems[index].quantity + 1 
-      };
+    if (existing) {
+      existing.quantity++;
     } else {
       this.cartItems.push({ product, quantity: 1 });
       this.notification.success('Product added to cart');
     }
+
     this.saveCartToStorage();
   }
 
   increaseQuantity(productId: string): void {
-    const item = this.cartItems.find(i => i.product.id === productId);
+    const item = this.cartItems.find(
+      i => i.product.id === productId
+    );
+
     if (!item) return;
+
     item.quantity++;
     this.saveCartToStorage();
   }
 
   decreaseQuantity(productId: string): void {
-    const item = this.cartItems.find(i => i.product.id === productId);
+    const item = this.cartItems.find(
+      i => i.product.id === productId
+    );
+
     if (!item) return;
+
     if (item.quantity === 1) {
       this.removeFromCart(productId);
       return;
     }
+
     item.quantity--;
     this.saveCartToStorage();
   }
 
   removeFromCart(productId: string): void {
-    this.cartItems = this.cartItems.filter(i => i.product.id !== productId);
+    this.cartItems = this.cartItems.filter(
+      i => i.product.id !== productId
+    );
+
     this.notification.warn('Product removed from cart');
+
     this.saveCartToStorage();
   }
 
@@ -127,12 +150,16 @@ export class CartService {
     this.saveCartToStorage();
   }
 
+
   getCartItems(): CartItem[] {
     return this.cartItems;
   }
 
   getTotal(): number {
-    return this.cartItems.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+    return this.cartItems.reduce(
+      (sum, i) => sum + i.product.price * i.quantity,
+      0
+    );
   }
 
   get items(): CartItem[] {

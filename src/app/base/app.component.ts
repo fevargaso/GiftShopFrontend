@@ -1,6 +1,6 @@
 import { Component, computed, inject, ViewEncapsulation } from '@angular/core';
-import { Router, RouterOutlet, NavigationEnd, Event } from '@angular/router'; // Se añade Event para tipar
-import { filter, map } from 'rxjs'; // Se añaden estas importaciones de RxJS
+import { Router, RouterOutlet, NavigationEnd, Event } from '@angular/router';
+import { filter, map } from 'rxjs'; 
 import { SplashScreenComponent } from '../shared/components/splash-screen/splash-screen.component';
 import { Store } from '@ngrx/store';
 import { changeRole, UserState } from '../core/auth/user.store';
@@ -47,7 +47,6 @@ export class AppComponent {
   protected readonly $initials = computed(() => this.$user()!.initials);
   protected readonly $role = computed(() => {
   const current = this.$user()!.actualRole;
-  console.log('Rol actual en la App:', current);
   return current;
 });
   protected readonly $roles = computed(() => this.$user()!.roles);
@@ -96,7 +95,7 @@ protected readonly navItems = computed(() => {
 
   logout(): void {
   localStorage.removeItem('loggedUser'); 
-  localStorage.removeItem('elysiumCurrentUserRole'); 
+  localStorage.removeItem('CurrentUserRole'); 
   this.router.navigate(['/home']).then(() => {
     window.location.reload(); 
   });

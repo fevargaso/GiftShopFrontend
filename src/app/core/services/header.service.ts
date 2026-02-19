@@ -3,60 +3,70 @@ import { RoleService } from '../auth/role.service';
 import { NavItem } from '../models/nav-item.model';
 import { Role } from '../auth/roles';
 
-const homeNavItem: NavItem = {
-  id: 'itm_navbar_home',
-  name: 'Home.TITLE',
-  route: ['home'],
-  icon: 'unordered-list',
-};
+const NAV_ITEMS = {
+  home: {
+    id: 'itm_navbar_home',
+    name: 'Home.TITLE',
+    route: ['home'],
+    icon: 'unordered-list',
+  } as NavItem,
 
-const productsNavItem: NavItem = {
-  id: 'itm_navbar_admin',
-  name: 'Store',
-  route: ['products'],
-  icon: 'setting',
-};
+  store: {
+    id: 'itm_navbar_store',
+    name: 'Store',
+    route: ['products'],
+    icon: 'shop',
+  } as NavItem,
 
-const adminNavItem: NavItem = {
-  id: 'itm_navbar_admin',
-  name: 'Products', 
-  route: ['admin/products'], 
-  icon: 'setting',
-};
+  adminProducts: {
+    id: 'itm_navbar_admin_products',
+    name: 'Products',
+    route: ['admin/products'],
+    icon: 'setting',
+  } as NavItem,
 
-const categoriesNavItem: NavItem = {
-  id: 'itm_navbar_categories',
-  name: 'Categories', 
-  route: ['admin/categories'], 
-  icon: 'setting',
-};
+  adminCategories: {
+    id: 'itm_navbar_admin_categories',
+    name: 'Categories',
+    route: ['admin/categories'],
+    icon: 'setting',
+  } as NavItem,
 
-const usersNavItem: NavItem = {
-  id: 'itm_navbar_users',
-  name: 'Users', 
-  route: ['admin/users'], 
-  icon: 'setting',
+  adminUsers: {
+    id: 'itm_navbar_admin_users',
+    name: 'Users',
+    route: ['admin/users'],
+    icon: 'setting',
+  } as NavItem,
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeaderService {
+
   private readonly roleService = inject(RoleService);
 
-  public getNavItems(role: Role | string | undefined): NavItem[] {
-    let items = [homeNavItem, productsNavItem];
+  getNavItems(role?: Role): NavItem[] {
+    const items: NavItem[] = [
+      NAV_ITEMS.home,
+      NAV_ITEMS.store
+    ];
 
     if (role === Role.STAFF) {
-      items.push(adminNavItem, categoriesNavItem, usersNavItem);
+      items.push(
+        NAV_ITEMS.adminProducts,
+        NAV_ITEMS.adminCategories,
+        NAV_ITEMS.adminUsers
+      );
     }
 
     return items;
   }
 
-  public getDisplayRoles(): string[] {
+  getDisplayRoles(): string[] {
     return this.roleService.removeUnmatchedAppRoles(
-      this.roleService.getRoles(),
+      this.roleService.getRoles()
     );
   }
 }

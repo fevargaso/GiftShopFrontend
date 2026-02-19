@@ -1,30 +1,47 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Product } from '../models/product-model';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { ProductQueryParams } from '../models/product-query-params.model';
+import { PagedProductResponse } from '../models/paged-product.model';
 
-@Injectable({ providedIn: 'root' })
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductService {
+
+  private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/products`;
 
-  constructor(private http: HttpClient) {}
 
-getProducts(params: any): Observable<any> {
-    let httpParams = new HttpParams();
-    if (params.search) httpParams = httpParams.set('search', params.search);
-    if (params.category) httpParams = httpParams.set('categoryId', params.category);
-    httpParams = httpParams.set('page', params.page.toString());
-    httpParams = httpParams.set('pageSize', params.pageSize.toString());
+  getProducts(
+    params: ProductQueryParams
+  ): Observable<PagedProductResponse> {
 
-    return this.http.get<any>(this.apiUrl, { params: httpParams });
+    let httpParams = new HttpParams()
+      .set('page', params.page.toString())
+      .set('pageSize', params.pageSize.toString());
+
+    if (params.search) {
+      httpParams = httpParams.set('search', params.search);
+    }
+
+    if (params.category) {
+      httpParams = httpParams.set('categoryId', params.category);
+    }
+
+    return this.http.get<PagedProductResponse>(this.apiUrl, {
+      params: httpParams
+    });
   }
 
-  getAll() {
+  getAll(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  getById(id: string) {
+  getById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
 
