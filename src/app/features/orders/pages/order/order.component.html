@@ -9,7 +9,7 @@
       <div class="payment-methods-section">
         <nz-card class="payment-card">
           <div *ngIf="cartLength === 0" class="empty-cart-warning">
-             <p style="color: #d48806;">
+             <p>
                <span nz-icon nzType="warning"></span> 
                Your cart is empty. Please add items before checking out.
              </p>
@@ -86,7 +86,7 @@
       
       <div nz-result-content>
         <div class="purchased-products-list">
-          <h4 style="margin-bottom: 16px;">Order Summary</h4>
+          <h4 class="summary-title">Order Summary</h4>
           
           <div *ngFor="let item of purchasedItems" class="item-row">
             <img [src]="item.product.imageUrl" class="mini-img" alt="product">
@@ -111,5 +111,4 @@
       </div>
     </nz-result>
   </div>
-
 </div>

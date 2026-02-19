@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router'; // Se mantienen ambos: uno para el tipo/inyector y otro para el standalone
 import { CommonModule } from '@angular/common';
 import { CartService } from '@app/core/services/cart.services';
 import { CartItem } from '@app/core/models/cart-item.model';
@@ -31,7 +31,9 @@ export class CartComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cartService.cart$.subscribe(items => this.cartItems = items);
+    this.cartService.cart$.subscribe(items => {
+      this.cartItems = items;
+    });
   }
 
   increase(item: CartItem): void {
@@ -39,9 +41,11 @@ export class CartComponent implements OnInit {
   }
 
   decrease(item: CartItem): void {
-    item.quantity === 1 
-      ? this.remove(item.product.id) 
-      : this.cartService.decreaseQuantity(item.product.id);
+    if (item.quantity === 1) {
+      this.remove(item.product.id);
+    } else {
+      this.cartService.decreaseQuantity(item.product.id);
+    }
   }
 
   remove(productId: string): void {
@@ -55,8 +59,7 @@ export class CartComponent implements OnInit {
   }
 
   getTotal(): number {
-    const total = this.cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
-    return Math.round(total * 100) / 100;
+    return this.cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
   }
 
   processCheckout(): void {
