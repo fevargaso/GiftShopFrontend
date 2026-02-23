@@ -41,32 +41,22 @@ const NAV_ITEMS = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HeaderService {
-
   private readonly roleService = inject(RoleService);
 
   getNavItems(role?: Role): NavItem[] {
-    const items: NavItem[] = [
-      NAV_ITEMS.home,
-      NAV_ITEMS.store
-    ];
+    const items: NavItem[] = [NAV_ITEMS.home, NAV_ITEMS.store];
 
     if (role === Role.STAFF) {
-      items.push(
-        NAV_ITEMS.adminProducts,
-        NAV_ITEMS.adminCategories,
-        NAV_ITEMS.adminUsers
-      );
+      items.push(NAV_ITEMS.adminProducts, NAV_ITEMS.adminCategories, NAV_ITEMS.adminUsers);
     }
 
     return items;
   }
 
   getDisplayRoles(): string[] {
-    return this.roleService.removeUnmatchedAppRoles(
-      this.roleService.getRoles()
-    );
+    return this.roleService.removeUnmatchedAppRoles(this.roleService.getRoles());
   }
 }

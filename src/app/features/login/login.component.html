@@ -1,6 +1,6 @@
 <div class="login-container">
   <h2 class="login-title">Login</h2>
-  
+
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-control [nzErrorTip]="emailErrorTpl">
@@ -28,9 +28,7 @@
       </nz-form-control>
     </nz-form-item>
 
-    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">
-      Login
-    </button>
+    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Login</button>
   </form>
 
   <div class="login-footer">
@@ -39,9 +37,7 @@
       <span class="divider-text">NEW HERE?</span>
       <div class="divider-line"></div>
     </div>
-    
-    <button nz-button nzType="default" nzBlock (click)="goToRegister()">
-      Create a new account
-    </button>
+
+    <button nz-button nzType="default" nzBlock (click)="goToRegister()">Create a new account</button>
   </div>
 </div>

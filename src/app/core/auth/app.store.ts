@@ -13,8 +13,8 @@ const initialState: AppState = {
 };
 
 export const initialized = createAction('[App] Initialized');
-export const changeOperational = createAction('[App] Change Operational', props<{ operation: boolean; }>());
-export const changeChecking = createAction('[App] Change Checking', props<{ check: boolean; }>());
+export const changeOperational = createAction('[App] Change Operational', props<{ operation: boolean }>());
+export const changeChecking = createAction('[App] Change Checking', props<{ check: boolean }>());
 
 export const appReducer = createReducer(
   initialState,

@@ -10,7 +10,7 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
   standalone: true,
   imports: [SharedModule, AddToCartButtonComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   private readonly productsService = inject(ProductService);
@@ -28,10 +28,10 @@ export class HomeComponent implements OnInit {
         const items = result.items ?? [];
         this.products = items.map((p: any) => ({
           ...p,
-          imageUrl: p.imageUrl || p.ImageUrl
+          imageUrl: p.imageUrl || p.ImageUrl,
         }));
       },
-      error: err => console.error('Error getting products:', err)
+      error: err => console.error('Error getting products:', err),
     });
   }
 
@@ -40,8 +40,8 @@ export class HomeComponent implements OnInit {
   }
 
   seeDetails(product: Product): void {
-    this.router.navigate(['/products', product.id], { 
-      state: { product } 
+    this.router.navigate(['/products', product.id], {
+      state: { product },
     });
   }
 }

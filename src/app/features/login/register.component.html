@@ -1,8 +1,7 @@
 <div class="register-container" [class.shake]="formError">
   <h2 class="register-title">Create Account</h2>
-  
+
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-    
     <nz-form-item>
       <nz-form-control [nzErrorTip]="nameErrorTpl">
         <nz-input-group nzPrefixIcon="user">
@@ -56,14 +55,10 @@
       </nz-form-control>
     </nz-form-item>
 
-    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">
-      Sign up
-    </button>
+    <button nz-button nzType="primary" nzBlock [nzLoading]="loading">Sign up</button>
   </form>
 
   <div class="register-footer">
-    <a routerLink="/login" class="login-link">
-      Already have an account? Sign in here.
-    </a>
+    <a routerLink="/login" class="login-link"> Already have an account? Sign in here. </a>
   </div>
 </div>

@@ -13,26 +13,22 @@ import { Category } from '@app/core/models/category.model';
 @Component({
   standalone: true,
   selector: 'app-admin-categories',
-  imports: [
-    CommonModule, FormsModule, NzTableModule, NzButtonModule,
-    NzModalModule, NzFormModule, NzInputModule
-  ],
+  imports: [CommonModule, FormsModule, NzTableModule, NzButtonModule, NzModalModule, NzFormModule, NzInputModule],
   templateUrl: './admin-categories.component.html',
-  styleUrls: ['./admin-categories.component.scss']
-
+  styleUrls: ['./admin-categories.component.scss'],
 })
 export class AdminCategoriesComponent implements OnInit {
   categories: Category[] = [];
   isVisible = false;
   isEdit = false;
 
-currentCategory: Partial<Category> = this.resetCategory();
+  currentCategory: Partial<Category> = this.resetCategory();
 
   constructor(
     private categoryService: CategoryService,
     private modal: NzModalService,
-    private message: NzMessageService
-  ) { }
+    private message: NzMessageService,
+  ) {}
 
   ngOnInit() {
     this.loadCategories();
@@ -63,9 +59,8 @@ currentCategory: Partial<Category> = this.resetCategory();
       return;
     }
 
-    const isDuplicate = this.categories.some(cat =>
-      cat.name.trim().toLowerCase() === nameToSave &&
-      cat.id !== this.currentCategory.id
+    const isDuplicate = this.categories.some(
+      cat => cat.name.trim().toLowerCase() === nameToSave && cat.id !== this.currentCategory.id,
     );
 
     if (isDuplicate) {
@@ -95,10 +90,7 @@ currentCategory: Partial<Category> = this.resetCategory();
     if (!this.currentCategory.name) return false;
 
     const name = this.currentCategory.name.trim().toLowerCase();
-    return this.categories.some(cat =>
-      cat.name.trim().toLowerCase() === name &&
-      cat.id !== this.currentCategory.id
-    );
+    return this.categories.some(cat => cat.name.trim().toLowerCase() === name && cat.id !== this.currentCategory.id);
   }
 
   private resetCategory(): Partial<Category> {
@@ -124,15 +116,15 @@ currentCategory: Partial<Category> = this.resetCategory();
             this.message.warning('Category and its links deleted successfully');
             this.loadCategories();
           },
-          error: (err) => {
+          error: err => {
             if (err.status === 400 || err.status === 409) {
               this.message.error('Cannot be deleted: This category has active products..');
             } else {
               this.message.error('Error while trying to delete the category');
             }
-          }
+          },
         });
-      }
+      },
     });
   }
 }

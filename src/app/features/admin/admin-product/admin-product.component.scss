@@ -9,14 +9,14 @@
 
   .admin-header {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
     padding: 16px 24px;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
 
     @media (max-width: 1100px) {
       flex-direction: column;
@@ -28,7 +28,7 @@
     .header-left {
       display: flex;
       align-items: center;
-      flex: 1; 
+      flex: 1;
 
       @media (max-width: 900px) {
         flex-direction: column;
@@ -36,20 +36,20 @@
         gap: 16px;
       }
 
-      h2 { 
-        margin: 0; 
-        color: #001529; 
-        font-weight: 700; 
+      h2 {
+        margin: 0;
+        color: #001529;
+        font-weight: 700;
         white-space: nowrap;
-        flex: 0 0 auto; 
+        flex: 0 0 auto;
       }
 
       .controls-container {
         display: flex;
         align-items: center;
-        gap: 20px; 
-        flex: 1; 
-        justify-content: center; 
+        gap: 20px;
+        flex: 1;
+        justify-content: center;
 
         @media (max-width: 900px) {
           flex-direction: column;
@@ -59,18 +59,23 @@
         }
 
         .filter-select {
-          min-width: 150px; 
-          @media (max-width: 900px) { width: 100%; }
+          min-width: 150px;
+          @media (max-width: 900px) {
+            width: 100%;
+          }
         }
 
         .search-wrapper {
           display: flex;
           align-items: center;
-          min-width: 300px; 
-          max-width: 550px; 
-          flex: 1; 
+          min-width: 300px;
+          max-width: 550px;
+          flex: 1;
 
-          @media (max-width: 900px) { min-width: 0; width: 100%; }
+          @media (max-width: 900px) {
+            min-width: 0;
+            width: 100%;
+          }
 
           input {
             border-radius: 8px 0 0 8px !important;
@@ -82,8 +87,8 @@
             background-color: #008ba3;
             color: white;
             border: 1px solid #008ba3;
-            height: 32px; 
-            padding: 0 16px; 
+            height: 32px;
+            padding: 0 16px;
             border-radius: 0 8px 8px 0;
             cursor: pointer;
             display: flex;
@@ -101,11 +106,15 @@
           align-items: center;
           gap: 8px;
           white-space: nowrap;
-          @media (max-width: 900px) { justify-content: space-between; }
+          @media (max-width: 900px) {
+            justify-content: space-between;
+          }
 
           .page-size-select {
             width: 140px;
-            @media (max-width: 900px) { width: 100%; }
+            @media (max-width: 900px) {
+              width: 100%;
+            }
           }
         }
       }
@@ -119,7 +128,7 @@
       font-weight: 600;
       white-space: nowrap;
       margin-left: 16px;
-      flex: 0 0 auto; 
+      flex: 0 0 auto;
 
       @media (max-width: 1100px) {
         margin-left: 0;
@@ -144,8 +153,8 @@
       gap: 20px !important;
     }
 
-    div[style*="flex: 1"] {
-      flex: 0 0 200px !important; 
+    div[style*='flex: 1'] {
+      flex: 0 0 200px !important;
       width: 200px !important;
       max-width: 200px !important;
 
@@ -160,32 +169,33 @@
 
     .image-dropzone {
       width: 200px !important;
-      height: 200px !important; 
+      height: 200px !important;
       max-height: 200px !important;
       border: 2px dashed #e2e8f0 !important;
       border-radius: 12px !important;
-      overflow: hidden !important; 
+      overflow: hidden !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       background: #f8fafc !important;
     }
 
-    div[style*="flex: 1.5"] {
+    div[style*='flex: 1.5'] {
       flex: 1 !important;
-      min-width: 0 !important; 
+      min-width: 0 !important;
       @media (max-width: 600px) {
         width: 100% !important;
       }
     }
 
-    input.ant-input, 
-    textarea.ant-input, 
+    input.ant-input,
+    textarea.ant-input,
     .ant-select-selector {
       border-radius: 10px !important;
       border: 1px solid #e2e8f0 !important;
-      
-      &:hover, &:focus {
+
+      &:hover,
+      &:focus {
         border-color: #008ba3 !important;
         box-shadow: 0 0 0 3px rgba(0, 139, 163, 0.1) !important;
       }

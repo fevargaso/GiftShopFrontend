@@ -11,50 +11,38 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    CommonModule, 
-    ReactiveFormsModule, 
-    NzFormModule, 
-    NzInputModule, 
-    NzButtonModule, 
-    RouterModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, NzFormModule, NzInputModule, NzButtonModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private message = inject(NzMessageService);
-  private authService = inject(AuthService); 
+  private authService = inject(AuthService);
 
   loading = false;
   formError = false;
 
   validateForm = this.fb.group({
-    name: ['', [
-      Validators.required, 
-      Validators.maxLength(100),
-      Validators.pattern(/^[a-zA-Z\s]+$/)
-    ]],
-    email: ['', [
-      Validators.required, 
-      Validators.email, 
-      Validators.maxLength(255)
-    ]],
-    password: ['', [
-      Validators.required, 
-      Validators.minLength(6),
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$/)
-    ]],
-    confirm: ['', [Validators.required]]
+    name: ['', [Validators.required, Validators.maxLength(100), Validators.pattern(/^[a-zA-Z\s]+$/)]],
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$/),
+      ],
+    ],
+    confirm: ['', [Validators.required]],
   });
 
   submitForm(): void {
     if (this.validateForm.invalid) {
       this.markFieldsDirty();
       this.message.warning('Please complete all fields correctly');
-      this.triggerShake(); 
+      this.triggerShake();
       return;
     }
 
@@ -73,17 +61,17 @@ export class RegisterComponent {
         this.message.success('Account successfully created! You can now log in.');
         this.router.navigate(['/login']);
       },
-      error: (err) => {
+      error: err => {
         this.loading = false;
-        this.triggerShake(); 
-        
+        this.triggerShake();
+
         if (err.status === 400 && err.error?.errors) {
           const firstError = Object.values(err.error.errors)[0] as string[];
           this.message.error(firstError[0] || 'Validation error');
         } else {
           this.message.error(err.error?.message || 'Error creating account');
         }
-      }
+      },
     });
   }
 

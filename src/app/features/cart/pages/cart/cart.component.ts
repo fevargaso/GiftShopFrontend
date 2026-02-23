@@ -11,14 +11,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [
-    CommonModule,
-    NzButtonModule,
-    RouterModule,
-    NzIconModule
-  ],
+  imports: [CommonModule, NzButtonModule, RouterModule, NzIconModule],
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
@@ -27,8 +22,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private notification: NotificationUtilService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.cartService.cart$.subscribe(items => {
@@ -59,7 +54,7 @@ export class CartComponent implements OnInit {
   }
 
   getTotal(): number {
-    return this.cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+    return this.cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   }
 
   processCheckout(): void {

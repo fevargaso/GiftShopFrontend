@@ -6,23 +6,15 @@ import { environment } from 'src/environments/environment';
 import { ProductQueryParams } from '../models/product-query-params.model';
 import { PagedProductResponse } from '../models/paged-product.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/products`;
 
-
-  getProducts(
-    params: ProductQueryParams
-  ): Observable<PagedProductResponse> {
-
-    let httpParams = new HttpParams()
-      .set('page', params.page.toString())
-      .set('pageSize', params.pageSize.toString());
+  getProducts(params: ProductQueryParams): Observable<PagedProductResponse> {
+    let httpParams = new HttpParams().set('page', params.page.toString()).set('pageSize', params.pageSize.toString());
 
     if (params.search) {
       httpParams = httpParams.set('search', params.search);
@@ -33,7 +25,7 @@ export class ProductService {
     }
 
     return this.http.get<PagedProductResponse>(this.apiUrl, {
-      params: httpParams
+      params: httpParams,
     });
   }
 

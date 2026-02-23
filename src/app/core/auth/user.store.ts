@@ -39,9 +39,9 @@ export class UserEffects {
       map(({ roles }) =>
         filterRoles({
           roles: this.roleService.removeUnmatchedAppRoles(roles),
-        })
-      )
-    )
+        }),
+      ),
+    ),
   );
 
   assignRole$ = createEffect(() =>
@@ -56,8 +56,8 @@ export class UserEffects {
           localStorage.setItem(this.CURRENT_ROLE_KEY, role);
         }
         return assignRole({ role });
-      })
-    )
+      }),
+    ),
   );
 
   changeRole$ = createEffect(() =>
@@ -66,8 +66,8 @@ export class UserEffects {
       map(({ role }) => {
         localStorage.setItem(this.CURRENT_ROLE_KEY, role);
         return assignRole({ role });
-      })
-    )
+      }),
+    ),
   );
 }
 
@@ -78,10 +78,7 @@ const getPersistedUser = () => {
     const user = JSON.parse(data);
     const cachedRole = localStorage.getItem('CurrentUserRole');
     const isAdmin =
-      user.roles?.some(
-        (r: any) =>
-          r.toString().toLowerCase() === 'admin' || r.toString() === '1'
-      ) ?? false;
+      user.roles?.some((r: any) => r.toString().toLowerCase() === 'admin' || r.toString() === '1') ?? false;
     const actualRole = cachedRole || (isAdmin ? Role.STAFF : Role.STANDARD);
     return { ...user, actualRole };
   } catch {
@@ -100,26 +97,17 @@ export const addUser = createAction(
     firstName: string;
     lastName: string;
     roles: string[];
-  }>()
+  }>(),
 );
 
-export const assignRole = createAction(
-  '[User] Assign Role',
-  props<{ role: Role }>()
-);
+export const assignRole = createAction('[User] Assign Role', props<{ role: Role }>());
 
-export const filterRoles = createAction(
-  '[User] Filter Roles',
-  props<{ roles: string[] }>()
-);
+export const filterRoles = createAction('[User] Filter Roles', props<{ roles: string[] }>());
 
-export const changeRole = createAction(
-  '[User] Change Role',
-  props<{ role: Role }>()
-);
+export const changeRole = createAction('[User] Change Role', props<{ role: Role }>());
 
 const persistedUser = getPersistedUser();
-const initialState: UserState = persistedUser 
+const initialState: UserState = persistedUser
   ? {
       id: persistedUser.id,
       email: persistedUser.email,
@@ -171,5 +159,5 @@ export const userReducer = createReducer(
     roles: action.roles,
   })),
 
-  on(clearUser, () => ({ ...EMPTY_USER_STATE }))
+  on(clearUser, () => ({ ...EMPTY_USER_STATE })),
 );

@@ -12,7 +12,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   standalone: true,
   imports: [CommonModule, RouterLink, AddToCartButtonComponent, NzIconModule, NzSpinModule],
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -34,8 +34,8 @@ export class ProductDetailComponent implements OnInit {
     if (!id) return;
 
     this.productService.getById(id).subscribe({
-      next: (res) => this.product = res,
-      error: (err) => console.error('Error loading product details:', err)
+      next: res => (this.product = res),
+      error: err => console.error('Error loading product details:', err),
     });
   }
 }

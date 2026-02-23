@@ -9,9 +9,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class RoleService {
   private readonly store = inject(Store);
-  private readonly userStore = toSignal<UserState>(
-    this.store.select('user')
-  );
+  private readonly userStore = toSignal<UserState>(this.store.select('user'));
 
   private readonly currentUserRoleKey = 'CurrentUserRole';
   private userRole: string = noneRole;
@@ -35,15 +33,12 @@ export class RoleService {
     const userRoles = this.getRoles();
     const defaultRole = this.defaultUserAppRole(userRoles);
 
-    const isValidCached = userRoles.some(role =>
-      role.includes(this.currentUserRole)
-    );
+    const isValidCached = userRoles.some(role => role.includes(this.currentUserRole));
 
     if (this.currentUserRole === noneRole || !isValidCached) {
       this.currentUserRole = defaultRole;
     }
   }
-
 
   selectRole(roles: string[]): Role {
     if (!roles?.length) return Role.UNAUTHORIZE;
@@ -65,12 +60,21 @@ export class RoleService {
     return this.userStore()?.actualRole === role;
   }
 
-  hasQaAccess() { return this.hasAccess(Role.QA); }
-  hasSalesAccess() { return this.hasAccess(Role.SALES); }
-  hasPmAccess() { return this.hasAccess(Role.PM); }
-  hasStaffAccess() { return this.hasAccess(Role.STAFF); }
-  hasPortfolioManagerAccess() { return this.hasAccess(Role.PORTFOLIO_MANAGER); }
-
+  hasQaAccess() {
+    return this.hasAccess(Role.QA);
+  }
+  hasSalesAccess() {
+    return this.hasAccess(Role.SALES);
+  }
+  hasPmAccess() {
+    return this.hasAccess(Role.PM);
+  }
+  hasStaffAccess() {
+    return this.hasAccess(Role.STAFF);
+  }
+  hasPortfolioManagerAccess() {
+    return this.hasAccess(Role.PORTFOLIO_MANAGER);
+  }
 
   defaultUserAppRole(userRoles: string[]): string {
     if (!userRoles?.length) return Role.UNAUTHORIZE;
@@ -99,7 +103,6 @@ export class RoleService {
     const allowed = ['Admin', 'User', 'Staff', 'Standard', '1', '0'];
     return roles.filter(role => allowed.includes(role));
   }
-
 
   getRoles(): string[] {
     const storeRoles = this.userStore()?.roles;

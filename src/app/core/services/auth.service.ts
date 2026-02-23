@@ -23,38 +23,33 @@ export class AuthService {
       return EMPTY;
     }
 
-    return this.http
-      .post<any>(`${this.BASE_URL}/login`, credentials)
-      .pipe(
-        tap(response => {
-          localStorage.setItem(this.TOKEN_KEY, response.token);
-          const user = response.user;
-          const userData = {
+    return this.http.post<any>(`${this.BASE_URL}/login`, credentials).pipe(
+      tap(response => {
+        localStorage.setItem(this.TOKEN_KEY, response.token);
+        const user = response.user;
+        const userData = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          roles: [user.role],
+          initials: user.name?.substring(0, 2).toUpperCase() || 'U',
+        };
+
+        localStorage.setItem(this.USER_KEY, JSON.stringify(userData));
+
+        window.location.href = '/';
+
+        this.store.dispatch(
+          addUser({
             id: user.id,
-            name: user.name,
             email: user.email,
+            firstName: user.name,
+            lastName: '',
             roles: [user.role],
-            initials: user.name?.substring(0, 2).toUpperCase() || 'U',
-          };
-
-          localStorage.setItem(
-            this.USER_KEY,
-            JSON.stringify(userData)
-          );
-
-          window.location.href = '/';
-
-          this.store.dispatch(
-            addUser({
-              id: user.id,
-              email: user.email,
-              firstName: user.name,
-              lastName: '',
-              roles: [user.role],
-            })
-          );
-        })
-      );
+          }),
+        );
+      }),
+    );
   }
 
   getToken(): string | null {

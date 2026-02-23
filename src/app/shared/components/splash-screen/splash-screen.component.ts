@@ -1,12 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 export enum SplashAnimationType {
@@ -20,30 +12,25 @@ export enum SplashAnimationType {
   selector: 'splash-screen',
   template: `
     @if (showSplash) {
-    <div
-      class="app-splash-screen"
-      [style]="{
-        left: windowWidth,
-        opacity: opacityChange,
-        transition: splashTransition
-      }"
-    >
-      <div id="ctn_splash_screen" class="app-splash-inner">
-        <div id="img_splash_screen_logo" class="app-logo"></div>
-        @if (showError) {
-        <div class="app-label">
-          {{ error }}
+      <div
+        class="app-splash-screen"
+        [style]="{
+          left: windowWidth,
+          opacity: opacityChange,
+          transition: splashTransition
+        }"
+      >
+        <div id="ctn_splash_screen" class="app-splash-inner">
+          <div id="img_splash_screen_logo" class="app-logo"></div>
+          @if (showError) {
+            <div class="app-label">
+              {{ error }}
+            </div>
+          } @else {
+            <span nz-icon nzType="loading" nzTheme="outline" style="font-size: 26px;"></span>
+          }
         </div>
-        } @else {
-        <span
-          nz-icon
-          nzType="loading"
-          nzTheme="outline"
-          style="font-size: 26px;"
-        ></span>
-        }
       </div>
-    </div>
     }
   `,
   styleUrls: ['./splash-screen.component.css'],
@@ -66,7 +53,7 @@ export class SplashScreenComponent implements OnInit, OnChanges {
 
   constructor() {
     this.destroy.onDestroy(() => {
-      this.timeouts.forEach((timeout) => clearTimeout(timeout));
+      this.timeouts.forEach(timeout => clearTimeout(timeout));
       this.timeouts = [];
     });
   }

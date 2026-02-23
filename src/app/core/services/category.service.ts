@@ -6,7 +6,6 @@ import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
-
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/categories`;
 
