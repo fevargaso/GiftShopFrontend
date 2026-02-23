@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router'; // Se mantienen ambos: uno para el tipo/inyector y otro para el standalone
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CartService } from '@app/core/services/cart.services';
 import { CartItem } from '@app/core/models/cart-item.model';
