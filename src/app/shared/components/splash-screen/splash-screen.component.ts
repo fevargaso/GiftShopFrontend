@@ -34,7 +34,6 @@ export enum SplashAnimationType {
     }
   `,
   styleUrls: ['./splash-screen.component.css'],
-  imports: [NgIf],
 })
 export class SplashScreenComponent implements OnInit, OnChanges {
   protected readonly destroy = inject(DestroyRef);

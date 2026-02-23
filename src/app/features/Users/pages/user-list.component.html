@@ -83,7 +83,7 @@
           <td>{{ data.email }}</td>
           <td>
             <nz-tag [nzColor]="data.role === 'Admin' || data.role === 'Staff' ? 'volcano' : 'blue'">
-              {{ data.role?.toString() || '' | uppercase }}
+              {{ data.role.toString() | uppercase }}
             </nz-tag>
           </td>
           <td>

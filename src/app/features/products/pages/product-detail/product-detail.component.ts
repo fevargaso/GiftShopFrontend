@@ -10,7 +10,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, AddToCartButtonComponent, NzIconModule, NzSpinModule],
+  imports: [CommonModule, AddToCartButtonComponent, NzIconModule, NzSpinModule],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss'],
 })

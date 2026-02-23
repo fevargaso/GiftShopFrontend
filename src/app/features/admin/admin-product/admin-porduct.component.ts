@@ -34,7 +34,6 @@ import { CategoryService } from '@app/core/services/category.service';
     NzSelectModule,
     NzTagModule,
     NzDividerModule,
-    RouterLink,
   ],
   templateUrl: './admin-product.component.html',
   styleUrls: ['./admin-product.component.scss'],

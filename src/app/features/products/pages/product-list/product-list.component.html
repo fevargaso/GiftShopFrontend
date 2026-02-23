@@ -39,7 +39,7 @@
   </div>
 
   <main class="content-layout">
-    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products?.length; else emptyState">
+    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products.length; else emptyState">
       <div *ngFor="let product of products" class="amazon-list-item">
         <a class="item-link" [routerLink]="['/products', product.id]">
           <div class="img-wrapper">

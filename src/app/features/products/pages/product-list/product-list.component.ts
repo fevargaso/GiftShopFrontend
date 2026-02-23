@@ -23,7 +23,6 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
     CommonModule,
     FormsModule,
     RouterModule,
-    ProductCardComponent,
     NzSelectModule,
     NzInputModule,
     NzPaginationModule,
