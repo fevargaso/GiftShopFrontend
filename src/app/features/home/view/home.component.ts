@@ -35,13 +35,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  scrollToProducts(): void {
-    document.getElementById('products-target')?.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'start'
-    });
-  }
-
   goToProductsPage(): void {
     this.router.navigate(['/products']);
   }

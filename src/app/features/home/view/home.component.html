@@ -32,13 +32,13 @@
       @for (product of products; track product.id) {
         <div class="product-card-premium">
           <div class="img-box" (click)="seeDetails(product)">
-            <img [src]="product.imageUrl || 'assets/logo.png'" [alt]="product.name" />
+            <img [src]="product.imageUrl" [alt]="product.name" />
           </div>
 
           <div class="info-box">
             <div class="rating-box">
               <span class="stars">★★★★★</span>
-              <span class="reviews">1,240</span>
+              <span class="reviews">259</span>
             </div>
 
             <h3 class="product-name">{{ product.name }}</h3>

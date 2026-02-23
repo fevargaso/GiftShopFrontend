@@ -1,18 +1,18 @@
 import {
   NzDestroyService
-} from "./chunk-YBPL5W6X.js";
-import "./chunk-4MSGGSW7.js";
+} from "./chunk-XHVUBTOU.js";
+import "./chunk-22ZON5OQ.js";
 import {
   Platform,
   normalizePassiveListenerOptions
-} from "./chunk-R6IJAHEZ.js";
+} from "./chunk-KKAJIRPV.js";
 import {
   ensureInBounds,
   isTouchEvent
-} from "./chunk-WKKYJIDN.js";
+} from "./chunk-IVFCXUEV.js";
 import {
   DOCUMENT
-} from "./chunk-VFHRQ4OU.js";
+} from "./chunk-AFWQCB6S.js";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -50,23 +50,23 @@ import {
   ɵɵrepeater,
   ɵɵrepeaterCreate,
   ɵɵrepeaterTrackByIdentity
-} from "./chunk-ZREUISJD.js";
+} from "./chunk-BD52RYQU.js";
+import "./chunk-HIQUU2WY.js";
 import {
   fromEvent,
   merge
-} from "./chunk-IC62NIWK.js";
-import "./chunk-ISM5WLAM.js";
+} from "./chunk-NHVCTQM5.js";
 import {
   Subject,
   filter,
   takeUntil
-} from "./chunk-ZZ67MR3E.js";
+} from "./chunk-4FM7L5J3.js";
 import {
   __spreadProps,
   __spreadValues
 } from "./chunk-TXDUYLVM.js";
 
-// node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-resizable.mjs
+// ../node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-resizable.mjs
 var _c0 = ["*"];
 function NzResizeHandlesComponent_For_1_Template(rf, ctx) {
   if (rf & 1) {

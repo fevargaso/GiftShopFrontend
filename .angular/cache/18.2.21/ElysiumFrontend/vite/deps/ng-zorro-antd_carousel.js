@@ -1,29 +1,29 @@
 import {
   LEFT_ARROW,
   RIGHT_ARROW
-} from "./chunk-3YLFXDIK.js";
+} from "./chunk-L6TDEO2O.js";
 import {
   NzResizeObserver
-} from "./chunk-U2GBWPPE.js";
+} from "./chunk-4QUY6JZX.js";
 import {
   NzDragService,
   NzResizeService
-} from "./chunk-YBPL5W6X.js";
-import "./chunk-4MSGGSW7.js";
+} from "./chunk-XHVUBTOU.js";
+import "./chunk-22ZON5OQ.js";
 import {
   Platform
-} from "./chunk-R6IJAHEZ.js";
+} from "./chunk-KKAJIRPV.js";
 import {
   Directionality
-} from "./chunk-CGJQYKLH.js";
+} from "./chunk-ZKBJSJEE.js";
 import {
   NzConfigService,
   WithConfig
-} from "./chunk-XRYSGYAF.js";
-import "./chunk-WKKYJIDN.js";
+} from "./chunk-DXJSDFBE.js";
+import "./chunk-IVFCXUEV.js";
 import {
   NgTemplateOutlet
-} from "./chunk-VFHRQ4OU.js";
+} from "./chunk-AFWQCB6S.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -78,11 +78,11 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate,
   ɵɵviewQuery
-} from "./chunk-ZREUISJD.js";
+} from "./chunk-BD52RYQU.js";
+import "./chunk-HIQUU2WY.js";
 import {
   fromEvent
-} from "./chunk-IC62NIWK.js";
-import "./chunk-ISM5WLAM.js";
+} from "./chunk-NHVCTQM5.js";
 import {
   Subject,
   __decorate,
@@ -90,10 +90,10 @@ import {
   distinctUntilChanged,
   takeUntil,
   timer
-} from "./chunk-ZZ67MR3E.js";
+} from "./chunk-4FM7L5J3.js";
 import "./chunk-TXDUYLVM.js";
 
-// node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-carousel.mjs
+// ../node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-carousel.mjs
 var _c0 = ["slickList"];
 var _c1 = ["slickTrack"];
 var _c2 = ["*"];

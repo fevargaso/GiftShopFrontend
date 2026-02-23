@@ -17,7 +17,9 @@ import { Category } from '@app/core/models/category.model';
     CommonModule, FormsModule, NzTableModule, NzButtonModule,
     NzModalModule, NzFormModule, NzInputModule
   ],
-  templateUrl: './admin-categories.component.html'
+  templateUrl: './admin-categories.component.html',
+  styleUrls: ['./admin-categories.component.scss']
+
 })
 export class AdminCategoriesComponent implements OnInit {
   categories: Category[] = [];
