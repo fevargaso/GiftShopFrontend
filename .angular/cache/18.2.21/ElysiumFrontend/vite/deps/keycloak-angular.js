@@ -1,10 +1,10 @@
 import {
   HTTP_INTERCEPTORS,
   HttpHeaders
-} from "./chunk-FADEYHXQ.js";
+} from "./chunk-IGUNWB7S.js";
 import {
   CommonModule
-} from "./chunk-VFHRQ4OU.js";
+} from "./chunk-P5AJ7EIU.js";
 import {
   Injectable,
   NgModule,
@@ -13,9 +13,9 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-ZREUISJD.js";
-import "./chunk-IC62NIWK.js";
-import "./chunk-ISM5WLAM.js";
+} from "./chunk-IJAPRJ4V.js";
+import "./chunk-TAJAR57M.js";
+import "./chunk-IBPEAIWH.js";
 import {
   Subject,
   combineLatest,
@@ -23,7 +23,8 @@ import {
   map,
   mergeMap,
   of
-} from "./chunk-ZZ67MR3E.js";
+} from "./chunk-LY5LHBYX.js";
+import "./chunk-4JLIZ3DY.js";
 import {
   __async,
   __commonJS,
@@ -56,9 +57,9 @@ var require_buffer = __commonJS({
   }
 });
 
-// node_modules/js-sha256/src/sha256.js
+// ../node_modules/js-sha256/src/sha256.js
 var require_sha256 = __commonJS({
-  "node_modules/js-sha256/src/sha256.js"(exports, module) {
+  "../node_modules/js-sha256/src/sha256.js"(exports, module) {
     (function() {
       "use strict";
       var ERROR = "input is invalid type";
@@ -480,10 +481,10 @@ var require_sha256 = __commonJS({
   }
 });
 
-// node_modules/keycloak-js/dist/keycloak.mjs
+// ../node_modules/keycloak-js/dist/keycloak.mjs
 var import_js_sha256 = __toESM(require_sha256(), 1);
 
-// node_modules/jwt-decode/build/esm/index.js
+// ../node_modules/jwt-decode/build/esm/index.js
 var InvalidTokenError = class extends Error {
 };
 InvalidTokenError.prototype.name = "InvalidTokenError";
@@ -539,7 +540,7 @@ function jwtDecode(token, options) {
   }
 }
 
-// node_modules/keycloak-js/dist/keycloak.mjs
+// ../node_modules/keycloak-js/dist/keycloak.mjs
 if (typeof Promise === "undefined") {
   throw Error("Keycloak requires an environment that supports Promises. Make sure that you include the appropriate polyfill.");
 }
@@ -1990,7 +1991,7 @@ function bytesToBase64(bytes) {
   return btoa(binString);
 }
 
-// node_modules/keycloak-angular/fesm2022/keycloak-angular.mjs
+// ../node_modules/keycloak-angular/fesm2022/keycloak-angular.mjs
 var KeycloakEventType;
 (function(KeycloakEventType2) {
   KeycloakEventType2[KeycloakEventType2["OnAuthError"] = 0] = "OnAuthError";

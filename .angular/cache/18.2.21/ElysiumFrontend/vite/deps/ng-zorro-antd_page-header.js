@@ -1,31 +1,31 @@
 import {
   NzIconDirective,
   NzIconModule
-} from "./chunk-24FD55U4.js";
-import "./chunk-BQ76GOFF.js";
+} from "./chunk-BTWL6VBQ.js";
+import "./chunk-FF3CGWPP.js";
 import {
   NzOutletModule,
   NzStringTemplateOutletDirective
-} from "./chunk-KCKBRW5C.js";
+} from "./chunk-I4HQEHIX.js";
 import {
   NzResizeObserver
-} from "./chunk-U2GBWPPE.js";
-import "./chunk-R6IJAHEZ.js";
+} from "./chunk-H4C5LKCN.js";
+import "./chunk-UUWMY3QI.js";
 import {
   Directionality
-} from "./chunk-CGJQYKLH.js";
+} from "./chunk-7DIMPZVY.js";
 import {
   NzConfigService,
   WithConfig
-} from "./chunk-XRYSGYAF.js";
+} from "./chunk-FNQVWW6X.js";
 import {
   PREFIX
-} from "./chunk-WKKYJIDN.js";
-import "./chunk-HHQ7MW3F.js";
-import "./chunk-FADEYHXQ.js";
+} from "./chunk-CEGLWSSJ.js";
+import "./chunk-SN4CB355.js";
+import "./chunk-IGUNWB7S.js";
 import {
   Location
-} from "./chunk-VFHRQ4OU.js";
+} from "./chunk-P5AJ7EIU.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -68,18 +68,20 @@ import {
   ɵɵtemplate,
   ɵɵtext,
   ɵɵtextInterpolate
-} from "./chunk-ZREUISJD.js";
-import "./chunk-IC62NIWK.js";
-import "./chunk-ISM5WLAM.js";
+} from "./chunk-IJAPRJ4V.js";
+import "./chunk-TAJAR57M.js";
+import "./chunk-IBPEAIWH.js";
 import {
   Subject,
-  __decorate,
   map,
   takeUntil
-} from "./chunk-ZZ67MR3E.js";
+} from "./chunk-LY5LHBYX.js";
+import {
+  __decorate
+} from "./chunk-4JLIZ3DY.js";
 import "./chunk-TXDUYLVM.js";
 
-// node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-page-header.mjs
+// ../node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-page-header.mjs
 var _c0 = [[["nz-breadcrumb", "nz-page-header-breadcrumb", ""]], [["nz-avatar", "nz-page-header-avatar", ""]], [["nz-page-header-tags"], ["", "nz-page-header-tags", ""]], [["nz-page-header-extra"], ["", "nz-page-header-extra", ""]], [["nz-page-header-content"], ["", "nz-page-header-content", ""]], [["nz-page-header-footer"], ["", "nz-page-header-footer", ""]], [["nz-page-header-title"], ["", "nz-page-header-title", ""]], [["nz-page-header-subtitle"], ["", "nz-page-header-subtitle", ""]]];
 var _c1 = ["nz-breadcrumb[nz-page-header-breadcrumb]", "nz-avatar[nz-page-header-avatar]", "nz-page-header-tags, [nz-page-header-tags]", "nz-page-header-extra, [nz-page-header-extra]", "nz-page-header-content, [nz-page-header-content]", "nz-page-header-footer, [nz-page-header-footer]", "nz-page-header-title, [nz-page-header-title]", "nz-page-header-subtitle, [nz-page-header-subtitle]"];
 function NzPageHeaderComponent_Conditional_3_ng_container_2_Template(rf, ctx) {
