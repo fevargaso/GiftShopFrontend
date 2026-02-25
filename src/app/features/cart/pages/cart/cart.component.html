@@ -55,26 +55,27 @@
     </div>
   </div>
 
-<aside class="cart-right-column">
-  <div class="checkout-card">
-    <div class="checkout-info">
-      <p class="checkout-subtotal">Subtotal ({{ cartItems.length }} products):</p>
-      <span class="main-total">${{ getTotal() | number:'1.2-2' }}</span>
-    </div>
+  <aside class="cart-right-column">
+    <div class="checkout-card">
+      <div class="checkout-info">
+        <p class="checkout-subtotal">Subtotal ({{ cartItems.length }} products):</p>
+        <span class="main-total">${{ getTotal() | number:'1.2-2' }}</span>
+      </div>
 
-    <button 
-      nz-button 
-      nzBlock 
-      class="cart-btn-global proceed-btn"
-      [nzLoading]="isProcessing"
-      (click)="processCheckout()">
-      Proceed to Buy
-    </button>
+      <button 
+        nz-button 
+        nzBlock 
+        class="cart-btn-global proceed-btn"
+        [nzLoading]="isProcessing"
+        (click)="processCheckout()">
+        Proceed to Buy
+      </button>
 
-    <div class="security-lock">
-      <span nz-icon nzType="lock"></span>
-      Secure transaction
+      <div class="security-lock">
+        <span nz-icon nzType="lock"></span>
+        Secure transaction
+      </div>
     </div>
-  </div>
-</aside>
+  </aside>
+
 </div>
