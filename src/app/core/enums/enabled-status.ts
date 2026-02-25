@@ -1,6 +1,5 @@
-export enum EnabledStatus
-{
-    Enabled,
-    Disabled,
-    Deleted
+export enum EnabledStatus {
+  Enabled,
+  Disabled,
+  Deleted,
 }

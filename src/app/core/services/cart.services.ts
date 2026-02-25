@@ -11,7 +11,6 @@ import { Role } from '../auth/roles';
   providedIn: 'root',
 })
 export class CartService {
-
   private readonly store = inject(Store<{ user: UserState }>);
   private readonly notification = inject(NotificationUtilService);
 
@@ -32,12 +31,9 @@ export class CartService {
   }
 
   private handleUserTransition(user: UserState): void {
-    const isRegistered =
-      !!user?.id && user.actualRole !== Role.UNAUTHORIZE;
+    const isRegistered = !!user?.id && user.actualRole !== Role.UNAUTHORIZE;
 
-    const newKey = isRegistered
-      ? `giftshop_cart_${user.id}`
-      : this.GUEST_KEY;
+    const newKey = isRegistered ? `giftshop_cart_${user.id}` : this.GUEST_KEY;
 
     if (this.storageKey === newKey) return;
 
@@ -55,13 +51,10 @@ export class CartService {
     this.storageKey = userKey;
 
     const savedUserCartJson = localStorage.getItem(this.storageKey);
-    let userSavedItems: CartItem[] =
-      savedUserCartJson ? JSON.parse(savedUserCartJson) : [];
+    let userSavedItems: CartItem[] = savedUserCartJson ? JSON.parse(savedUserCartJson) : [];
 
     guestItems.forEach(gItem => {
-      const existing = userSavedItems.find(
-        u => u.product.id === gItem.product.id
-      );
+      const existing = userSavedItems.find(u => u.product.id === gItem.product.id);
 
       if (existing) {
         existing.quantity += gItem.quantity;
@@ -84,18 +77,12 @@ export class CartService {
   }
 
   private saveCartToStorage(): void {
-    localStorage.setItem(
-      this.storageKey,
-      JSON.stringify(this.cartItems)
-    );
+    localStorage.setItem(this.storageKey, JSON.stringify(this.cartItems));
     this.cartSubject.next([...this.cartItems]);
   }
 
-
   addToCartProduct(product: Product): void {
-    const existing = this.cartItems.find(
-      i => i.product.id === product.id
-    );
+    const existing = this.cartItems.find(i => i.product.id === product.id);
 
     if (existing) {
       existing.quantity++;
@@ -108,9 +95,7 @@ export class CartService {
   }
 
   increaseQuantity(productId: string): void {
-    const item = this.cartItems.find(
-      i => i.product.id === productId
-    );
+    const item = this.cartItems.find(i => i.product.id === productId);
 
     if (!item) return;
 
@@ -119,9 +104,7 @@ export class CartService {
   }
 
   decreaseQuantity(productId: string): void {
-    const item = this.cartItems.find(
-      i => i.product.id === productId
-    );
+    const item = this.cartItems.find(i => i.product.id === productId);
 
     if (!item) return;
 
@@ -135,9 +118,7 @@ export class CartService {
   }
 
   removeFromCart(productId: string): void {
-    this.cartItems = this.cartItems.filter(
-      i => i.product.id !== productId
-    );
+    this.cartItems = this.cartItems.filter(i => i.product.id !== productId);
 
     this.notification.warn('Product removed from cart');
 
@@ -150,16 +131,12 @@ export class CartService {
     this.saveCartToStorage();
   }
 
-
   getCartItems(): CartItem[] {
     return this.cartItems;
   }
 
   getTotal(): number {
-    return this.cartItems.reduce(
-      (sum, i) => sum + i.product.price * i.quantity,
-      0
-    );
+    return this.cartItems.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
   }
 
   get items(): CartItem[] {

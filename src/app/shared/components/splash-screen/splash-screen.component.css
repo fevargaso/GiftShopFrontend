@@ -30,7 +30,7 @@
 }
 
 .app-logo {
-  background: url("../../../../../public/assets/pinnacle-logo.svg");
+  background: url('../../../../../public/assets/pinnacle-logo.svg');
   background-repeat: no-repeat;
   max-width: 100%;
   background-position: center;

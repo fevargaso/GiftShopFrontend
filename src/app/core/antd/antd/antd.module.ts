@@ -139,6 +139,6 @@ import { NzFlexModule } from 'ng-zorro-antd/flex';
     NzSegmentedModule,
     NzFlexModule,
     NzProgressModule,
-  ]
+  ],
 })
-export class AntdModule { }
+export class AntdModule {}

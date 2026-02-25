@@ -10,6 +10,13 @@ export enum Role {
 
 export const noneRole: string = 'none';
 
-export const privilegedRoles: string[] = [Role.STANDARD, Role.QA, Role.SALES, Role.PM, Role.STAFF, Role.PORTFOLIO_MANAGER];
+export const privilegedRoles: string[] = [
+  Role.STANDARD,
+  Role.QA,
+  Role.SALES,
+  Role.PM,
+  Role.STAFF,
+  Role.PORTFOLIO_MANAGER,
+];
 
 export const allAppRoles: string[] = [...privilegedRoles];

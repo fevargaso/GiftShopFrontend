@@ -1,35 +1,16 @@
-import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  provideZoneChangeDetection,
-  importProvidersFrom,
-} from '@angular/core';
-import {
-  PreloadAllModules,
-  provideRouter,
-  withComponentInputBinding,
-  withPreloading,
-} from '@angular/router';
+import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { PreloadAllModules, provideRouter, withComponentInputBinding, withPreloading } from '@angular/router';
 
 import { routes } from './app.routes';
 import { ConfigService } from './core/services/config.service';
-import {
-  HttpClient,
-  provideHttpClient,
-  withInterceptors,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 
 import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {
-  TranslateModule,
-  TranslateLoader,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
 import { provideStore } from '@ngrx/store';
@@ -37,7 +18,7 @@ import { provideEffects } from '@ngrx/effects';
 import { appReducer } from './core/auth/app.store';
 import { UserEffects, userReducer } from './core/auth/user.store';
 
-import { jwtInterceptor } from './core/auth/jwt.interceptor'; 
+import { jwtInterceptor } from './core/auth/jwt.interceptor';
 
 registerLocaleData(en);
 
@@ -50,34 +31,23 @@ export function appConfigInit(configService: ConfigService, translate: Translate
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(
-    http,
-    './assets/i18n/',
-    '.json?v=' + new Date(Date.now()).getDay()
-  );
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json?v=' + new Date(Date.now()).getDay());
 }
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimationsAsync(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    
-    provideRouter(
-      routes,
-      withPreloading(PreloadAllModules),
-      withComponentInputBinding()
-    ),
 
-    provideHttpClient(
-      withInterceptorsFromDi(),
-      withInterceptors([jwtInterceptor]) 
-    ),
+    provideRouter(routes, withPreloading(PreloadAllModules), withComponentInputBinding()),
+
+    provideHttpClient(withInterceptorsFromDi(), withInterceptors([jwtInterceptor])),
 
     provideStore({ app: appReducer, user: userReducer }),
     provideEffects(UserEffects),
 
     provideNzI18n(en_US),
-    
+
     importProvidersFrom([
       FormsModule,
       TranslateModule.forRoot({

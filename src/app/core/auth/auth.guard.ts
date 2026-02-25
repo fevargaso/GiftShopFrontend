@@ -5,7 +5,6 @@ import { map, take } from 'rxjs';
 import { Role } from './roles';
 
 export const authGuard: CanActivateFn = (route, state) => {
-
   const router = inject(Router);
   const store = inject(Store);
 
@@ -18,20 +17,18 @@ export const authGuard: CanActivateFn = (route, state) => {
       const hasId = !!userState?.id;
       const isNotGuest = userState?.actualRole !== Role.UNAUTHORIZE;
 
-      const isAuthenticated =
-        (hasId || !!persistedUser) && !!token && isNotGuest;
+      const isAuthenticated = (hasId || !!persistedUser) && !!token && isNotGuest;
 
       return isAuthenticated
         ? true
         : router.createUrlTree(['/login'], {
-            queryParams: { returnUrl: state.url }
+            queryParams: { returnUrl: state.url },
           });
-    })
+    }),
   );
 };
 
 export const adminGuard: CanActivateFn = () => {
-
   const router = inject(Router);
   const store = inject(Store);
 
@@ -40,9 +37,7 @@ export const adminGuard: CanActivateFn = () => {
     map(userState => {
       const isAdmin = userState?.actualRole === Role.STAFF;
 
-      return isAdmin
-        ? true
-        : router.createUrlTree(['/']);
-    })
+      return isAdmin ? true : router.createUrlTree(['/']);
+    }),
   );
 };

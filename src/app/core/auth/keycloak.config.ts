@@ -1,20 +1,12 @@
-import {
-  KeycloakService,
-  KeycloakOptions,
-  KeycloakEventType,
-} from 'keycloak-angular';
+import { KeycloakService, KeycloakOptions, KeycloakEventType } from 'keycloak-angular';
 import { ConfigService } from '../services/config.service';
 import { Store } from '@ngrx/store';
 import { changeOperational, initialized } from './app.store';
 import { addUser } from './user.store';
 
-export function initializeKeycloak(
-  keycloak: KeycloakService,
-  config: ConfigService,
-  store: Store
-): () => Promise<any> {
+export function initializeKeycloak(keycloak: KeycloakService, config: ConfigService, store: Store): () => Promise<any> {
   return () => {
-    return new Promise(async (resolve) =>{
+    return new Promise(async resolve => {
       await config.load();
       const options: KeycloakOptions = {
         config: {
@@ -24,14 +16,13 @@ export function initializeKeycloak(
         },
         initOptions: {
           onLoad: config.KEYCLOAK_ON_LOAD,
-          silentCheckSsoRedirectUri:
-            window.location.origin + config.KEYCLOAK_SILENT_CHECK_SSO_REDIRECT_URI,
+          silentCheckSsoRedirectUri: window.location.origin + config.KEYCLOAK_SILENT_CHECK_SSO_REDIRECT_URI,
         },
         enableBearerInterceptor: true,
         loadUserProfileAtStartUp: true,
       };
 
-      const keycloakInitialized = await keycloak.init(options).catch((err) => {
+      const keycloakInitialized = await keycloak.init(options).catch(err => {
         console.error('Error cannot init Keycloak', err);
       });
 
@@ -59,7 +50,7 @@ export function initializeKeycloak(
       }
 
       keycloak.keycloakEvents$.subscribe({
-        next: (event) => {
+        next: event => {
           if (event.type == KeycloakEventType.OnTokenExpired) {
             keycloak.updateToken(20);
           }
@@ -67,7 +58,7 @@ export function initializeKeycloak(
             keycloak.login();
           }
         },
-        error: (err) => {
+        error: err => {
           console.error('Error listening event for Keycloak', err);
           store.dispatch(changeOperational({ operation: false }));
         },
@@ -78,6 +69,6 @@ export function initializeKeycloak(
       store.dispatch(initialized());
       store.dispatch(changeOperational({ operation: true }));
       resolve(true);
-    })
+    });
   };
 }

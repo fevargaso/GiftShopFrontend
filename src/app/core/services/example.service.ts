@@ -4,22 +4,21 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ExampleModel } from '../models/example.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExampleService {
   private readonly configService = inject(ConfigService);
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${this.configService.ELYSIUM_API_URL}/api/examples`
+  private readonly baseUrl = `${this.configService.ELYSIUM_API_URL}/api/examples`;
 
-  constructor() { }
+  constructor() {}
 
-  getExamples(term: string = ""){
+  getExamples(term: string = '') {
     let queryParams = new HttpParams();
-    if(term != ""){
-      queryParams.append('term', term)
+    if (term != '') {
+      queryParams.append('term', term);
     }
 
-    return this.http.get<ExampleModel[]>(`${this.baseUrl}`,{ params: queryParams})
+    return this.http.get<ExampleModel[]>(`${this.baseUrl}`, { params: queryParams });
   }
-
 }

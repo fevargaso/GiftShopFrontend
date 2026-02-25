@@ -2,18 +2,27 @@
   <div class="admin-header">
     <div class="header-left">
       <div class="controls-container">
-
         <div class="category-selector">
-          <nz-select class="filter-select" [(ngModel)]="params.category" (ngModelChange)="onFilterChange()"
-            nzPlaceHolder="All Categories" nzAllowClear>
-            <nz-option *ngFor="let cat of categories" [nzValue]="cat.id" [nzLabel]="cat.name">
-            </nz-option>
+          <nz-select
+            class="filter-select"
+            [(ngModel)]="params.category"
+            (ngModelChange)="onFilterChange()"
+            nzPlaceHolder="All Categories"
+            nzAllowClear
+          >
+            <nz-option *ngFor="let cat of categories" [nzValue]="cat.id" [nzLabel]="cat.name"> </nz-option>
           </nz-select>
         </div>
 
         <div class="search-wrapper">
-          <input type="text" nz-input placeholder="Search products..." [(ngModel)]="params.search"
-            (ngModelChange)="onSearchChange()" /> <button class="search-confirm-btn" (click)="onFilterChange()">
+          <input
+            type="text"
+            nz-input
+            placeholder="Search products..."
+            [(ngModel)]="params.search"
+            (ngModelChange)="onSearchChange()"
+          />
+          <button class="search-confirm-btn" (click)="onFilterChange()">
             <span nz-icon nzType="search"></span>
           </button>
         </div>
@@ -25,16 +34,14 @@
             <nz-option [nzValue]="12" nzLabel="12 per page"></nz-option>
           </nz-select>
         </div>
-
       </div>
     </div>
   </div>
 
   <main class="content-layout">
-    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products?.length; else emptyState">
+    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products.length; else emptyState">
       <div *ngFor="let product of products" class="amazon-list-item">
         <a class="item-link" [routerLink]="['/products', product.id]">
-
           <div class="img-wrapper">
             <img [src]="product.imageUrl || 'assets/logo.png'" [alt]="product.name" class="product-img" />
           </div>
@@ -55,34 +62,36 @@
               <div class="price-amazon">
                 <span class="symbol">$</span>
                 <span class="whole">
-                  {{ product.price | number:'1.0-0' }}
+                  {{ product.price | number: '1.0-0' }}
                 </span>
                 <span class="fraction">
-                  {{ (product.price % 1 * 100) | number:'2.0-0' }}
+                  {{ (product.price % 1) * 100 | number: '2.0-0' }}
                 </span>
               </div>
 
               <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
             </div>
           </div>
-
         </a>
       </div>
     </div>
 
     <ng-template #emptyState>
       <div class="no-results">
-        <img src="assets/logo.png" alt="No results" class="empty-img">
+        <img src="assets/logo.png" alt="No results" class="empty-img" />
         <h3>Can't find what you're looking for?</h3>
         <p>Try checking the spelling or using more general terms.</p>
       </div>
     </ng-template>
 
     <footer class="pagination-footer" *ngIf="totalItems > params.pageSize">
-      <nz-pagination [(nzPageIndex)]="params.page" [nzTotal]="totalItems" [nzPageSize]="params.pageSize"
-        (nzPageIndexChange)="onPageChange($event)">
+      <nz-pagination
+        [(nzPageIndex)]="params.page"
+        [nzTotal]="totalItems"
+        [nzPageSize]="params.pageSize"
+        (nzPageIndexChange)="onPageChange($event)"
+      >
       </nz-pagination>
     </footer>
-
   </main>
 </div>

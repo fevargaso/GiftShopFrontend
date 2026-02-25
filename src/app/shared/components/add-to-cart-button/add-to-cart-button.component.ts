@@ -20,7 +20,7 @@ export class AddToCartButtonComponent implements OnInit, OnDestroy {
 
   constructor(private cartService: CartService) {}
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.cartSub = this.cartService.cart$.subscribe(items => {
       if (this.product) {
         this.isAdded = items.some(item => item.product.id === this.product.id);
@@ -35,10 +35,10 @@ ngOnInit(): void {
   add(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
-    
-    if (this.product && !this.issuccess) { 
+
+    if (this.product && !this.issuccess) {
       this.cartService.addToCartProduct(this.product);
-      
+
       this.issuccess = true;
 
       setTimeout(() => {

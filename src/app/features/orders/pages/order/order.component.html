@@ -1,5 +1,4 @@
 <div class="order-page-container">
-  
   <ng-container *ngIf="!isSuccess">
     <div class="checkout-header">
       <h1>Payment method</h1>
@@ -9,10 +8,10 @@
       <div class="payment-methods-section">
         <nz-card class="payment-card">
           <div *ngIf="cartLength === 0" class="empty-cart-warning">
-             <p>
-               <span nz-icon nzType="warning"></span> 
-               Your cart is empty. Please add items before checking out.
-             </p>
+            <p>
+              <span nz-icon nzType="warning"></span>
+              Your cart is empty. Please add items before checking out.
+            </p>
           </div>
 
           <nz-divider nzText="Add a card"></nz-divider>
@@ -38,7 +37,7 @@
                   <nz-form-label nzRequired>Expiration date (MM/AA)</nz-form-label>
                   <nz-form-control [nzErrorTip]="expiryErrorTpl">
                     <input nz-input formControlName="expiryDate" placeholder="MM/AA" maxlength="5" />
-                    
+
                     <ng-template #expiryErrorTpl let-control>
                       <ng-container *ngIf="control.hasError('required')">Date is required</ng-container>
                       <ng-container *ngIf="control.hasError('pattern')">Format must be MM/AA</ng-container>
@@ -62,14 +61,15 @@
 
       <aside class="order-summary-side">
         <div class="summary-box">
-          <button 
-            nz-button 
-            nzType="primary" 
-            nzBlock 
-            class="payment-btn" 
+          <button
+            nz-button
+            nzType="primary"
+            nzBlock
+            class="payment-btn"
             [nzLoading]="isProcessing"
             [disabled]="cartLength === 0 || paymentForm.invalid"
-            (click)="processPayment()">
+            (click)="processPayment()"
+          >
             Purchase
           </button>
           <p class="disclaimer">By continuing, you agree to the terms of use.</p>
@@ -82,19 +82,19 @@
     <nz-result
       nzStatus="success"
       nzTitle="Successfully Purchased!"
-      nzSubTitle="Your order is being prepared. Here is your summary:">
-      
+      nzSubTitle="Your order is being prepared. Here is your summary:"
+    >
       <div nz-result-content>
         <div class="purchased-products-list">
           <h4 class="summary-title">Order Summary</h4>
-          
+
           <div *ngFor="let item of purchasedItems" class="item-row">
-            <img [src]="item.product.imageUrl" class="mini-img" alt="product">
+            <img [src]="item.product.imageUrl" class="mini-img" alt="product" />
             <div class="item-details">
               <span class="name">{{ item.product.name }}</span>
               <span class="qty">Qty: {{ item.quantity }}</span>
             </div>
-            <span class="price">{{ (item.product.price * item.quantity) | currency }}</span>
+            <span class="price">{{ item.product.price * item.quantity | currency }}</span>
           </div>
 
           <nz-divider></nz-divider>

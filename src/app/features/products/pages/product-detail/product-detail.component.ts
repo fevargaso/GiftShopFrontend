@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '@app/core/services/product.services';
 import { Product } from '@app/core/models/product-model';
@@ -10,9 +10,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, AddToCartButtonComponent, NzIconModule, NzSpinModule],
+  imports: [CommonModule, AddToCartButtonComponent, NzIconModule, NzSpinModule],
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
@@ -34,8 +34,8 @@ export class ProductDetailComponent implements OnInit {
     if (!id) return;
 
     this.productService.getById(id).subscribe({
-      next: (res) => this.product = res,
-      error: (err) => console.error('Error loading product details:', err)
+      next: res => (this.product = res),
+      error: err => console.error('Error loading product details:', err),
     });
   }
 }

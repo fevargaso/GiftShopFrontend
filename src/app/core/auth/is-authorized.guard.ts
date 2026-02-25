@@ -1,21 +1,17 @@
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 
-import { Observable } from "rxjs";
-import { inject } from "@angular/core";
-import { RoleService } from "./role.service";
+import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { RoleService } from './role.service';
 
 export const isAuthorized = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-):
-  | boolean
-  | UrlTree
-  | Observable<boolean | UrlTree>
-  | Promise<boolean | UrlTree> => {
+  state: RouterStateSnapshot,
+): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> => {
   const router = inject(Router);
   const roleService = inject(RoleService);
 
-  const routeRoles: string[]|undefined = route.data['roles'];
+  const routeRoles: string[] | undefined = route.data['roles'];
   if (!routeRoles) {
     return Promise.resolve(true);
   }

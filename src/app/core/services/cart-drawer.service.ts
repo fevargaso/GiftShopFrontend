@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CartDrawerService {
-
   private readonly openSubject = new BehaviorSubject<boolean>(false);
 
   readonly open$ = this.openSubject.asObservable();

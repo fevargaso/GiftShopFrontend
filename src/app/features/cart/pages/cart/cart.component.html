@@ -5,14 +5,11 @@
     </div>
     <h2>Your Pinnacle Cart is empty.</h2>
     <p>Check our products and find something great for you!</p>
-    <button nz-button class="cart-btn-global" routerLink="/products">
-      Go to products
-    </button>
+    <button nz-button class="cart-btn-global" routerLink="/products">Go to products</button>
   </div>
 </div>
 
 <div *ngIf="cartItems.length > 0" class="amazon-cart-wrapper">
-  
   <div class="cart-left-column">
     <div class="cart-header">
       <h1>Shopping cart</h1>
@@ -28,7 +25,7 @@
         <h3>{{ item.product.name || item.product.description }}</h3>
         <p class="category-tag">{{ item.product.categoryName }}</p>
         <p class="stock-status">Available</p>
-        
+
         <div class="item-actions">
           <div class="quantity-box">
             <button (click)="decrease(item)" class="qty-btn">−</button>
@@ -41,16 +38,14 @@
       </div>
 
       <div class="item-price">
-        <strong>${{ item.product.price | number:'1.2-2' }}</strong>
+        <strong>${{ item.product.price | number: '1.2-2' }}</strong>
       </div>
     </div>
 
     <div class="cart-footer">
-      <button nz-button nzType="default" nzDanger (click)="clear()" class="btn-clear-all">
-        Clear cart
-      </button>
+      <button nz-button nzType="default" nzDanger (click)="clear()" class="btn-clear-all">Clear cart</button>
       <p class="subtotal-text">
-        Subtotal ({{ cartItems.length }} products): <strong>${{ getTotal() | number:'1.2-2' }}</strong>
+        Subtotal ({{ cartItems.length }} products): <strong>${{ getTotal() | number: '1.2-2' }}</strong>
       </p>
     </div>
   </div>
@@ -59,15 +54,16 @@
     <div class="checkout-card">
       <div class="checkout-info">
         <p class="checkout-subtotal">Subtotal ({{ cartItems.length }} products):</p>
-        <span class="main-total">${{ getTotal() | number:'1.2-2' }}</span>
+        <span class="main-total">${{ getTotal() | number: '1.2-2' }}</span>
       </div>
 
-      <button 
-        nz-button 
-        nzBlock 
+      <button
+        nz-button
+        nzBlock
         class="cart-btn-global proceed-btn"
         [nzLoading]="isProcessing"
-        (click)="processCheckout()">
+        (click)="processCheckout()"
+      >
         Proceed to Buy
       </button>
 
@@ -77,5 +73,4 @@
       </div>
     </div>
   </aside>
-
 </div>

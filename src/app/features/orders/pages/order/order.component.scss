@@ -10,10 +10,10 @@ $border-color: #ddd;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .checkout-header {
-    h1 { 
-      font-size: 24px; 
-      margin-bottom: 20px; 
-      font-weight: 600; 
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: 600;
     }
   }
 
@@ -30,7 +30,9 @@ $border-color: #ddd;
 
     .empty-cart-warning {
       padding: 10px 0;
-      span { margin-right: 8px; }
+      span {
+        margin-right: 8px;
+      }
     }
 
     .new-card-form {
@@ -121,7 +123,9 @@ $border-color: #ddd;
         padding: 12px 0;
         border-bottom: 1px solid #e0e0e0;
 
-        &:last-of-type { border-bottom: none; }
+        &:last-of-type {
+          border-bottom: none;
+        }
 
         .mini-img {
           width: 60px;
@@ -135,19 +139,24 @@ $border-color: #ddd;
 
         .item-details {
           flex: 1;
-          .name { 
-            font-size: 15px; 
-            font-weight: 500; 
+          .name {
+            font-size: 15px;
+            font-weight: 500;
             color: $text-main;
             display: -webkit-box;
-            -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow: hidden;
           }
-          .qty { font-size: 13px; color: $text-muted; }
+          .qty {
+            font-size: 13px;
+            color: $text-muted;
+          }
         }
 
-        .price { font-weight: 600; font-size: 16px; }
+        .price {
+          font-weight: 600;
+          font-size: 16px;
+        }
       }
 
       .total-summary {
@@ -159,9 +168,9 @@ $border-color: #ddd;
         border-top: 2px solid $border-color;
         font-size: 18px;
 
-        .amount { 
-          color: #B12704;
-          font-weight: 700; 
+        .amount {
+          color: #b12704;
+          font-weight: 700;
           font-size: 22px;
         }
       }
@@ -170,20 +179,26 @@ $border-color: #ddd;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
   .order-page-container {
     .main-checkout-layout {
       grid-template-columns: 1fr;
-      
+
       .order-summary-side {
-        order: -1; 
+        order: -1;
       }
     }
-    
+
     .success-layout {
       padding: 20px;
     }

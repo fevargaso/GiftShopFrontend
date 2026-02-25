@@ -4,16 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '@app/core/services/product.services';
 import { CategoryService } from '@app/core/services/category.service';
 import { Product } from '@app/core/models/product-model';
-import { ProductCardComponent } from '../product-card/product-card.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { CartService } from '@app/core/services/cart.services';
 import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-button/add-to-cart-button.component';
 
 @Component({
@@ -23,23 +21,22 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
     CommonModule,
     FormsModule,
     RouterModule,
-    ProductCardComponent,
     NzSelectModule,
     NzInputModule,
     NzPaginationModule,
     NzIconModule,
     NzButtonModule,
-    AddToCartButtonComponent
+    AddToCartButtonComponent,
   ],
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   private readonly productService = inject(ProductService);
   private readonly categoryService = inject(CategoryService);
 
   products: Product[] = [];
-  categories: any[] = []; 
+  categories: any[] = [];
   totalItems = 0;
   viewMode: 'list' | 'grid' = 'list';
 
@@ -50,23 +47,22 @@ export class ProductListComponent implements OnInit, OnDestroy {
     search: '',
     category: '',
     page: 1,
-    pageSize: 6
+    pageSize: 6,
   };
 
   ngOnInit(): void {
     this.initSearchDebounce();
-    this.loadCategories(); 
+    this.loadCategories();
     this.loadProducts();
   }
 
   private initSearchDebounce(): void {
-    this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(400),
-      distinctUntilChanged()
-    ).subscribe(searchText => {
-      this.params.search = searchText;
-      this.loadProducts();
-    });
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe(searchText => {
+        this.params.search = searchText;
+        this.loadProducts();
+      });
   }
 
   ngOnDestroy(): void {
@@ -75,8 +71,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   loadCategories(): void {
     this.categoryService.getAll().subscribe({
-      next: (res) => this.categories = res,
-      error: (err) => console.error('Error loading categories', err)
+      next: res => (this.categories = res),
+      error: err => console.error('Error loading categories', err),
     });
   }
 
@@ -85,16 +81,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
       next: (res: any) => {
         this.products = (res.items || []).map((p: any) => ({
           ...p,
-          imageUrl: p.imageUrl || p.ImageUrl
+          imageUrl: p.imageUrl || p.ImageUrl,
         }));
         this.totalItems = res.totalItems ?? res.totalCount ?? 0;
       },
-      error: err => console.error('Error loading products', err)
+      error: err => console.error('Error loading products', err),
     });
   }
 
   onSearchChange(): void {
-    this.params.page = 1; 
+    this.params.page = 1;
     this.searchSubject.next(this.params.search);
   }
 
@@ -110,6 +106,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   toggleViewMode(mode: 'list' | 'grid'): void {
-  this.viewMode = mode;
-}
+    this.viewMode = mode;
+  }
 }

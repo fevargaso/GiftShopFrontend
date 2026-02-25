@@ -11,10 +11,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { RouterLink } from "@angular/router";
 import { Subject, Subscription, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
 import { ProductService } from '@app/core/services/product.services';
 import { Product } from '@app/core/models/product-model';
 import { CategoryService } from '@app/core/services/category.service';
@@ -23,22 +21,30 @@ import { CategoryService } from '@app/core/services/category.service';
   standalone: true,
   selector: 'app-admin-products',
   imports: [
-    CommonModule, FormsModule, NzTableModule, NzButtonModule,
-    NzModalModule, NzFormModule, NzInputModule, NzIconModule, NzSelectModule,
-    NzTagModule, NzDividerModule, RouterLink
+    CommonModule,
+    FormsModule,
+    NzTableModule,
+    NzButtonModule,
+    NzModalModule,
+    NzFormModule,
+    NzInputModule,
+    NzIconModule,
+    NzSelectModule,
+    NzTagModule,
+    NzDividerModule,
   ],
   templateUrl: './admin-product.component.html',
-  styleUrls: ['./admin-product.component.scss']
+  styleUrls: ['./admin-product.component.scss'],
 })
 export class AdminProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   categories: any[] = [];
-  
+
   params = {
     search: '',
-    category: '', 
+    category: '',
     page: 1,
-    pageSize: 6
+    pageSize: 6,
   };
 
   private searchSubject = new Subject<string>();
@@ -54,17 +60,14 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private categoryService: CategoryService,
     private modal: NzModalService,
-    private message: NzMessageService
+    private message: NzMessageService,
   ) {}
 
   ngOnInit() {
     this.loadCategories();
     this.loadProducts();
 
-    this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(400), 
-      distinctUntilChanged() 
-    ).subscribe(value => {
+    this.searchSubscription = this.searchSubject.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
       this.params.search = value;
       this.params.page = 1;
       this.loadProducts();
@@ -80,8 +83,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(categoryId: string | null): void {
-    this.params.category = categoryId || ''; 
-    this.params.page = 1; 
+    this.params.category = categoryId || '';
+    this.params.page = 1;
     this.loadProducts();
   }
 
@@ -102,14 +105,14 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
         this.products = res.items || [];
         this.totalItems = res.totalItems ?? res.totalCount ?? 0;
       },
-      error: () => this.message.error('Error loading products')
+      error: () => this.message.error('Error loading products'),
     });
   }
 
   loadCategories() {
     this.categoryService.getAll().subscribe({
-      next: (res) => this.categories = res,
-      error: (err) => console.error('Error loading categories', err)
+      next: res => (this.categories = res),
+      error: err => console.error('Error loading categories', err),
     });
   }
 
@@ -130,7 +133,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const request$: Observable<any> = this.isEdit 
+    const request$: Observable<any> = this.isEdit
       ? this.productService.update(this.currentProduct.id!, this.currentProduct)
       : this.productService.create(this.currentProduct);
 
@@ -139,10 +142,10 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
         this.message.success(this.isEdit ? 'Product updated' : 'Product created');
         this.finalizeOperation();
       },
-      error: (err: any) => { 
+      error: (err: any) => {
         console.error(err);
         this.message.error('Error saving product');
-      }
+      },
     });
   }
 
@@ -156,12 +159,12 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   private resetProduct() {
-    return { 
-      name: '', 
-      price: 0, 
-      description: '', 
-      imageUrl: '', 
-      categoryId: undefined 
+    return {
+      name: '',
+      price: 0,
+      description: '',
+      imageUrl: '',
+      categoryId: undefined,
     };
   }
 
@@ -172,13 +175,13 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.onload = () => {
         this.currentProduct.imageUrl = reader.result as string;
-        input.value = ''; 
+        input.value = '';
       };
       reader.readAsDataURL(file);
     }
   }
 
-  deleteProduct(id: string) { 
+  deleteProduct(id: string) {
     this.modal.confirm({
       nzTitle: 'Are you sure?',
       nzContent: 'This action cannot be undone',
@@ -188,7 +191,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
           this.message.info('Deleted successfully');
           this.loadProducts();
         });
-      }
+      },
     });
   }
 }

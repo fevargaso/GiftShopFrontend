@@ -1,5 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { NonNullableFormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+  NonNullableFormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NotificationUtilService } from '@app/core/utils/notification-util.service';
@@ -25,10 +32,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzDividerModule,
     NzCardModule,
     NzResultModule,
-    NzIconModule
+    NzIconModule,
   ],
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss']
+  styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
@@ -43,12 +50,11 @@ export class OrderComponent implements OnInit {
   paymentForm = this.fb.group({
     cardHolder: ['', [Validators.required]],
     cardNumber: ['', [Validators.required, Validators.pattern('^[0-9]{16}$')]],
-    expiryDate: ['', [
-      Validators.required,
-      Validators.pattern('^(0[1-9]|1[0-2])\\/([0-9]{2})$'),
-      this.expiryDateValidator()
-    ]],
-    cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]]
+    expiryDate: [
+      '',
+      [Validators.required, Validators.pattern('^(0[1-9]|1[0-2])\\/([0-9]{2})$'), this.expiryDateValidator()],
+    ],
+    cvv: ['', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]],
   });
 
   ngOnInit(): void {
@@ -78,9 +84,7 @@ export class OrderComponent implements OnInit {
   }
 
   calculateTotal(): number {
-    return this.purchasedItems.reduce((acc, item) => 
-      acc + ((item.product?.price || 0) * (item.quantity || 1)), 0
-    );
+    return this.purchasedItems.reduce((acc, item) => acc + (item.product?.price || 0) * (item.quantity || 1), 0);
   }
 
   processPayment(): void {
@@ -96,7 +100,7 @@ export class OrderComponent implements OnInit {
     }
 
     this.isProcessing = true;
-    
+
     setTimeout(() => {
       this.isProcessing = false;
       this.isSuccess = true;

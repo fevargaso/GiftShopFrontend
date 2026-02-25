@@ -8,16 +8,14 @@ import { SharedModule } from '@shared/shared.module';
 import { User, UserQueryParams } from '@app/core/models/user.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-user-list',
   standalone: true,
   imports: [SharedModule],
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-
   private readonly userService = inject(UserService);
   private readonly store = inject(Store<{ user: any }>);
   private readonly modalService = inject(NzModalService);
@@ -38,42 +36,39 @@ export class UserListComponent implements OnInit {
   };
 
   isAdmin$ = this.store.select('user').pipe(
-    map(state => state?.roles?.includes('Admin'))
+    map(user => {
+      if (!user) return false;
+      const isStaff = user.actualRole?.toLowerCase() === 'staff';
+      const isAdmin = user.roles?.includes(1) || user.roles?.includes('1');
+
+      return isStaff || isAdmin;
+    }),
   );
 
-
-ngOnInit(): void {
-  this.isAdmin$
-    .pipe(take(1))
-    .subscribe(isAdmin => {
-      console.log('Is Admin:', isAdmin);
+  ngOnInit(): void {
+    this.isAdmin$.subscribe(isAdmin => {
       if (isAdmin) {
         this.loadUsers();
       }
     });
-}
+  }
 
+  loadUsers(): void {
+    this.loading = true;
 
-loadUsers(): void {
-  this.loading = true;
+    this.userService.getAllUsers(this.params).subscribe({
+      next: (response: any) => {
+        this.users = response.data;
+        this.totalItems = response.total;
 
-  this.userService.getAllUsers(this.params).subscribe({
-    next: (response: any) => {
-      console.log('RESPONSE:', response);
-
-      this.users = response.data;    
-      this.totalItems = response.total; 
-
-      this.loading = false;
-    },
-    error: () => {
-      this.users = [];
-      this.loading = false;
-    }
-  });
-}
-
-
+        this.loading = false;
+      },
+      error: () => {
+        this.users = [];
+        this.loading = false;
+      },
+    });
+  }
 
   onSearchChange(value: string): void {
     this.params.search = value;
@@ -97,7 +92,6 @@ loadUsers(): void {
     this.loadUsers();
   }
 
-
   showModal(user?: User): void {
     this.isVisible = true;
 
@@ -109,7 +103,7 @@ loadUsers(): void {
       this.currentUser = {
         name: '',
         email: '',
-        role: 'User'
+        role: 'User',
       };
     }
   }
@@ -119,7 +113,6 @@ loadUsers(): void {
   }
 
   handleOk(): void {
-
     if (!this.currentUser.name || !this.currentUser.email) return;
 
     this.loading = true;
@@ -134,10 +127,9 @@ loadUsers(): void {
       next: () => {
         this.resetAfterSave();
       },
-error: (err: HttpErrorResponse) => {
-  console.error('Request error:', err.message);
-  this.loading = false;
-}
+      error: (err: HttpErrorResponse) => {
+        this.loading = false;
+      },
     });
   }
 
@@ -145,19 +137,19 @@ error: (err: HttpErrorResponse) => {
     const base = {
       name: this.currentUser.name,
       email: this.currentUser.email,
-      role: this.currentUser.role || 'User'
+      role: this.currentUser.role || 'User',
     };
 
     if (this.isEdit) {
       return {
         ...base,
-        id: this.currentUser.id
+        id: this.currentUser.id,
       };
     }
 
     return {
       ...base,
-      password: this.currentUser.password
+      password: this.currentUser.password,
     };
   }
 
@@ -167,7 +159,6 @@ error: (err: HttpErrorResponse) => {
     this.currentUser = {};
     this.loadUsers();
   }
-
 
   deleteUser(id: string): void {
     this.modalService.confirm({
@@ -179,9 +170,9 @@ error: (err: HttpErrorResponse) => {
       nzOnOk: () => {
         this.userService.deleteUser(id).subscribe({
           next: () => this.loadUsers(),
-          error: (err) => console.error(err)
+          error: err => console.error(err),
         });
-      }
+      },
     });
   }
 }

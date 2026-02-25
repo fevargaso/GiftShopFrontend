@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core'; 
+import { Component, inject, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router'; 
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '@app/core/services/auth.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SharedModule } from '@shared/shared.module';
@@ -10,21 +10,21 @@ import { SharedModule } from '@shared/shared.module';
   standalone: true,
   imports: [SharedModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   private fb = inject(NonNullableFormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute); 
+  private route = inject(ActivatedRoute);
   private message = inject(NzMessageService);
 
   loading = false;
-  private returnUrl = '/home'; 
+  private returnUrl = '/home';
 
   validateForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]], 
-    password: ['', [Validators.required]]
+    email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
   });
 
   ngOnInit(): void {
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         error: () => {
           this.loading = false;
           this.message.error('Incorrect email or password');
-        }
+        },
       });
     } else {
       this.markFormControlsAsDirty();
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
   }
 
   goToRegister(): void {
-    this.router.navigate(['/register']); 
+    this.router.navigate(['/register']);
   }
 
   private markFormControlsAsDirty(): void {

@@ -2,22 +2,38 @@
   [showSplash]="showSplash()"
   [animationDuration]="0.5"
   [showError]="noOperational()"
-  [error]="'Fatal Error, application no operational! Please contact to IT Team.'" />
+  [error]="'Fatal Error, application no operational! Please contact to IT Team.'"
+/>
 
 <nz-layout class="layout">
-  <nz-header id="ctn_navbar" 
-             [style.pointer-events]="isLoginPage() ? 'none' : 'auto'"
-             [style.opacity]="isLoginPage() ? '0.6' : '1'">
-    
+  <nz-header
+    id="ctn_navbar"
+    [style.pointer-events]="isLoginPage() ? 'none' : 'auto'"
+    [style.opacity]="isLoginPage() ? '0.6' : '1'"
+  >
     @if (navItems().length > 0) {
       <div style="height: 100%; display: flex; align-items: center">
-        <button class="menu-horizontal" nzSize="large" nz-button nz-dropdown [nzDropdownMenu]="menu"
-          nzOverlayClassName="menu-horizontal-actions" nzType="primary" nzTrigger="hover">
+        <button
+          class="menu-horizontal"
+          nzSize="large"
+          nz-button
+          nz-dropdown
+          [nzDropdownMenu]="menu"
+          nzOverlayClassName="menu-horizontal-actions"
+          nzType="primary"
+          nzTrigger="hover"
+        >
           <span nz-icon nzType="menu" nzTheme="outline"></span>
         </button>
         <nz-dropdown-menu #menu="nzDropdownMenu">
           <ul id="navigation-bar" nz-menu class="header-menu-horizontal" nzMode="horizontal">
-            <li *ngFor="let item of navItems()" [id]="item.id" nz-menu-item [routerLink]="item.route" [routerLinkActive]="['ant-menu-item-selected']">
+            <li
+              *ngFor="let item of navItems()"
+              [id]="item.id"
+              nz-menu-item
+              [routerLink]="item.route"
+              [routerLinkActive]="['ant-menu-item-selected']"
+            >
               <span class="header-menu-horizontal-item typography-body nav-item-text">
                 {{ item.name | translate }}
               </span>
@@ -30,7 +46,14 @@
     <img id="img_navbar_logo" class="logo" src="./assets/pinnacle-logo.svg" [alt]="'General.ALT_LOGO' | translate" />
 
     <ul id="lst_navigation_bar" nz-menu class="nav-background header-menu" nzMode="horizontal">
-      <li *ngFor="let item of navItems()" [id]="item.id" nz-menu-item class="nav-background" [routerLink]="item.route" [routerLinkActive]="['ant-menu-item-selected']">
+      <li
+        *ngFor="let item of navItems()"
+        [id]="item.id"
+        nz-menu-item
+        class="nav-background"
+        [routerLink]="item.route"
+        [routerLinkActive]="['ant-menu-item-selected']"
+      >
         <span class="typography-body align nav-item-text">
           {{ item.name | translate }}
         </span>
@@ -39,25 +62,32 @@
 
     <div class="header-space"></div>
 
-    <div class="navbar_left" 
-         nz-dropdown 
-         [nzDropdownMenu]="$role() !== 'unauthorize' ? menuUser : emptyMenu" 
-         nzPlacement="bottomRight" 
-         nzOverlayClassName="menu-user-actions">
-      
-      <div class="navbar_left__container" (click)="$role() === 'unauthorize' ? goToLogin() : null" [style.cursor]="'pointer'">
+    <div
+      class="navbar_left"
+      nz-dropdown
+      [nzDropdownMenu]="$role() !== 'unauthorize' ? menuUser : emptyMenu"
+      nzPlacement="bottomRight"
+      nzOverlayClassName="menu-user-actions"
+    >
+      <div
+        class="navbar_left__container"
+        (click)="$role() === 'unauthorize' ? goToLogin() : null"
+        [style.cursor]="'pointer'"
+      >
         @if ($role() !== 'unauthorize') {
           <h6 id="lbl_navbar_employee_name" class="navbar_left__container__name">{{ $name() }}</h6>
           <span id="lbl_navbar_employee_role" class="navbar_left__container__role">{{ $role() | translate }}</span>
         } @else {
           <h6 class="navbar_left__container__name">{{ 'GUEST' | translate }}</h6>
-          <span class="navbar_left__container__role" style="color: #1890ff;">{{ 'LOGIN' | translate }}</span>
+          <span class="navbar_left__container__role" style="color: #1890ff">{{ 'LOGIN' | translate }}</span>
         }
       </div>
 
-      <div class="rounded-circle navbar_left__container__photo" 
-           (click)="$role() === 'unauthorize' ? goToLogin() : null" 
-           [style.cursor]="'pointer'">
+      <div
+        class="rounded-circle navbar_left__container__photo"
+        (click)="$role() === 'unauthorize' ? goToLogin() : null"
+        [style.cursor]="'pointer'"
+      >
         @if ($role() !== 'unauthorize') {
           <nz-avatar id="img_avatar" [nzText]="$initials()"></nz-avatar>
         } @else {
@@ -75,20 +105,18 @@
       </nz-dropdown-menu>
 
       <nz-dropdown-menu #emptyMenu="nzDropdownMenu">
-        <ul nz-menu style="display: none;"></ul>
+        <ul nz-menu style="display: none"></ul>
       </nz-dropdown-menu>
     </div>
   </nz-header>
 
   <nz-content id="ctn_content">
     <div class="inner-content">
-      <router-outlet></router-outlet> 
+      <router-outlet></router-outlet>
     </div>
   </nz-content>
 
-  <div class="floating-cart-trigger" 
-        *ngIf="!isLoginPage()" 
-        (click)="cartDrawerService.toggle()">
+  <div class="floating-cart-trigger" *ngIf="!isLoginPage()" (click)="cartDrawerService.toggle()">
     <nz-badge [nzCount]="$cartCount()" [nzOffset]="[-10, 10]">
       <button nz-button nzType="primary" nzShape="circle" class="cart-btn">
         <span nz-icon nzType="shopping-cart"></span>
@@ -99,9 +127,8 @@
   <app-cart-drawer></app-cart-drawer>
 
   <nz-footer id="ctn_footer">
-    <span style="font-size: 14px; font-weight: 600;">
-      {{ "General.COMPANY_NAME" | translate:{year:year} }}
+    <span style="font-size: 14px; font-weight: 600">
+      {{ 'General.COMPANY_NAME' | translate: { year: year } }}
     </span>
   </nz-footer>
-
 </nz-layout>

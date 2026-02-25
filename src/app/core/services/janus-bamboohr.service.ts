@@ -17,12 +17,8 @@ export class JanusBambooHrService {
 
   sendNotification(appReporterNotification: FormData) {
     const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
-    return this.http.post(
-      `${this.baseUrl}${this.janusBambooHrApiNotification}`,
-      appReporterNotification,
-      { headers },
-    ).pipe(
-      timeout(30_000)
-    );
+    return this.http
+      .post(`${this.baseUrl}${this.janusBambooHrApiNotification}`, appReporterNotification, { headers })
+      .pipe(timeout(30_000));
   }
 }
