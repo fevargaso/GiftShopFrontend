@@ -11,10 +11,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { RouterLink } from '@angular/router';
 import { Subject, Subscription, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-
 import { ProductService } from '@app/core/services/product.services';
 import { Product } from '@app/core/models/product-model';
 import { CategoryService } from '@app/core/services/category.service';

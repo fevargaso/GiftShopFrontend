@@ -8,9 +8,7 @@ import { tap, EMPTY } from 'rxjs';
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly store = inject(Store);
-
   private readonly BASE_URL = 'https://localhost:5201/api/user';
-
   private readonly TOKEN_KEY = 'token';
   private readonly USER_KEY = 'loggedUser';
 

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '@app/core/services/cart.services';
 import { CartItem } from '@app/core/models/cart-item.model';
 import { NotificationUtilService } from '@app/core/utils/notification-util.service';
-
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 

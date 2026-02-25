@@ -25,14 +25,14 @@
 
 .ant-btn-primary {
   color: var(--color-white);
-  border-color: #118AB2; /* TODO: move to global vars */
-  background: #118AB2; /* TODO: move to global vars */
+  border-color: #118ab2; /* TODO: move to global vars */
+  background: #118ab2; /* TODO: move to global vars */
 }
 
 /* -- btn -- */
 .btn.ant-btn.ant-btn-default {
-  color : #118AB2; /* TODO: move to global vars */
-  border: 1px solid #118AB2; /* TODO: move to global vars */
+  color: #118ab2; /* TODO: move to global vars */
+  border: 1px solid #118ab2; /* TODO: move to global vars */
 }
 
 .btn.btn-transparent {
@@ -67,108 +67,18 @@
   border: 1px solid;
   border-image-slice: 1;
   border-width: 1px;
-  border-image-source: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+  border-image-source: linear-gradient(90deg, #00c0ff 0%, #ffcf00 49%, #fc4f4f 80%, #00c0ff 100%);
   animation: gradientAnimation 2s infinite;
 }
 
 @keyframes gradientAnimation {
   0% {
-    border-image-source: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+    border-image-source: linear-gradient(90deg, #00c0ff 0%, #ffcf00 49%, #fc4f4f 80%, #00c0ff 100%);
   }
   50% {
-    border-image-source: linear-gradient(90deg, #FC4F4F 0%, #00C0FF 49%, #FFCF00 80%, #FC4F4F 100%);
+    border-image-source: linear-gradient(90deg, #fc4f4f 0%, #00c0ff 49%, #ffcf00 80%, #fc4f4f 100%);
   }
   100% {
-    border-image-source: linear-gradient(90deg, #00C0FF 0%, #FFCF00 49%, #FC4F4F 80%, #00C0FF 100%);
+    border-image-source: linear-gradient(90deg, #00c0ff 0%, #ffcf00 49%, #fc4f4f 80%, #00c0ff 100%);
   }
 }
-/* end test */
-
-/* -- nzDanger -- */
-/*.btn.ant-btn.ant-btn-dangerous {
-  font-family: var(--font-open-sans);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 17px;
-  letter-spacing: 0;
-  text-align: center;
-}
-.btn.ant-btn-dangerous,
-.btn.ant-btn-dangerous.ant-btn-default {
-  color: var(--color-red8);
-  border: 2px solid var(--color-red8);
-  background: var(--color-white);
-}
-.btn.ant-btn-dangerous:hover,
-.btn.ant-btn-dangerous:focus,
-.btn.ant-btn-dangerous.ant-btn-default:hover,
-.btn.ant-btn-dangerous.ant-btn-default:focus {
-  color: var(--color-red9);
-  border-color: var(--color-red9);
-  background: var(--color-white);
-}
-.btn.ant-btn-dangerous:active,
-.btn.ant-btn-dangerous.ant-btn-default:active {
-  color: var(--color-red9);
-  border-color: var(--color-red9);
-  background: var(--color-white);
-}
-.btn.ant-btn-dangerous.ant-btn-primary {
-  color: var(--color-white);
-  border: 2px solid var(--color-red8);
-  background: var(--color-red8);
-}
-.btn.ant-btn-dangerous.ant-btn-primary:hover,
-.btn.ant-btn-dangerous.ant-btn-primary:focus {
-  color: var(--color-white);
-  border-color: var(--color-red9);
-  background: var(--color-red9);
-}
-.btn.ant-btn-dangerous.ant-btn-primary:active {
-  color: var(--color-white);
-  border-color: var(--color-red9);
-  background: var(--color-red9);
-}
-.btn.ant-btn-dangerous.ant-btn-link[disabled],
-.btn.ant-btn-dangerous.ant-btn-link[disabled]:hover,
-.btn.ant-btn-dangerous.ant-btn-link[disabled]:focus,
-.btn.ant-btn-dangerous.ant-btn-link[disabled]:active,
-.btn.ant-btn-dangerous.ant-btn-text[disabled],
-.btn.ant-btn-dangerous.ant-btn-text[disabled]:hover,
-.btn.ant-btn-dangerous.ant-btn-text[disabled]:focus,
-.btn.ant-btn-dangerous.ant-btn-text[disabled]:active {
-  color: rgba(0, 0, 0, 0.25);
-  border-color: transparent;
-  background: transparent;
-  text-shadow: none;
-  box-shadow: none;
-}
-.btn.ant-btn-dangerous.ant-btn-link,
-.btn.ant-btn-dangerous.ant-btn-text {
-  color: var(--color-red8);
-  border-color: transparent;
-  background: transparent;
-}
-.btn.ant-btn-dangerous.ant-btn-link:hover,
-.btn.ant-btn-dangerous.ant-btn-link:focus {
-  color: var(--color-red9);
-  border-color: transparent;
-  background: transparent;
-}
-.btn.ant-btn-dangerous.ant-btn-link:active {
-  color: var(--color-red9);
-  border-color: transparent;
-  background: transparent;
-}
-.btn.ant-btn-dangerous.ant-btn-text:hover,
-.btn.ant-btn-dangerous.ant-btn-text:focus {
-  color: var(--color-red8);
-  border-color: transparent;
-  background: rgba(0, 0, 0, 0.018);
-}
-.btn.ant-btn-dangerous.ant-btn-text:active {
-  color: var(--color-red9);
-  border-color: transparent;
-  background: rgba(0, 0, 0, 0.028);
-}*/
-/* -- end -- */
