@@ -1,20 +1,28 @@
-<div class="product-card">
-  <div class="product-clickable-area" [routerLink]="['/products', product.id]">
-    <div class="product-image">
-      <img [src]="product.imageUrl || 'assets/images/placeholder.png'" [alt]="product.name" loading="lazy" />
+<div class="product-card-premium">
+  <div class="img-box" [routerLink]="['/products', product.id]">
+    <img [src]="product.imageUrl || 'assets/logo.png'" [alt]="product.name" />
+  </div>
+
+  <div class="info-box">
+    <div class="rating-box">
+      <span class="stars">★★★★★</span>
+      <span class="reviews">259</span>
     </div>
 
-    <div class="product-info">
-      <span class="category" *ngIf="product.categoryName">{{ product.categoryName }}</span>
-      <h3 class="name" [title]="product.name">{{ product.name }}</h3>
+    <h3 class="product-name">
+      {{ product.name }}
+    </h3>
 
-      <div class="price-container">
-        <span class="symbol">$</span>
-        <span class="whole">{{ product.price | number: '1.0-0' }}</span>
-        <span class="fraction">{{ (product.price % 1) * 100 | number: '2.0-0' }}</span>
-      </div>
-
-      <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+    <div class="product-price-container">
+      <span class="currency-symbol">$</span>
+      <span class="price-whole">
+        {{ product.price | number: '1.0-0' }}
+      </span>
+      <span class="price-fraction">
+        {{ (product.price % 1) * 100 | number: '2.0-0' }}
+      </span>
     </div>
+
+    <app-add-to-cart-button [product]="product"> </app-add-to-cart-button>
   </div>
 </div>

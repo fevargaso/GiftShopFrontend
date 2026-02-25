@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '@app/core/services/product.services';
 import { CategoryService } from '@app/core/services/category.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
 import { Product } from '@app/core/models/product-model';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -27,6 +28,7 @@ import { AddToCartButtonComponent } from '@app/shared/components/add-to-cart-but
     NzIconModule,
     NzButtonModule,
     AddToCartButtonComponent,
+    ProductCardComponent,
   ],
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
@@ -38,7 +40,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   categories: any[] = [];
   totalItems = 0;
-  viewMode: 'list' | 'grid' = 'list';
+  viewMode: 'list' | 'card' = 'list';
 
   private searchSubject = new Subject<string>();
   private searchSubscription?: Subscription;
@@ -105,7 +107,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  toggleViewMode(mode: 'list' | 'grid'): void {
+  toggleViewMode(mode: 'list' | 'card'): void {
     this.viewMode = mode;
   }
 }

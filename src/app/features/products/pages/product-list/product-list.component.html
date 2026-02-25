@@ -31,15 +31,27 @@
           <span class="label">Show:</span>
           <nz-select class="page-size-select" [(ngModel)]="params.pageSize" (ngModelChange)="onFilterChange()">
             <nz-option [nzValue]="6" nzLabel="6 per page"></nz-option>
-            <nz-option [nzValue]="12" nzLabel="12 per page"></nz-option>
+            <nz-option [nzValue]="10" nzLabel="10 per page"></nz-option>
+            <nz-option [nzValue]="20" nzLabel="20 per page"></nz-option>
           </nz-select>
+        </div>
+
+        <div class="view-mode-toggle">
+          <button nz-button [nzType]="viewMode === 'list' ? 'primary' : 'default'" (click)="toggleViewMode('list')">
+            <span nz-icon nzType="unordered-list"></span>
+          </button>
+
+          <button nz-button [nzType]="viewMode === 'card' ? 'primary' : 'default'" (click)="toggleViewMode('card')">
+            <span nz-icon nzType="appstore"></span>
+          </button>
         </div>
       </div>
     </div>
   </div>
 
   <main class="content-layout">
-    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products.length; else emptyState">
+    <!-- LIST VIEW -->
+    <div class="amazon-vertical-list" *ngIf="viewMode === 'list' && products.length">
       <div *ngFor="let product of products" class="amazon-list-item">
         <a class="item-link" [routerLink]="['/products', product.id]">
           <div class="img-wrapper">
@@ -75,6 +87,14 @@
         </a>
       </div>
     </div>
+
+    <div class="products-grid" *ngIf="viewMode === 'card' && products.length">
+      <app-product-card *ngFor="let product of products" [product]="product"> </app-product-card>
+    </div>
+
+    <ng-container *ngIf="!products.length">
+      <ng-template [ngTemplateOutlet]="emptyState"></ng-template>
+    </ng-container>
 
     <ng-template #emptyState>
       <div class="no-results">
